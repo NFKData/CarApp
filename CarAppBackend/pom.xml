@@ -9,7 +9,6 @@
   <properties>
   	<hibernate.version>1.0.2.Final</hibernate.version>
   	<log4j.version>2.11.2</log4j.version>
-  	<postgresql.version>42.2.5</postgresql.version>
   </properties>
   
   <build>
@@ -44,12 +43,6 @@
 	  <groupId>org.apache.logging.log4j</groupId>
 	  <artifactId>log4j-core</artifactId>
 	  <version>${log4j.version}</version>
-	</dependency>
-	
-	<dependency>
-	  <groupId>org.postgresql</groupId>
-	  <artifactId>postgresql</artifactId>
-	  <version>${postgresql.version}</version>
 	</dependency>
   </dependencies>
 </project>
