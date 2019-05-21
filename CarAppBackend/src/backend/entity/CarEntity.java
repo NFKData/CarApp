@@ -1,6 +1,7 @@
 package backend.entity;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,40 +9,36 @@ import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 @Entity
-@Table(name="Car")
+@Table(name = "Car")
 public class CarEntity {
-	
-	@Column(name="uuid")
+
+	@Column(name = "uuid")
 	@Id
 	private String id;
-	
-	@Column(name="brand")
+
+	@Column(name = "brand")
 	private String brand;
-	
-	@Column(name="registration")
-	@Temporal(TemporalType.TIMESTAMP)
+
+	@Column(name = "registration")
 	private LocalDateTime registration;
-	
-	@Column(name="country")
+
+	@Column(name = "country")
 	private String country;
-	
-	@Column(name="created_at")
-	@Temporal(TemporalType.TIMESTAMP)
+
+	@Column(name = "created_at")
 	private LocalDateTime createdAt;
-	
-	@Column(name="last_updated")
-	@Temporal(TemporalType.TIMESTAMP)
+
+	@Column(name = "last_updated")
 	private LocalDateTime lastUpdated;
-	
+
 	@PrePersist
 	public void prePersit() {
 		this.createdAt = LocalDateTime.now();
+		this.id = UUID.randomUUID().toString();
 	}
-	
+
 	@PreUpdate
 	public void preUpdate() {
 		this.lastUpdated = LocalDateTime.now();
@@ -94,16 +91,16 @@ public class CarEntity {
 	public void setLastUpdated(LocalDateTime lastUpdated) {
 		this.lastUpdated = lastUpdated;
 	}
-	
+
 	@Override
 	public boolean equals(Object other) {
-		if(other == null) 
+		if (other == null)
 			return false;
-		if(!(other instanceof CarEntity))
+		if (!(other instanceof CarEntity))
 			return false;
-		if(other == this)
+		if (other == this)
 			return true;
-		
+
 		CarEntity o = (CarEntity) other;
 		return o.id.equals(this.id);
 	}
