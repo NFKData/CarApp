@@ -1,9 +1,8 @@
 package backend.resource;
 
-import java.util.List;
-
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -11,9 +10,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import backend.entity.Car;
-import backend.exception.CarFoundException;
 import backend.exception.CarNotFoundException;
 import backend.service.CarService;
 
@@ -25,38 +25,58 @@ public class CarResource {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Car> getCars() {
-		return carService.getAllCars();
+	public Response getCars() {
+		return Response.status(Status.OK)
+				.entity(carService.getAllCars())
+				.build();
 	}
 
 	@GET
 	@Path("/{carId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Car getCar(@PathParam(value = "carId") String id) {
-		return carService.getCar(id);
+	public Response getCar(@PathParam(value = "carId") String id) {
+		return Response.status(Status.OK)
+				.entity(carService.getCar(id))
+				.build();
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Car createCar(Car car) throws CarFoundException {
-		try {
-			return carService.createCar(car);
-		} catch (CarFoundException e) {
-			return null;
-		}
+	public Response createCar(Car car) {
+		return Response.status(Status.CREATED)
+				.entity(carService.createCar(car))
+				.build();
 	}
 
 	@PUT
 	@Path("/{carId}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Car updateCar(@PathParam(value = "carId") String id, Car car) {
+	public Response updateCar(@PathParam(value = "carId") String id, Car car) {
 		car.setId(id);
 		try {
-			return carService.updateCar(car);
+			return Response.status(Status.OK)
+					.entity(carService.updateCar(car))
+					.build();
 		} catch (CarNotFoundException e) {
-			return null;
+			return Response.status(Status.NO_CONTENT)
+					.build();
+		}
+	}
+	
+	@DELETE
+	@Path("/{carId}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteCar(@PathParam(value = "carId") String id) {
+		try {
+			return Response.status(Status.OK)
+						.entity(carService.deleteCar(id))
+						.build();
+		} catch (CarNotFoundException e) {
+			return Response.status(Status.NO_CONTENT)
+					.build();
 		}
 	}
 }
