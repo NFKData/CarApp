@@ -1,6 +1,6 @@
 package backend.entity;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,18 +22,18 @@ public class CarEntity {
 	
 	@Column(name="registration")
 	@Temporal(TemporalType.TIMESTAMP)
-	private Timestamp registration;
+	private LocalDateTime registration;
 	
 	@Column(name="country")
 	private String country;
 	
 	@Column(name="created_at")
 	@Temporal(TemporalType.TIMESTAMP)
-	private Timestamp createdAt;
+	private LocalDateTime createdAt;
 	
 	@Column(name="last_updated")
 	@Temporal(TemporalType.TIMESTAMP)
-	private Timestamp lastUpdated;
+	private LocalDateTime lastUpdated;
 
 	public String getId() {
 		return id;
@@ -51,11 +51,11 @@ public class CarEntity {
 		this.brand = brand;
 	}
 
-	public Timestamp getRegistration() {
+	public LocalDateTime getRegistration() {
 		return registration;
 	}
 
-	public void setRegistration(Timestamp registration) {
+	public void setRegistration(LocalDateTime registration) {
 		this.registration = registration;
 	}
 
@@ -67,19 +67,19 @@ public class CarEntity {
 		this.country = country;
 	}
 
-	public Timestamp getCreatedAt() {
+	public LocalDateTime getCreatedAt() {
 		return createdAt;
 	}
 
-	public void setCreatedAt(Timestamp createdAt) {
+	public void setCreatedAt(LocalDateTime createdAt) {
 		this.createdAt = createdAt;
 	}
 
-	public Timestamp getLastUpdated() {
+	public LocalDateTime getLastUpdated() {
 		return lastUpdated;
 	}
 
-	public void setLastUpdated(Timestamp lastUpdated) {
+	public void setLastUpdated(LocalDateTime lastUpdated) {
 		this.lastUpdated = lastUpdated;
 	}
 	
