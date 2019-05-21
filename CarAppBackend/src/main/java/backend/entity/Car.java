@@ -10,9 +10,23 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.NamedQuery;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+
+/**
+ * Entity that represents a car
+ * @author gmiralle
+ */
 @Entity
 @Table(name = "Car")
-public class CarEntity {
+@NamedQuery(name="CarService.findAllCars", query="SELECT c FROM Car c")
+public class Car {
 
 	@Column(name = "uuid")
 	@Id
@@ -21,15 +35,20 @@ public class CarEntity {
 	@Column(name = "brand")
 	private String brand;
 
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd/MM/yyyy@HH:mm:ss.SSSZ")
+	@JsonDeserialize(using = LocalDateTimeDeserializer.class)  
+	@JsonSerialize(using = LocalDateTimeSerializer.class)  
 	@Column(name = "registration")
 	private LocalDateTime registration;
 
 	@Column(name = "country")
 	private String country;
 
+	@JsonIgnore
 	@Column(name = "created_at")
 	private LocalDateTime createdAt;
 
+	@JsonIgnore
 	@Column(name = "last_updated")
 	private LocalDateTime lastUpdated;
 
@@ -96,12 +115,18 @@ public class CarEntity {
 	public boolean equals(Object other) {
 		if (other == null)
 			return false;
-		if (!(other instanceof CarEntity))
+		if (!(other instanceof Car))
 			return false;
 		if (other == this)
 			return true;
 
-		CarEntity o = (CarEntity) other;
+		Car o = (Car) other;
 		return o.id.equals(this.id);
+	}
+	
+	@Override
+	public String toString() {
+		return "{id:" + id + ", brand:" + brand + ", registration:" + registration + ", country:" + country
+				+ ", createdAt:" + createdAt + ", lastUpdated:" + lastUpdated + "}";
 	}
 }
