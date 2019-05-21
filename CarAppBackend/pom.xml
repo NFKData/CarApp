@@ -9,6 +9,7 @@
   <properties>
   	<hibernate.version>1.0.2.Final</hibernate.version>
   	<log4j.version>2.11.2</log4j.version>
+  	<jax-rs.version>2.1.1</jax-rs.version>
   </properties>
   
   <build>
@@ -27,6 +28,7 @@
         <version>3.2.1</version>
         <configuration>
           <warSourceDirectory>WebContent</warSourceDirectory>
+          <failOnMissingWebXml>false</failOnMissingWebXml>
         </configuration>
       </plugin>
     </plugins>
@@ -43,6 +45,12 @@
 	  <groupId>org.apache.logging.log4j</groupId>
 	  <artifactId>log4j-core</artifactId>
 	  <version>${log4j.version}</version>
+	</dependency>
+	
+	<dependency>
+	  <groupId>javax.ws.rs</groupId>
+	  <artifactId>javax.ws.rs-api</artifactId>
+	  <version>${jax-rs.version}</version>
 	</dependency>
   </dependencies>
 </project>
