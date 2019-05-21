@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -34,6 +36,16 @@ public class CarEntity {
 	@Column(name="last_updated")
 	@Temporal(TemporalType.TIMESTAMP)
 	private LocalDateTime lastUpdated;
+	
+	@PrePersist
+	public void prePersit() {
+		this.createdAt = LocalDateTime.now();
+	}
+	
+	@PreUpdate
+	public void preUpdate() {
+		this.lastUpdated = LocalDateTime.now();
+	}
 
 	public String getId() {
 		return id;
