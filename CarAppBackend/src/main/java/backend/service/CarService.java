@@ -3,7 +3,6 @@ package backend.service;
 import java.util.List;
 
 import backend.entity.Car;
-import backend.exception.CarFoundException;
 import backend.exception.CarNotFoundException;
 
 public interface CarService {
@@ -30,7 +29,7 @@ public interface CarService {
 	 * @throws CarFoundException if there's another car with the same ID
 	 * {@link Car}
 	 */
-	public Car createCar(Car car) throws CarFoundException;
+	public Car createCar(Car car);
 	
 	/**
 	 * Update a car based on the received one
