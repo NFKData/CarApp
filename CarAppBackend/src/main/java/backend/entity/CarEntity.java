@@ -10,8 +10,15 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.NamedQuery;
+
+/**
+ * Entity that represents a car
+ * @author gmiralle
+ */
 @Entity
 @Table(name = "Car")
+@NamedQuery(name="CarService.findAllCars", query="SELECT c FROM CarEntity c")
 public class CarEntity {
 
 	@Column(name = "uuid")
@@ -103,5 +110,11 @@ public class CarEntity {
 
 		CarEntity o = (CarEntity) other;
 		return o.id.equals(this.id);
+	}
+	
+	@Override
+	public String toString() {
+		return "CarEntity = {id:" + id + ", brand:" + brand + ", registration:" + registration + ", country:" + country
+				+ ", createdAt:" + createdAt + ", lastUpdated:" + lastUpdated + "}";
 	}
 }
