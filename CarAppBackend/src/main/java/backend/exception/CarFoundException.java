@@ -1,6 +1,6 @@
 package backend.exception;
 
-import backend.entity.CarEntity;
+import backend.entity.Car;
 
 public class CarFoundException extends Exception {
 	
@@ -15,11 +15,11 @@ public class CarFoundException extends Exception {
 		super(message);
 	}
 
-	public CarFoundException(String message, CarEntity car) {
+	public CarFoundException(String message, Car car) {
 		super(message + car.toString());
 	}
 	
-	public CarFoundException(CarEntity car) {
+	public CarFoundException(Car car) {
 		super(DEFAULT_MESSAGE + car.toString());
 	}
 }

@@ -7,7 +7,7 @@ import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import backend.entity.CarEntity;
+import backend.entity.Car;
 import backend.exception.CarFoundException;
 import backend.exception.CarNotFoundException;
 import backend.service.CarService;
@@ -15,22 +15,22 @@ import backend.service.CarService;
 @Stateless
 public class CarServiceImpl implements CarService {
 
-	@PersistenceContext(unitName="carEntityPU")
+	@PersistenceContext(unitName="carPU")
 	private EntityManager em;
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<CarEntity> getAllCars() {
-		return (List<CarEntity>) em.createNamedQuery("CarService.findAllCars").getResultList();
+	public List<Car> getAllCars() {
+		return (List<Car>) em.createNamedQuery("CarService.findAllCars").getResultList();
 	}
 
 	@Override
-	public CarEntity getCar(String id) {
-		return em.find(CarEntity.class, id);
+	public Car getCar(String id) {
+		return em.find(Car.class, id);
 	}
 
 	@Override
-	public CarEntity createCar(CarEntity car) throws CarFoundException {
+	public Car createCar(Car car) throws CarFoundException {
 		try {
 			em.persist(car);
 			return car;
@@ -40,17 +40,18 @@ public class CarServiceImpl implements CarService {
 	}
 
 	@Override
-	public CarEntity updateCar(CarEntity car) throws CarNotFoundException {
-		CarEntity auxCar = em.find(CarEntity.class, car.getId());
+	public Car updateCar(Car car) throws CarNotFoundException {
+		Car auxCar = em.find(Car.class, car.getId());
 		if(auxCar == null) {
 			throw new CarNotFoundException(car.getId());
 		}
+		car.setCreatedAt(auxCar.getCreatedAt());
 		return em.merge(car);
 	}
 
 	@Override
 	public boolean deleteCar(String id) throws CarNotFoundException {
-		CarEntity car = em.find(CarEntity.class, id);
+		Car car = em.find(Car.class, id);
 		if(car == null) {
 			throw new CarNotFoundException(id);
 		}
