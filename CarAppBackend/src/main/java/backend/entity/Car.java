@@ -13,6 +13,8 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import backend.serialization.LocalDateTimeAdapter;
+
 /**
  * Entity that represents a car
  * 

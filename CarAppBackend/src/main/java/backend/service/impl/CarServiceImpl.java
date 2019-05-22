@@ -3,12 +3,10 @@ package backend.service.impl;
 import java.util.List;
 
 import javax.ejb.Stateless;
-import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import backend.entity.Car;
-import backend.exception.CarFoundException;
 import backend.exception.CarNotFoundException;
 import backend.service.CarService;
 
@@ -30,13 +28,10 @@ public class CarServiceImpl implements CarService {
 	}
 
 	@Override
-	public Car createCar(Car car) throws CarFoundException {
-		try {
-			em.persist(car);
-			return car;
-		} catch (EntityExistsException ex) {
-			throw new CarFoundException(car);
-		}
+	public Car createCar(Car car) {
+		em.persist(car);
+		return car;
+
 	}
 
 	@Override

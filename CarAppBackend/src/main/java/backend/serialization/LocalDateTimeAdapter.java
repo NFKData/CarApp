@@ -1,4 +1,4 @@
-package backend.entity;
+package backend.serialization;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -32,4 +32,4 @@ public class LocalDateTimeAdapter extends XmlAdapter<String, LocalDateTime> {
 	public String marshal(LocalDateTime localDateString) throws Exception {
 		return DateTimeFormatter.ISO_DATE_TIME.format(localDateString);
 	}
-}
+} 

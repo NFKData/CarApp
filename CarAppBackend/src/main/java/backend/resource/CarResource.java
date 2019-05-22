@@ -17,7 +17,6 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import backend.entity.Car;
-import backend.exception.CarFoundException;
 import backend.exception.CarNotFoundException;
 import backend.service.CarService;
 
@@ -44,7 +43,7 @@ public class CarResource {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response createCar(Car car) throws CarFoundException {
+	public Response createCar(Car car) {
 		return Response.status(Status.CREATED).entity(carService.createCar(car)).build();
 	}
 
