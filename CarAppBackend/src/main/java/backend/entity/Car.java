@@ -35,7 +35,7 @@ public class Car {
 
 	@Column(name = "registration")
 	@XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
-	@NotNull(message = "Registration mustn't be null and has to have the format dd/MM/yyyy@HH:mm:ss.SSS")
+	@NotNull(message = "Registration mustn't be null and has to have the ISO format")
 	private LocalDateTime registration;
 
 	@Column(name = "country")
