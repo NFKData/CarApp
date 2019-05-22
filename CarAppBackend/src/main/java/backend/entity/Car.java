@@ -6,13 +6,23 @@ import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import backend.serialization.LocalDateTimeAdapter;
+
+/**
+ * Entity that represents a car
+ * 
+ * @author gmiralle
+ */
 @Entity
 @Table(name = "Car")
-public class CarEntity {
+@NamedQuery(name = "CarService.findAllCars", query = "SELECT c FROM Car c")
+public class Car {
 
 	@Column(name = "uuid")
 	@Id
@@ -22,6 +32,7 @@ public class CarEntity {
 	private String brand;
 
 	@Column(name = "registration")
+	@XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
 	private LocalDateTime registration;
 
 	@Column(name = "country")
@@ -80,28 +91,26 @@ public class CarEntity {
 		return createdAt;
 	}
 
-	public void setCreatedAt(LocalDateTime createdAt) {
-		this.createdAt = createdAt;
-	}
-
 	public LocalDateTime getLastUpdated() {
 		return lastUpdated;
-	}
-
-	public void setLastUpdated(LocalDateTime lastUpdated) {
-		this.lastUpdated = lastUpdated;
 	}
 
 	@Override
 	public boolean equals(Object other) {
 		if (other == null)
 			return false;
-		if (!(other instanceof CarEntity))
+		if (!(other instanceof Car))
 			return false;
 		if (other == this)
 			return true;
 
-		CarEntity o = (CarEntity) other;
+		Car o = (Car) other;
 		return o.id.equals(this.id);
+	}
+
+	@Override
+	public String toString() {
+		return "{id:" + id + ", brand:" + brand + ", registration:" + registration + ", country:" + country
+				+ ", createdAt:" + createdAt + ", lastUpdated:" + lastUpdated + "}";
 	}
 }
