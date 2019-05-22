@@ -9,7 +9,7 @@ import backend.entity.dto.ValidationErrorDto;
  * @author gmiralle
  *
  */
-public class ValidationNotSucceededException extends Exception {
+public class InvalidEntityException extends Exception {
 
 	private static final long serialVersionUID = 799190880834250761L;
 	private List<ValidationErrorDto> validationErrors;
@@ -18,7 +18,7 @@ public class ValidationNotSucceededException extends Exception {
 	 * Create exception that contains every validation error
 	 * @param validationErrors Errors occurred during validation
 	 */
-	public ValidationNotSucceededException(List<ValidationErrorDto> validationErrors) {
+	public InvalidEntityException(List<ValidationErrorDto> validationErrors) {
 		super("Errors ocurred on data validation");
 		this.validationErrors = validationErrors;
 	}

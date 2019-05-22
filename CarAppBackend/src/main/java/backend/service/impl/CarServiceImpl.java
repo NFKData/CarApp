@@ -8,7 +8,7 @@ import javax.persistence.PersistenceContext;
 
 import backend.entity.Car;
 import backend.exception.CarNotFoundException;
-import backend.exception.ValidationNotSucceededException;
+import backend.exception.InvalidEntityException;
 import backend.helper.ValidationHelper;
 import backend.service.CarService;
 
@@ -30,7 +30,7 @@ public class CarServiceImpl implements CarService {
 	}
 
 	@Override
-	public Car createCar(Car car) throws ValidationNotSucceededException {
+	public Car createCar(Car car) throws InvalidEntityException {
 		ValidationHelper.validateCar(car);
 		em.persist(car);
 		return car;
@@ -38,7 +38,7 @@ public class CarServiceImpl implements CarService {
 	}
 
 	@Override
-	public Car updateCar(Car car) throws CarNotFoundException, ValidationNotSucceededException {
+	public Car updateCar(Car car) throws CarNotFoundException, InvalidEntityException {
 		ValidationHelper.validateCar(car);
 		Car auxCar = em.find(Car.class, car.getId());
 		if (auxCar == null) {

@@ -9,11 +9,12 @@ import java.util.Set;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
+import javax.validation.ValidationException;
 import javax.validation.Validator;
 
 import backend.entity.Car;
 import backend.entity.dto.ValidationErrorDto;
-import backend.exception.ValidationNotSucceededException;
+import backend.exception.InvalidEntityException;
 
 public class ValidationHelper<T> {
 	
@@ -22,10 +23,10 @@ public class ValidationHelper<T> {
 	/**
 	 * Method that delegates a car validation on a general validation method
 	 * @param car {@link Car} to be validated
-	 * @throws ValidationNotSucceededException When there's any validation error
+	 * @throws InvalidEntityException When there's any validation error
 	 */
 	@SuppressWarnings("unchecked")
-	public static void validateCar(Car car) throws ValidationNotSucceededException{
+	public static void validateCar(Car car) throws InvalidEntityException{
 		ValidationHelper<Car> helper = (ValidationHelper<Car>) helpers.get(Car.class);
 		if(helper == null) {
 			helper = new ValidationHelper<Car>();
@@ -37,9 +38,9 @@ public class ValidationHelper<T> {
 	/**
 	 * Validate and create errors if any
 	 * @param object Entity to be validated
-	 * @throws ValidationNotSucceededException When there's any validation error
+	 * @throws InvalidEntityException When there's any validation error
 	 */
-	private void validate(T object) throws ValidationNotSucceededException{
+	private void validate(T object) throws InvalidEntityException {
 		Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 		Set<ConstraintViolation<T>> violations = validator.validate(object);
 		if (!violations.isEmpty()) {
@@ -49,7 +50,7 @@ public class ValidationHelper<T> {
 			while (it.hasNext()) {
 				validationErrors.add(new ValidationErrorDto(++errorNumbers, it.next().getMessage()));
 			}
-			throw new ValidationNotSucceededException(validationErrors);
+			throw new InvalidEntityException(validationErrors);
 		}
 	}
 	

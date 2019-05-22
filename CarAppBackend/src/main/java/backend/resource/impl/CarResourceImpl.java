@@ -11,7 +11,7 @@ import javax.ws.rs.core.Response.Status;
 import backend.entity.Car;
 import backend.entity.dto.ValidationErrorDto;
 import backend.exception.CarNotFoundException;
-import backend.exception.ValidationNotSucceededException;
+import backend.exception.InvalidEntityException;
 import backend.resource.CarResource;
 import backend.service.CarService;
 
@@ -36,7 +36,7 @@ public class CarResourceImpl extends CarResource {
 	public Response create(Car car) {
 		try {
 			return Response.status(Status.CREATED).entity(carService.createCar((Car) car)).build();
-		} catch (ValidationNotSucceededException e) {
+		} catch (InvalidEntityException e) {
 			return Response.status(Status.BAD_REQUEST)
 					.entity(new GenericEntity<List<ValidationErrorDto>>(e.getValidationErrors()) {
 					}).build();
@@ -51,7 +51,7 @@ public class CarResourceImpl extends CarResource {
 			return Response.status(Status.OK).entity(carService.updateCar(car)).build();
 		} catch (CarNotFoundException e) {
 			return Response.status(Status.NOT_FOUND).build();
-		} catch (ValidationNotSucceededException ex) {
+		} catch (InvalidEntityException ex) {
 			return Response.status(Status.BAD_REQUEST)
 					.entity(new GenericEntity<List<ValidationErrorDto>>(ex.getValidationErrors()) {
 					}).build();
