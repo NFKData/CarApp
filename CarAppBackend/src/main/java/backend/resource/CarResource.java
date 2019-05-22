@@ -13,6 +13,8 @@ import javax.ws.rs.core.Response;
 
 import backend.entity.Car;
 
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public abstract class CarResource {
 
 	/**
@@ -21,7 +23,6 @@ public abstract class CarResource {
 	 * 
 	 */
 	@GET
-	@Produces(MediaType.APPLICATION_JSON)
 	public abstract Response getAll();
 	
 	/**
@@ -31,7 +32,6 @@ public abstract class CarResource {
 	 */
 	@GET
 	@Path("/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
 	public abstract Response getOne(@PathParam(value = "id")String id);
 	
 	/**
@@ -40,8 +40,6 @@ public abstract class CarResource {
 	 * @return Response with the new {@link Car} in the body
 	 */
 	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
 	public abstract Response create(Car car);
 	
 	/**
@@ -53,8 +51,6 @@ public abstract class CarResource {
 	 */
 	@PUT
 	@Path("/{id}")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
 	public abstract Response update(@PathParam(value = "id")String id, Car car);
 	/**
 	 * Delete the {@link Car} with the specified ID
@@ -63,8 +59,6 @@ public abstract class CarResource {
 	 */
 	@DELETE
 	@Path("/{id}")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
 	public abstract Response delete(@PathParam(value = "id") String id);
 	
 }
