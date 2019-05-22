@@ -32,4 +32,4 @@ public class LocalDateTimeAdapter extends XmlAdapter<String, LocalDateTime> {
 	public String marshal(LocalDateTime localDateString) throws Exception {
 		return DateTimeFormatter.ISO_DATE_TIME.format(localDateString);
 	}
-} 
+}

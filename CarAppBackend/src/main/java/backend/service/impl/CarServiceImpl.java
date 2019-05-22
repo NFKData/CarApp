@@ -8,6 +8,8 @@ import javax.persistence.PersistenceContext;
 
 import backend.entity.Car;
 import backend.exception.CarNotFoundException;
+import backend.exception.InvalidEntityException;
+import backend.helper.ValidationHelper;
 import backend.service.CarService;
 
 @Stateless
@@ -28,14 +30,16 @@ public class CarServiceImpl implements CarService {
 	}
 
 	@Override
-	public Car createCar(Car car) {
+	public Car createCar(Car car) throws InvalidEntityException {
+		ValidationHelper.validateCar(car);
 		em.persist(car);
 		return car;
 
 	}
 
 	@Override
-	public Car updateCar(Car car) throws CarNotFoundException {
+	public Car updateCar(Car car) throws CarNotFoundException, InvalidEntityException {
+		ValidationHelper.validateCar(car);
 		Car auxCar = em.find(Car.class, car.getId());
 		if (auxCar == null) {
 			throw new CarNotFoundException(car.getId());
