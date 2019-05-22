@@ -3,7 +3,6 @@ package backend.entity;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -40,11 +39,9 @@ public class Car {
 	private String country;
 
 	@Column(name = "created_at")
-	@JsonbTransient
 	private LocalDateTime createdAt;
 
 	@Column(name = "last_updated")
-	@JsonbTransient
 	private LocalDateTime lastUpdated;
 
 	@PrePersist

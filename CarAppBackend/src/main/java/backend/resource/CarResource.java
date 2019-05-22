@@ -1,3 +1,4 @@
+
 package backend.resource;
 
 import java.util.List;
@@ -56,7 +57,7 @@ public class CarResource {
 		try {
 			return Response.status(Status.OK).entity(carService.updateCar(car)).build();
 		} catch (CarNotFoundException e) {
-			return Response.status(Status.NO_CONTENT).build();
+			return Response.status(Status.NOT_FOUND).build();
 		}
 	}
 
@@ -66,9 +67,10 @@ public class CarResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteCar(@PathParam(value = "carId") String id) {
 		try {
-			return Response.status(Status.OK).entity(carService.deleteCar(id)).build();
-		} catch (CarNotFoundException e) {
+			carService.deleteCar(id);
 			return Response.status(Status.NO_CONTENT).build();
+		} catch (CarNotFoundException e) {
+			return Response.status(Status.NOT_FOUND).build();
 		}
 	}
 }
