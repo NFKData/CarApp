@@ -13,6 +13,8 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
  */
 public class LocalDateTimeAdapter extends XmlAdapter<String, LocalDateTime> {
 
+	private static final DateTimeFormatter DTF = DateTimeFormatter.ofPattern("dd/MM/yyyy@HH:mm:ss.SSS");
+
 	/**
 	 * Convert ISO date time string to a valid {@link LocalDateTime} format
 	 * 
@@ -20,7 +22,7 @@ public class LocalDateTimeAdapter extends XmlAdapter<String, LocalDateTime> {
 	 */
 	@Override
 	public LocalDateTime unmarshal(String localDateString) throws Exception {
-		return LocalDateTime.parse(localDateString, DateTimeFormatter.ISO_DATE_TIME);
+		return LocalDateTime.parse(localDateString, DTF);
 	}
 
 	/**
@@ -30,6 +32,6 @@ public class LocalDateTimeAdapter extends XmlAdapter<String, LocalDateTime> {
 	 */
 	@Override
 	public String marshal(LocalDateTime localDateString) throws Exception {
-		return DateTimeFormatter.ISO_DATE_TIME.format(localDateString);
+		return DTF.format(localDateString);
 	}
-} 
+}

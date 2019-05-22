@@ -10,6 +10,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import backend.serialization.LocalDateTimeAdapter;
@@ -29,13 +30,16 @@ public class Car {
 	private String id;
 
 	@Column(name = "brand")
+	@NotNull
 	private String brand;
 
 	@Column(name = "registration")
 	@XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
+	@NotNull
 	private LocalDateTime registration;
 
 	@Column(name = "country")
+	@NotNull
 	private String country;
 
 	@Column(name = "created_at")
