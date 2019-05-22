@@ -15,9 +15,9 @@ import backend.service.CarService;
 @Stateless
 public class CarServiceImpl implements CarService {
 
-	@PersistenceContext(unitName="carPU")
+	@PersistenceContext(unitName = "carPU")
 	private EntityManager em;
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Car> getAllCars() {
@@ -42,7 +42,7 @@ public class CarServiceImpl implements CarService {
 	@Override
 	public Car updateCar(Car car) throws CarNotFoundException {
 		Car auxCar = em.find(Car.class, car.getId());
-		if(auxCar == null) {
+		if (auxCar == null) {
 			throw new CarNotFoundException(car.getId());
 		}
 		car.setCreatedAt(auxCar.getCreatedAt());
@@ -52,7 +52,7 @@ public class CarServiceImpl implements CarService {
 	@Override
 	public boolean deleteCar(String id) throws CarNotFoundException {
 		Car car = em.find(Car.class, id);
-		if(car == null) {
+		if (car == null) {
 			throw new CarNotFoundException(id);
 		}
 		em.remove(car);

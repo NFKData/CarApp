@@ -3,29 +3,24 @@ package backend.entity;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.NamedQuery;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  * Entity that represents a car
+ * 
  * @author gmiralle
  */
 @Entity
 @Table(name = "Car")
-@NamedQuery(name="CarService.findAllCars", query="SELECT c FROM Car c")
+@NamedQuery(name = "CarService.findAllCars", query = "SELECT c FROM Car c")
 public class Car {
 
 	@Column(name = "uuid")
@@ -35,21 +30,19 @@ public class Car {
 	@Column(name = "brand")
 	private String brand;
 
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd/MM/yyyy@HH:mm:ss.SSSZ")
-	@JsonDeserialize(using = LocalDateTimeDeserializer.class)  
-	@JsonSerialize(using = LocalDateTimeSerializer.class)  
 	@Column(name = "registration")
+	@XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
 	private LocalDateTime registration;
 
 	@Column(name = "country")
 	private String country;
 
-	@JsonIgnore
 	@Column(name = "created_at")
+	@JsonbTransient
 	private LocalDateTime createdAt;
 
-	@JsonIgnore
 	@Column(name = "last_updated")
+	@JsonbTransient
 	private LocalDateTime lastUpdated;
 
 	@PrePersist
@@ -123,7 +116,7 @@ public class Car {
 		Car o = (Car) other;
 		return o.id.equals(this.id);
 	}
-	
+
 	@Override
 	public String toString() {
 		return "{id:" + id + ", brand:" + brand + ", registration:" + registration + ", country:" + country
