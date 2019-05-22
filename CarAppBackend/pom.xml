@@ -1,4 +1,5 @@
-<project>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.everis</groupId>
 	<artifactId>car-api</artifactId>
@@ -7,7 +8,7 @@
 	<name>Everis Car App</name>
 	<dependencies>
 		<dependency>
-			<groupId>org.hibernate.orm</groupId>
+			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
 			<version>${hibernate.version}</version>
 		</dependency>
@@ -27,7 +28,7 @@
 		<finalName>car-api</finalName>
 	</build>
 	<properties>
-		<hibernate.version>6.0.0.Alpha2</hibernate.version>
+		<hibernate.version>5.4.2.Final</hibernate.version>
 		<jee.version>8.0</jee.version>
 		<log4j.version>2.11.2</log4j.version>
 		<maven.compiler.source>1.8</maven.compiler.source>

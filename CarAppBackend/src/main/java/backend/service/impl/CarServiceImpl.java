@@ -40,8 +40,10 @@ public class CarServiceImpl implements CarService {
 		if (auxCar == null) {
 			throw new CarNotFoundException(car.getId());
 		}
-		car.setCreatedAt(auxCar.getCreatedAt());
-		return em.merge(car);
+		auxCar.setBrand(car.getBrand());
+		auxCar.setCountry(car.getCountry());
+		auxCar.setRegistration(car.getRegistration());
+		return em.merge(auxCar);
 	}
 
 	@Override

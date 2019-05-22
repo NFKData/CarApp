@@ -91,16 +91,8 @@ public class Car {
 		return createdAt;
 	}
 
-	public void setCreatedAt(LocalDateTime createdAt) {
-		this.createdAt = createdAt;
-	}
-
 	public LocalDateTime getLastUpdated() {
 		return lastUpdated;
-	}
-
-	public void setLastUpdated(LocalDateTime lastUpdated) {
-		this.lastUpdated = lastUpdated;
 	}
 
 	@Override
