@@ -9,7 +9,9 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import backend.entity.Car;
+import backend.entity.dto.ValidationErrorDto;
 import backend.exception.CarNotFoundException;
+import backend.exception.ValidationNotSucceededException;
 import backend.resource.CarResource;
 import backend.service.CarService;
 
@@ -32,17 +34,27 @@ public class CarResourceImpl extends CarResource {
 
 	@Override
 	public Response create(Car car) {
-		return Response.status(Status.CREATED).entity(carService.createCar((Car)car)).build();
+		try {
+			return Response.status(Status.CREATED).entity(carService.createCar((Car) car)).build();
+		} catch (ValidationNotSucceededException e) {
+			return Response.status(Status.BAD_REQUEST)
+					.entity(new GenericEntity<List<ValidationErrorDto>>(e.getValidationErrors()) {
+					}).build();
+		}
 	}
 
 	@Override
 	public Response update(String id, Car entity) {
-		Car car = (Car) entity;		
+		Car car = (Car) entity;
 		car.setId(id);
 		try {
 			return Response.status(Status.OK).entity(carService.updateCar(car)).build();
 		} catch (CarNotFoundException e) {
 			return Response.status(Status.NOT_FOUND).build();
+		} catch (ValidationNotSucceededException ex) {
+			return Response.status(Status.BAD_REQUEST)
+					.entity(new GenericEntity<List<ValidationErrorDto>>(ex.getValidationErrors()) {
+					}).build();
 		}
 	}
 

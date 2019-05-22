@@ -30,16 +30,16 @@ public class Car {
 	private String id;
 
 	@Column(name = "brand")
-	@NotNull
+	@NotNull(message = "Brand mustn't be null")
 	private String brand;
 
 	@Column(name = "registration")
 	@XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
-	@NotNull
+	@NotNull(message = "Registration mustn't be null and has to have the format dd/MM/yyyy@HH:mm:ss.SSS")
 	private LocalDateTime registration;
 
 	@Column(name = "country")
-	@NotNull
+	@NotNull(message = "Country mustn't be null")
 	private String country;
 
 	@Column(name = "created_at")
