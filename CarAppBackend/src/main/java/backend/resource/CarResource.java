@@ -1,9 +1,5 @@
-
 package backend.resource;
 
-import java.util.List;
-
-import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -12,65 +8,63 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 
 import backend.entity.Car;
-import backend.exception.CarNotFoundException;
-import backend.service.CarService;
 
-@Path("cars")
-public class CarResource {
+public abstract class CarResource {
 
-	@EJB(name = "carService")
-	private CarService carService;
-
+	/**
+	 * Obtain all cars in the system
+	 * @return Response with every {@link Car} in the body
+	 * 
+	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getCars() {
-		return Response.status(Status.OK).entity(new GenericEntity<List<Car>>(carService.getAllCars()) {
-		}).build();
-	}
-
+	public abstract Response getAll();
+	
+	/**
+	 * Obtain the car with the specified ID
+	 * @param id UUID of the car to look for
+	 * @return Response with the found {@link Car}
+	 */
 	@GET
-	@Path("/{carId}")
+	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getCar(@PathParam(value = "carId") String id) {
-		return Response.status(Status.OK).entity(carService.getCar(id)).build();
-	}
-
+	public abstract Response getOne(@PathParam(value = "id")String id);
+	
+	/**
+	 * Insert a new car in the system
+	 * @param car The car to be created
+	 * @return Response with the new {@link Car} in the body
+	 */
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response createCar(Car car) {
-		return Response.status(Status.CREATED).entity(carService.createCar(car)).build();
-	}
-
+	public abstract Response create(Car car);
+	
+	/**
+	 * Update the car with the specified ID
+	 * @param id UUID of the car which will be updated
+	 * @param car The new car data
+	 * @return Response with the updated {@link Car} in the body
+	 * 
+	 */
 	@PUT
-	@Path("/{carId}")
+	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response updateCar(@PathParam(value = "carId") String id, Car car) {
-		car.setId(id);
-		try {
-			return Response.status(Status.OK).entity(carService.updateCar(car)).build();
-		} catch (CarNotFoundException e) {
-			return Response.status(Status.NOT_FOUND).build();
-		}
-	}
-
+	public abstract Response update(@PathParam(value = "id")String id, Car car);
+	/**
+	 * Delete the {@link Car} with the specified ID
+	 * @param id UUID of the car which will be deleted
+	 * @return Response without body
+	 */
 	@DELETE
-	@Path("/{carId}")
+	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response deleteCar(@PathParam(value = "carId") String id) {
-		try {
-			carService.deleteCar(id);
-			return Response.status(Status.NO_CONTENT).build();
-		} catch (CarNotFoundException e) {
-			return Response.status(Status.NOT_FOUND).build();
-		}
-	}
+	public abstract Response delete(@PathParam(value = "id") String id);
+	
 }

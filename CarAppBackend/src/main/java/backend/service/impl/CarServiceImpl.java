@@ -47,13 +47,12 @@ public class CarServiceImpl implements CarService {
 	}
 
 	@Override
-	public boolean deleteCar(String id) throws CarNotFoundException {
+	public void deleteCar(String id) throws CarNotFoundException {
 		Car car = em.find(Car.class, id);
 		if (car == null) {
 			throw new CarNotFoundException(id);
 		}
 		em.remove(car);
-		return true;
 	}
 
 }
