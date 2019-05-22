@@ -74,6 +74,7 @@ public class CarResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteCar(@PathParam(value = "carId") String id) {
 		try {
+			carService.deleteCar(id);
 			return Response.status(Status.OK)
 						.build();
 		} catch (CarNotFoundException e) {
