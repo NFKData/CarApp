@@ -1,12 +1,25 @@
 package backend.entity.dto;
 
+/**
+ * DTO for sending errors to client
+ * @author gmiralle
+ *
+ */
 public class ValidationErrorDto {
 
 	private int errorNumber;
 	private String description;
 	
+	/**
+	 * Generic constructor needed for JSON serialization
+	 */
 	public ValidationErrorDto() {}
 
+	/**
+	 * Constructor of an error
+	 * @param errorNumber Number of this error
+	 * @param description Description of this error
+	 */
 	public ValidationErrorDto(int errorNumber, String description) {
 			this.errorNumber = errorNumber;
 			this.description = description;

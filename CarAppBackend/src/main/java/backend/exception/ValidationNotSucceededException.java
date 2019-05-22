@@ -4,6 +4,11 @@ import java.util.List;
 
 import backend.entity.dto.ValidationErrorDto;
 
+/**
+ * Exception occurred when a Bean Validation has errors
+ * @author gmiralle
+ *
+ */
 public class ValidationNotSucceededException extends Exception {
 
 	private static final long serialVersionUID = 799190880834250761L;
