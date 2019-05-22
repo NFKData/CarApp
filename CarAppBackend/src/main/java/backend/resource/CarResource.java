@@ -75,7 +75,6 @@ public class CarResource {
 	public Response deleteCar(@PathParam(value = "carId") String id) {
 		try {
 			return Response.status(Status.OK)
-						.entity(carService.deleteCar(id))
 						.build();
 		} catch (CarNotFoundException e) {
 			return Response.status(Status.NO_CONTENT)
