@@ -17,6 +17,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import com.backend.interceptor.LogInterceptor;
 import com.backend.serialization.LocalDateTimeAdapter;
 
+import io.swagger.v3.oas.annotations.Hidden;
+
 /**
  * Entity that represents a car
  * 
@@ -45,9 +47,11 @@ public class Car {
 	@NotNull(message = "Country mustn't be null")
 	private String country;
 
+	@Hidden
 	@Column(name = "created_at")
 	private LocalDateTime createdAt;
 
+	@Hidden
 	@Column(name = "last_updated")
 	private LocalDateTime lastUpdated;
 
