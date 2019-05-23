@@ -1,8 +1,9 @@
-package backend.entity;
+package com.backend.entity;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import javax.interceptor.Interceptors;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -13,7 +14,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import backend.serialization.LocalDateTimeAdapter;
+import com.backend.interceptor.LogInterceptor;
+import com.backend.serialization.LocalDateTimeAdapter;
 
 /**
  * Entity that represents a car
@@ -23,6 +25,7 @@ import backend.serialization.LocalDateTimeAdapter;
 @Entity
 @Table(name = "Car")
 @NamedQuery(name = "CarService.findAllCars", query = "SELECT c FROM Car c")
+@Interceptors(LogInterceptor.class)
 public class Car {
 
 	@Column(name = "uuid")
@@ -111,10 +114,10 @@ public class Car {
 		Car o = (Car) other;
 		return o.id.equals(this.id);
 	}
-
+	
 	@Override
 	public String toString() {
-		return "{id:" + id + ", brand:" + brand + ", registration:" + registration + ", country:" + country
+		return "Car = {id:" + id + ", brand:" + brand + ", registration:" + registration + ", country:" + country
 				+ ", createdAt:" + createdAt + ", lastUpdated:" + lastUpdated + "}";
 	}
 }

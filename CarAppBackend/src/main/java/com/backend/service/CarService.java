@@ -1,10 +1,10 @@
-package backend.service;
+package com.backend.service;
 
 import java.util.List;
 
-import backend.entity.Car;
-import backend.exception.CarNotFoundException;
-import backend.exception.InvalidEntityException;
+import com.backend.entity.Car;
+import com.backend.exception.CarNotFoundException;
+import com.backend.exception.InvalidEntityException;
 
 public interface CarService {
 

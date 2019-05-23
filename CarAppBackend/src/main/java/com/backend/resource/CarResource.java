@@ -1,4 +1,4 @@
-package backend.resource;
+package com.backend.resource;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -11,8 +11,16 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import backend.entity.Car;
+import com.backend.entity.Car;
+import com.backend.exception.CarNotFoundException;
+import com.backend.exception.InvalidEntityException;
 
+/**
+ * Resource of the API.
+ * Exceptions are mapped by {@link CarApiBaseExceptionHandler}
+ * @author gmiralle
+ *
+ */
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public abstract class CarResource {
@@ -36,29 +44,46 @@ public abstract class CarResource {
 	
 	/**
 	 * Insert a new car in the system
+	 * May return the following HTTP Codes:
+	 * <ul>
+	 * 	<li>400 - Bad Request - On validation errors</li>
+	 * </ul>
 	 * @param car The car to be created
 	 * @return Response with the new {@link Car} in the body
+	 * @throws InvalidEntityException If validation of the entity failed
 	 */
 	@POST
-	public abstract Response create(Car car);
+	public abstract Response create(Car car) throws InvalidEntityException;
 	
 	/**
 	 * Update the car with the specified ID
+	 * May return the following HTTP Codes:
+	 * <ul>
+	 * 	<li>400 - Bad Request - On validation errors</li>
+	 * 	<li>404 - Not Found - If there's no car with the specified ID</li>
+	 * </ul>
 	 * @param id UUID of the car which will be updated
 	 * @param car The new car data
 	 * @return Response with the updated {@link Car} in the body
+	 * @throws InvalidEntityException If validation of the entity failed
+	 * @throws CarNotFoundException If a car with the specified Id couldn't be found
 	 * 
 	 */
 	@PUT
 	@Path("/{id}")
-	public abstract Response update(@PathParam(value = "id")String id, Car car);
+	public abstract Response update(@PathParam(value = "id")String id, Car car) throws CarNotFoundException, InvalidEntityException;
 	/**
 	 * Delete the {@link Car} with the specified ID
+	 * May return the following HTTP Codes:
+	 * <ul>
+	 * 	<li>404 - Not Found - If there's no car with the specified ID</li>
+	 * </ul>
 	 * @param id UUID of the car which will be deleted
 	 * @return Response without body
+	 * @throws CarNotFoundException If a car with the specified Id couldn't be found
 	 */
 	@DELETE
 	@Path("/{id}")
-	public abstract Response delete(@PathParam(value = "id") String id);
+	public abstract Response delete(@PathParam(value = "id") String id) throws CarNotFoundException;
 	
 }
