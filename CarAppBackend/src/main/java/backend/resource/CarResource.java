@@ -76,7 +76,7 @@ public abstract class CarResource {
 	 */
 	@Operation(summary = "Update car by ID", tags = {
 			"cars" }, description = "Update the car with the specified ID and new data", responses = {
-					@ApiResponse(description = "Car", responseCode = "201", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Car.class))),
+					@ApiResponse(description = "Car", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Car.class))),
 					@ApiResponse(description = "Validation errors", responseCode = "400", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ValidationErrorDto.class)))),
 					@ApiResponse(description = "Car not found", responseCode = "404") })
 	@PUT
