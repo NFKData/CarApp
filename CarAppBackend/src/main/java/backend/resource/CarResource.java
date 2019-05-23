@@ -11,8 +11,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import backend.entity.Car;
-import backend.entity.dto.ValidationErrorDto;
+import com.backend.entity.Car;
+import com.backend.entity.dto.ValidationErrorDto;
+import com.backend.exception.CarNotFoundException;
+import com.backend.exception.InvalidEntityException;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -27,9 +30,12 @@ public abstract class CarResource {
 
 	/**
 	 * Obtain all cars in the system
-	 * 
+	 * May return the following HTTP Codes:
+	 * <ul>
+	 * 	<li>200 - OK</li>
+	 * 	<li>204 - No content - On no cars found</li>
+	 * </ul>
 	 * @return Response with every {@link Car} in the body
-	 * 
 	 */
 	@Operation(summary = "Get all cars", tags = {
 			"cars" }, description = "Retrieve every car on the system", responses = {
@@ -40,9 +46,14 @@ public abstract class CarResource {
 
 	/**
 	 * Obtain the car with the specified ID
-	 * 
+	 * May return the following HTTP Codes:
+	 * <ul>
+	 * 	<li>200 - OK</li>
+	 * 	<li>404 - Not found - If there's no car with the specified ID on the system</li>
+	 * </ul>
 	 * @param id UUID of the car to look for
 	 * @return Response with the found {@link Car}
+	 * @throws CarNotFoundException If there's no car in the system with the specified ID
 	 */
 	@Operation(summary = "Get car by ID", tags = {
 			"cars" }, description = "Retrieve the car with the specified ID", responses = {
@@ -51,13 +62,18 @@ public abstract class CarResource {
 	@GET
 	@Path("/{id}")
 	public abstract Response getOne(
-			@Parameter(description = "UUID of the car to retrieve", schema = @Schema(type = "string", format = "uuid", description = "param UUID of the car to retrieve"), required = true) @PathParam(value = "id") String id);
+			@Parameter(description = "UUID of the car to retrieve", schema = @Schema(type = "string", format = "uuid", description = "param UUID of the car to retrieve"), required = true) @PathParam(value = "id") String id) throws CarNotFoundException;
 
 	/**
 	 * Insert a new car in the system
-	 * 
+	 * May return the following HTTP Codes:
+	 * <ul>
+	 * 	<li>201 - Created</li>
+	 * 	<li>400 - Bad request - On validation errors</li>
+	 * </ul>
 	 * @param car The car to be created
 	 * @return Response with the new {@link Car} in the body
+	 * @throws InvalidEntityException If validation of the entity failed
 	 */
 	@Operation(summary = "Create a new car", tags = {
 			"cars" }, description = "Create a new car with specified data", responses = {
@@ -65,15 +81,21 @@ public abstract class CarResource {
 					@ApiResponse(description = "Validation errors", responseCode = "400", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ValidationErrorDto.class)))) })
 	@POST
 	public abstract Response create(
-			@Parameter(description = "Car to create", schema = @Schema(implementation = Car.class), required = true) Car car);
+			@Parameter(description = "Car to create", schema = @Schema(implementation = Car.class), required = true) Car car) throws InvalidEntityException;
 
 	/**
 	 * Update the car with the specified ID
-	 * 
-	 * @param id  UUID of the car which will be updated
+	 * May return the following HTTP Codes:
+	 * <ul>
+	 * 	<li>200 - OK</li>
+	 * 	<li>400 - Bad Request - On validation errors</li>
+	 * 	<li>404 - Not Found - If there's no car with the specified ID</li>
+	 * </ul>
+	 * @param id UUID of the car which will be updated
 	 * @param car The new car data
 	 * @return Response with the updated {@link Car} in the body
-	 * 
+	 * @throws InvalidEntityException If validation of the entity failed
+	 * @throws CarNotFoundException If a car with the specified Id couldn't be found
 	 */
 	@Operation(summary = "Update car by ID", tags = {
 			"cars" }, description = "Update the car with the specified ID and new data", responses = {
@@ -84,13 +106,18 @@ public abstract class CarResource {
 	@Path("/{id}")
 	public abstract Response update(
 			@Parameter(description = "UUID of the car to update", schema = @Schema(type = "string", format = "uuid", description = "param UUID of the car to update"), required = true) @PathParam(value = "id") String id,
-			@Parameter(description = "New data for the car", schema = @Schema(implementation = Car.class), required = true) Car car);
+			@Parameter(description = "New data for the car", schema = @Schema(implementation = Car.class), required = true) Car car) throws CarNotFoundException, InvalidEntityException;
 
 	/**
 	 * Delete the {@link Car} with the specified ID
-	 * 
+	 * May return the following HTTP Codes:
+	 * <ul>
+	 * 	<li>204 - No Content - On Success</li>
+	 * 	<li>404 - Not Found - If there's no car with the specified ID</li>
+	 * </ul>
 	 * @param id UUID of the car which will be deleted
 	 * @return Response without body
+	 * @throws CarNotFoundException If a car with the specified Id couldn't be found
 	 */
 	@Operation(summary = "Delete car by ID", tags = {
 			"cars" }, description = "Delete the car with the specified ID", responses = {
@@ -99,6 +126,6 @@ public abstract class CarResource {
 	@DELETE
 	@Path("/{id}")
 	public abstract Response delete(
-			@Parameter(description = "UUID of the car to update", schema = @Schema(type = "string", format = "uuid", description = "param UUID of the car to update"), required = true) @PathParam(value = "id") String id);
+			@Parameter(description = "UUID of the car to update", schema = @Schema(type = "string", format = "uuid", description = "param UUID of the car to update"), required = true) @PathParam(value = "id") String id) throws CarNotFoundException;
 
 }
