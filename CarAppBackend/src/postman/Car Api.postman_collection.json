@@ -1,0 +1,685 @@
+{
+	"info": {
+		"_postman_id": "8a2c0dec-53cb-45da-ad58-9f953f597b5f",
+		"name": "Car Api",
+		"description": "API for Car APP\n\nContact Support: \n{\n\nName : Guillermo Miralles Campillo\n\nEmail : guillermo.miralles.campillo@everis.com\n\n}",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Set 1",
+			"item": [
+				{
+					"name": "api",
+					"item": [
+						{
+							"name": "cars",
+							"item": [
+								{
+									"name": "Create a new car CREATED",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "44dc8e53-44d9-4d5a-9e0b-9253f8250583",
+												"exec": [
+													"tests['ResponseCode is Created'] = responseCode.code == 201;",
+													"",
+													"if(responseCode.code == 201) {",
+													"    var responseJSON = JSON.parse(responseBody);",
+													"    postman.setEnvironmentVariable('carUUID', responseJSON.id);",
+													"} "
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"brand\": \"BMW\",\n    \"country\": \"Spain\",\n    \"registration\": \"1980-01-01T00:00:00.000\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/cars",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"cars"
+											]
+										},
+										"description": "Create a new car with specified data"
+									},
+									"response": [
+										{
+											"name": "Car",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"brand\": \"<string>\",\n    \"country\": \"<string>\",\n    \"registration\": \"<dateTime>\",\n    \"id\": \"<string>\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/cars",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"cars"
+													]
+												}
+											},
+											"status": "Created",
+											"code": 201,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"brand\": \"<string>\",\n \"country\": \"<string>\",\n \"registration\": \"<dateTime>\",\n \"id\": \"<string>\"\n}"
+										},
+										{
+											"name": "Validation errors",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"brand\": \"<string>\",\n    \"country\": \"<string>\",\n    \"registration\": \"<dateTime>\",\n    \"id\": \"<string>\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/cars",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"cars"
+													]
+												}
+											},
+											"status": "Bad Request",
+											"code": 400,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "[\n {\n  \"errorNumber\": \"<integer>\",\n  \"description\": \"<string>\"\n },\n {\n  \"errorNumber\": \"<integer>\",\n  \"description\": \"<string>\"\n }\n]"
+										}
+									]
+								},
+								{
+									"name": "Get all cars OK",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "66a49d12-d437-4b8f-bdbf-bcc28a4bb6e2",
+												"exec": [
+													"tests['ResponseCode is OK'] = responseCode.code == 200;",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/cars",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"cars"
+											]
+										},
+										"description": "Retrieve every car on the system"
+									},
+									"response": [
+										{
+											"name": "List of cars",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/cars",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"cars"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"brand\": \"<string>\",\n \"country\": \"<string>\",\n \"registration\": \"<dateTime>\",\n \"id\": \"<string>\"\n}"
+										},
+										{
+											"name": "No cars on the system",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/cars",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"cars"
+													]
+												}
+											},
+											"status": "No Content",
+											"code": 204,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								},
+								{
+									"name": "Get car by ID OK",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "b8c98c82-215b-44ac-b2fb-23d831995e6f",
+												"exec": [
+													"tests['Response Code is OK'] = responseCode.code == 200;",
+													"",
+													"if(responseCode.code == 200) {",
+													"    postman.setEnvironmentVariable('originalResponse', responseBody);",
+													"} "
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/cars/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"cars",
+												":id"
+											],
+											"variable": [
+												{
+													"description": "UUID of the car to retrieve",
+													"key": "id",
+													"value": "{{carUUID}}"
+												}
+											]
+										},
+										"description": "Retrieve the car with the specified ID"
+									},
+									"response": [
+										{
+											"name": "Car not found",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/cars/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"cars",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Car",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/cars/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"cars",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "[\n {\n  \"brand\": \"<string>\",\n  \"country\": \"<string>\",\n  \"registration\": \"<dateTime>\",\n  \"id\": \"<string>\"\n },\n {\n  \"brand\": \"<string>\",\n  \"country\": \"<string>\",\n  \"registration\": \"<dateTime>\",\n  \"id\": \"<string>\"\n }\n]"
+										}
+									]
+								},
+								{
+									"name": "Update car by ID OK",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "0b0288e1-ffbb-488c-bef0-d22e6e4b6b89",
+												"exec": [
+													"var originalResponse = postman.getEnvironmentVariable('originalResponse');",
+													"var newBrand;",
+													"tests['Response Code is OK'] = responseCode.code == 200;",
+													"if(responseCode.code == 200) {",
+													"    newBrand = JSON.parse(responseBody).brand;",
+													"} ",
+													"tests['Car is correctly updated'] = originalResponse != responseBody && newBrand && newBrand == \"Mercedes\";"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"brand\": \"Mercedes\",\n    \"country\": \"Spain\",\n    \"registration\": \"2019-01-01T00:00:00.000\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/cars/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"cars",
+												":id"
+											],
+											"variable": [
+												{
+													"description": "UUID of the car to update",
+													"key": "id",
+													"value": "{{carUUID}}"
+												}
+											]
+										},
+										"description": "Update the car with the specified ID and new data"
+									},
+									"response": [
+										{
+											"name": "Car not found",
+											"originalRequest": {
+												"method": "PUT",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"brand\": \"<string>\",\n    \"country\": \"<string>\",\n    \"registration\": \"<dateTime>\",\n    \"id\": \"<string>\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/cars/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"cars",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Validation errors",
+											"originalRequest": {
+												"method": "PUT",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"brand\": \"<string>\",\n    \"country\": \"<string>\",\n    \"registration\": \"<dateTime>\",\n    \"id\": \"<string>\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/cars/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"cars",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "Bad Request",
+											"code": 400,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "[\n {\n  \"errorNumber\": \"<integer>\",\n  \"description\": \"<string>\"\n },\n {\n  \"errorNumber\": \"<integer>\",\n  \"description\": \"<string>\"\n }\n]"
+										},
+										{
+											"name": "Car",
+											"originalRequest": {
+												"method": "PUT",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"brand\": \"<string>\",\n    \"country\": \"<string>\",\n    \"registration\": \"<dateTime>\",\n    \"id\": \"<string>\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/cars/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"cars",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"brand\": \"<string>\",\n \"country\": \"<string>\",\n \"registration\": \"<dateTime>\",\n \"id\": \"<string>\"\n}"
+										}
+									]
+								},
+								{
+									"name": "Delete car by ID NOT FOUND",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "c763e3a0-1c81-448c-8eb1-47328e348c62",
+												"exec": [
+													"tests['Response Code is NOT FOUND'] = responseCode.code = 204;"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/cars/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"cars",
+												":id"
+											],
+											"variable": [
+												{
+													"description": "UUID of the car to update",
+													"key": "id",
+													"value": "{{carUUID}}"
+												}
+											]
+										},
+										"description": "Delete the car with the specified ID"
+									},
+									"response": [
+										{
+											"name": "Car not found",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/cars/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"cars",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Car deleted",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/cars/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"cars",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "No Content",
+											"code": 204,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								}
+							],
+							"_postman_isSubFolder": true
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "42e8cdc1-3f3a-4149-8b28-f5b0713e47d3",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "8a579f30-86f2-4e82-b879-091a0fa76964",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "822aacc5-3d47-4ec5-9899-0f65a3e5d8dc",
+			"key": "baseUrl",
+			"value": "/",
+			"type": "string"
+		}
+	]
+}
