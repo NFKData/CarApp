@@ -28,7 +28,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-@OpenAPIDefinition(externalDocs=@ExternalDocumentation(url="/cars"))
 public abstract class CarResource {
 
 	/**
