@@ -46,10 +46,7 @@ public class CarServiceImpl implements CarService {
 	@Override
 	public Car updateCar(Car car) throws CarNotFoundException, InvalidEntityException {
 		ValidationHelper.validateCar(car);
-		Car auxCar = em.find(Car.class, car.getId());
-		if (auxCar == null) {
-			throw new CarNotFoundException(car.getId());
-		}
+		Car auxCar = getCar(car.getId());
 		auxCar.setBrand(car.getBrand());
 		auxCar.setCountry(car.getCountry());
 		auxCar.setRegistration(car.getRegistration());
@@ -58,11 +55,7 @@ public class CarServiceImpl implements CarService {
 
 	@Override
 	public void deleteCar(String id) throws CarNotFoundException {
-		Car car = em.find(Car.class, id);
-		if (car == null) {
-			throw new CarNotFoundException(id);
-		}
-		em.remove(car);
+		em.remove(getCar(id));
 	}
 
 }
