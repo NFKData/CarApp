@@ -1,10 +1,10 @@
-package backend.service;
+package com.backend.service;
 
 import java.util.List;
 
-import backend.entity.Car;
-import backend.exception.CarNotFoundException;
-import backend.exception.InvalidEntityException;
+import com.backend.entity.Car;
+import com.backend.exception.CarNotFoundException;
+import com.backend.exception.InvalidEntityException;
 
 public interface CarService {
 
@@ -19,8 +19,9 @@ public interface CarService {
 	 * Obtain a car based on the received id
 	 * @param id UUID to look for on the system
 	 * @return The requested {@link Car}, if found
+	 * @throws CarNotFoundException If there's no car in the system with the specified ID
 	 */
-	public Car getCar(String id);
+	public Car getCar(String id) throws CarNotFoundException;
 	
 	/**
 	 * Insert a new car in the system

@@ -1,9 +1,13 @@
-package backend.serialization;
+package com.backend.serialization;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import javax.interceptor.Interceptors;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import com.backend.interceptor.LogInterceptor;
 
 /**
  * {@link XmlAdapter} to parse correctly {@link LocalDateTime} fields from and
@@ -11,6 +15,7 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
  * {@link XmlJavaTypeAdapter} annotation to parse {@link LocalDateTime}
  * properties of a class.
  */
+@Interceptors(LogInterceptor.class)
 public class LocalDateTimeAdapter extends XmlAdapter<String, LocalDateTime> {
 
 	/**

@@ -1,18 +1,21 @@
-package backend.service.impl;
+package com.backend.service.impl;
 
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import backend.entity.Car;
-import backend.exception.CarNotFoundException;
-import backend.exception.InvalidEntityException;
-import backend.helper.ValidationHelper;
-import backend.service.CarService;
+import com.backend.entity.Car;
+import com.backend.exception.CarNotFoundException;
+import com.backend.exception.InvalidEntityException;
+import com.backend.helper.ValidationHelper;
+import com.backend.interceptor.LogInterceptor;
+import com.backend.service.CarService;
 
 @Stateless
+@Interceptors(LogInterceptor.class)
 public class CarServiceImpl implements CarService {
 
 	@PersistenceContext(unitName = "carPU")
@@ -25,8 +28,11 @@ public class CarServiceImpl implements CarService {
 	}
 
 	@Override
-	public Car getCar(String id) {
-		return em.find(Car.class, id);
+	public Car getCar(String id) throws CarNotFoundException {
+		Car car = em.find(Car.class, id);
+		if(car == null) 
+			throw new CarNotFoundException(id);
+		return car;
 	}
 
 	@Override
@@ -40,10 +46,7 @@ public class CarServiceImpl implements CarService {
 	@Override
 	public Car updateCar(Car car) throws CarNotFoundException, InvalidEntityException {
 		ValidationHelper.validateCar(car);
-		Car auxCar = em.find(Car.class, car.getId());
-		if (auxCar == null) {
-			throw new CarNotFoundException(car.getId());
-		}
+		Car auxCar = getCar(car.getId());
 		auxCar.setBrand(car.getBrand());
 		auxCar.setCountry(car.getCountry());
 		auxCar.setRegistration(car.getRegistration());
@@ -52,11 +55,7 @@ public class CarServiceImpl implements CarService {
 
 	@Override
 	public void deleteCar(String id) throws CarNotFoundException {
-		Car car = em.find(Car.class, id);
-		if (car == null) {
-			throw new CarNotFoundException(id);
-		}
-		em.remove(car);
+		em.remove(getCar(id));
 	}
 
 }
