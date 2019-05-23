@@ -27,6 +27,11 @@ public abstract class CarResource {
 
 	/**
 	 * Obtain all cars in the system
+	 * May return the following HTTP Codes:
+	 * <ul>
+	 * 	<li>200 - OK</li>
+	 * 	<li>204 - No content - On no cars found</li>
+	 * </ul>
 	 * @return Response with every {@link Car} in the body
 	 * 
 	 */
@@ -38,7 +43,7 @@ public abstract class CarResource {
 	 * May return the following HTTP Codes:
 	 * <ul>
 	 * 	<li>200 - OK</li>
-	 * 	<li>204 - No content - On no cars found</li>
+	 * 	<li>404 - Not found - If there's no car with the specified ID on the system</li>
 	 * </ul>
 	 * @param id UUID of the car to look for
 	 * @return Response with the found {@link Car}
@@ -53,7 +58,7 @@ public abstract class CarResource {
 	 * May return the following HTTP Codes:
 	 * <ul>
 	 * 	<li>201 - Created</li>
-	 * 	<li>404 - Not found - On validation errors</li>
+	 * 	<li>400 - Bad request - On validation errors</li>
 	 * </ul>
 	 * @param car The car to be created
 	 * @return Response with the new {@link Car} in the body
