@@ -16,6 +16,9 @@ import com.backend.entity.dto.ValidationErrorDto;
 import com.backend.exception.CarNotFoundException;
 import com.backend.exception.InvalidEntityException;
 
+import io.swagger.v3.oas.annotations.ExternalDocumentation;
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -25,6 +28,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
+@OpenAPIDefinition(externalDocs=@ExternalDocumentation(url="/cars"))
 public abstract class CarResource {
 
 	/**
@@ -60,6 +64,7 @@ public abstract class CarResource {
 					@ApiResponse(description = "Car not found", responseCode = "404") })
 	@GET
 	@Path("/{id}")
+	@Hidden
 	public abstract Response getOne(
 			@Parameter(description = "UUID of the car to retrieve", schema = @Schema(type = "string", format = "uuid", description = "param UUID of the car to retrieve"), required = true) @PathParam(value = "id") String id) throws CarNotFoundException;
 
@@ -103,6 +108,7 @@ public abstract class CarResource {
 					@ApiResponse(description = "Car not found", responseCode = "404") })
 	@PUT
 	@Path("/{id}")
+	@Hidden
 	public abstract Response update(
 			@Parameter(description = "UUID of the car to update", schema = @Schema(type = "string", format = "uuid", description = "param UUID of the car to update"), required = true) @PathParam(value = "id") String id,
 			@Parameter(description = "New data for the car", schema = @Schema(implementation = Car.class), required = true) Car car) throws CarNotFoundException, InvalidEntityException;
@@ -124,6 +130,7 @@ public abstract class CarResource {
 					@ApiResponse(description = "Car not found", responseCode = "404") })
 	@DELETE
 	@Path("/{id}")
+	@Hidden
 	public abstract Response delete(
 			@Parameter(description = "UUID of the car to update", schema = @Schema(type = "string", format = "uuid", description = "param UUID of the car to update"), required = true) @PathParam(value = "id") String id) throws CarNotFoundException;
 
