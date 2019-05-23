@@ -37,10 +37,11 @@ public abstract class CarResource {
 	 * Obtain the car with the specified ID
 	 * @param id UUID of the car to look for
 	 * @return Response with the found {@link Car}
+	 * @throws CarNotFoundException If there's no car in the system with the specified ID
 	 */
 	@GET
 	@Path("/{id}")
-	public abstract Response getOne(@PathParam(value = "id")String id);
+	public abstract Response getOne(@PathParam(value = "id")String id) throws CarNotFoundException;
 	
 	/**
 	 * Insert a new car in the system

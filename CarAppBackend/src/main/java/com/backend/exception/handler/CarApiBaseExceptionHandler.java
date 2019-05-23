@@ -25,7 +25,7 @@ public class CarApiBaseExceptionHandler implements ExceptionMapper<CarApiBaseExc
 	
 	@Override
 	public Response toResponse(CarApiBaseException exception) {
-		LOG.error(exception.getMessage(), exception);
+		LOG.error(exception.getMessage());
 		ResponseBuilder builder = Response.status(exception.getStatusToResponse());
 		if (exception.getEntity() != null) {
 			builder.entity(exception.getEntity());

@@ -17,6 +17,7 @@ import com.backend.interceptor.LogInterceptor;
 @Interceptors(LogInterceptor.class)
 public class InvalidEntityException extends CarApiBaseException {
 
+	private static final String ERRORS_OCURRED_ON_DATA_VALIDATION = "Errors ocurred on data validation.";
 	private static final long serialVersionUID = 799190880834250761L;
 	private List<ValidationErrorDto> validationErrors;
 	
@@ -25,7 +26,7 @@ public class InvalidEntityException extends CarApiBaseException {
 	 * @param validationErrors Errors occurred during validation
 	 */
 	public InvalidEntityException(List<ValidationErrorDto> validationErrors) {
-		super("Errors ocurred on data validation");
+		super(ERRORS_OCURRED_ON_DATA_VALIDATION);
 		this.validationErrors = validationErrors;
 		this.statusToResponse = Status.BAD_REQUEST;
 	}
@@ -36,7 +37,7 @@ public class InvalidEntityException extends CarApiBaseException {
 	 * @param entity Entity that provoked the exception
 	 */
 	public InvalidEntityException(List<ValidationErrorDto> validationErrors, GenericEntity<?> entity) {
-		super("Errors ocurred on data validation");
+		super(ERRORS_OCURRED_ON_DATA_VALIDATION);
 		this.validationErrors = validationErrors;
 		super.statusToResponse = Status.BAD_REQUEST;
 		super.entity = entity;

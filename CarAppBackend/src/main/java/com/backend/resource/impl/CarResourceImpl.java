@@ -9,9 +9,6 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.backend.entity.Car;
 import com.backend.exception.CarNotFoundException;
 import com.backend.exception.InvalidEntityException;
@@ -28,24 +25,21 @@ public class CarResourceImpl extends CarResource {
 
 	@Override
 	public Response getAll() {
+		List<Car> cars = carService.getAllCars();
+		if(cars.isEmpty()) {
+			return Response.status(Status.NO_CONTENT).build();
+		}
 		return Response.status(Status.OK).entity(new GenericEntity<List<Car>>(carService.getAllCars()) {
 		}).build();
 	}
 
 	@Override
-	public Response getOne(String id) {
+	public Response getOne(String id) throws CarNotFoundException {
 		return Response.status(Status.OK).entity(carService.getCar(id)).build();
 	}
 
 	@Override
 	public Response create(Car car) throws InvalidEntityException {
-		Logger logger = LogManager.getLogger(getClass());
-		logger.info("Method Called: create");
-		logger.info("Parameters: " + car.toString());
-		logger.debug("Method Called: create");        
-		logger.debug("Parameters: " + car.toString());
-		logger.error("Method Called: create");        
-		logger.error("Parameters: " + car.toString());
 		return Response.status(Status.CREATED).entity(carService.createCar((Car) car)).build();
 	}
 

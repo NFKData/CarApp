@@ -28,8 +28,11 @@ public class CarServiceImpl implements CarService {
 	}
 
 	@Override
-	public Car getCar(String id) {
-		return em.find(Car.class, id);
+	public Car getCar(String id) throws CarNotFoundException {
+		Car car = em.find(Car.class, id);
+		if(car == null) 
+			throw new CarNotFoundException(id);
+		return car;
 	}
 
 	@Override
