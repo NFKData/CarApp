@@ -1,4 +1,4 @@
-package com.backend.service.impl;
+package com.backend.control;
 
 import java.util.List;
 
@@ -12,7 +12,6 @@ import com.backend.exception.CarNotFoundException;
 import com.backend.exception.InvalidEntityException;
 import com.backend.helper.ValidationHelper;
 import com.backend.interceptor.LogInterceptor;
-import com.backend.service.CarService;
 
 @Stateless
 @Interceptors(LogInterceptor.class)

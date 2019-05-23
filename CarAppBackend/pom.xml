@@ -37,7 +37,7 @@
 		<hibernate.version>5.4.2.Final</hibernate.version>
 		<jee.version>8.0</jee.version>
 		<log4j.version>2.11.2</log4j.version>
-		<swagger.version>2.0.0</swagger.version>
+		<swagger.version>2.0.8</swagger.version>
 		
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
