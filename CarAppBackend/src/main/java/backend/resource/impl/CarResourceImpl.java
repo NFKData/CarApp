@@ -3,7 +3,6 @@ package backend.resource.impl;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.ws.rs.Path;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -15,7 +14,6 @@ import backend.exception.InvalidEntityException;
 import backend.resource.CarResource;
 import backend.service.CarService;
 
-@Path("cars")
 public class CarResourceImpl extends CarResource {
 
 	@EJB(name = "carService")
