@@ -1,10 +1,15 @@
-package backend.entity.dto;
+package com.backend.entity.dto;
+
+import javax.interceptor.Interceptors;
+
+import com.backend.interceptor.LogInterceptor;
 
 /**
  * DTO for sending errors to client
  * @author gmiralle
  *
  */
+@Interceptors(LogInterceptor.class)
 public class ValidationErrorDto {
 
 	private int errorNumber;

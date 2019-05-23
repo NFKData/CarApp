@@ -1,4 +1,4 @@
-package backend.helper;
+package com.backend.helper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,15 +7,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.interceptor.Interceptors;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
-import javax.validation.ValidationException;
 import javax.validation.Validator;
+import javax.ws.rs.core.GenericEntity;
 
-import backend.entity.Car;
-import backend.entity.dto.ValidationErrorDto;
-import backend.exception.InvalidEntityException;
+import com.backend.entity.Car;
+import com.backend.entity.dto.ValidationErrorDto;
+import com.backend.exception.InvalidEntityException;
+import com.backend.interceptor.LogInterceptor;
 
+@Interceptors(LogInterceptor.class)
 public class ValidationHelper<T> {
 	
 	private static Map<Class<?>, ValidationHelper<?>> helpers = new HashMap<>();
@@ -50,7 +53,7 @@ public class ValidationHelper<T> {
 			while (it.hasNext()) {
 				validationErrors.add(new ValidationErrorDto(++errorNumbers, it.next().getMessage()));
 			}
-			throw new InvalidEntityException(validationErrors);
+			throw new InvalidEntityException(validationErrors, new GenericEntity<List<ValidationErrorDto>>(validationErrors) {});
 		}
 	}
 	
