@@ -16,9 +16,7 @@ import com.backend.entity.dto.ValidationErrorDto;
 import com.backend.exception.CarNotFoundException;
 import com.backend.exception.InvalidEntityException;
 
-import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Hidden;
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -33,8 +31,7 @@ public abstract class CarResource {
 	/**
 	 * Obtain all cars in the system May return the following HTTP Codes:
 	 * <ul>
-	 * <li>200 - OK</li>
-	 * <li>204 - No content - On no cars found</li>
+	 * 	<li>200 - OK</li>
 	 * </ul>
 	 * 
 	 * @return Response with every {@link Car} in the body
@@ -48,8 +45,8 @@ public abstract class CarResource {
 	/**
 	 * Obtain the car with the specified ID May return the following HTTP Codes:
 	 * <ul>
-	 * <li>200 - OK</li>
-	 * <li>404 - Not found - If there's no car with the specified ID on the
+	 * 	<li>200 - OK</li>
+	 * 	<li>404 - Not found - If there's no car with the specified ID on the
 	 * system</li>
 	 * </ul>
 	 * 
@@ -72,8 +69,8 @@ public abstract class CarResource {
 	/**
 	 * Insert a new car in the system May return the following HTTP Codes:
 	 * <ul>
-	 * <li>201 - Created</li>
-	 * <li>400 - Bad request - On validation errors</li>
+	 *	<li>201 - Created</li>
+	 * 	<li>400 - Bad request - On validation errors</li>
 	 * </ul>
 	 * 
 	 * @param car The car to be created
@@ -92,9 +89,9 @@ public abstract class CarResource {
 	/**
 	 * Update the car with the specified ID May return the following HTTP Codes:
 	 * <ul>
-	 * <li>200 - OK</li>
-	 * <li>400 - Bad Request - On validation errors</li>
-	 * <li>404 - Not Found - If there's no car with the specified ID</li>
+	 * 	<li>200 - OK</li>
+	 * 	<li>400 - Bad Request - On validation errors</li>
+	 * 	<li>404 - Not Found - If there's no car with the specified ID</li>
 	 * </ul>
 	 * 
 	 * @param id  UUID of the car which will be updated
@@ -121,8 +118,8 @@ public abstract class CarResource {
 	 * Delete the {@link Car} with the specified ID May return the following HTTP
 	 * Codes:
 	 * <ul>
-	 * <li>204 - No Content - On Success</li>
-	 * <li>404 - Not Found - If there's no car with the specified ID</li>
+	 * 	<li>204 - No Content - On Success</li>
+	 * 	<li>404 - Not Found - If there's no car with the specified ID</li>
 	 * </ul>
 	 * 
 	 * @param id UUID of the car which will be deleted
