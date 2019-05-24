@@ -1,23 +1,19 @@
-package com.backend.resource.impl;
+package com.backend.boundary;
 
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.interceptor.Interceptors;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import com.backend.control.CarService;
 import com.backend.entity.Car;
 import com.backend.exception.CarNotFoundException;
 import com.backend.exception.InvalidEntityException;
-import com.backend.interceptor.LogInterceptor;
-import com.backend.resource.CarResource;
-import com.backend.service.CarService;
 
-@Path("cars")
-@Interceptors(LogInterceptor.class)
+@Path("/cars")
 public class CarResourceImpl extends CarResource {
 
 	@EJB(name = "carService")
@@ -25,10 +21,6 @@ public class CarResourceImpl extends CarResource {
 
 	@Override
 	public Response getAll() {
-		List<Car> cars = carService.getAllCars();
-		if(cars.isEmpty()) {
-			return Response.status(Status.NO_CONTENT).build();
-		}
 		return Response.status(Status.OK).entity(new GenericEntity<List<Car>>(carService.getAllCars()) {
 		}).build();
 	}
