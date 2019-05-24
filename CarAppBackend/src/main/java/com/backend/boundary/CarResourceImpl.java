@@ -21,10 +21,6 @@ public class CarResourceImpl extends CarResource {
 
 	@Override
 	public Response getAll() {
-		List<Car> cars = carService.getAllCars();
-		if(cars.isEmpty()) {
-			return Response.status(Status.NO_CONTENT).build();
-		}
 		return Response.status(Status.OK).entity(new GenericEntity<List<Car>>(carService.getAllCars()) {
 		}).build();
 	}
