@@ -1,14 +1,16 @@
- language: java
- 
- install:
-  - npm install newman
+language: java
 
-before_script:
-  - node --version
-  - npm --version
-  - node_modules/.bin/newman --version
+jdk:
+    - oraclejdk8
  
- script:
+before_install:
+    - cd CarAppBackend
+    - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+ 
+install:
+    - npm install newman
+
+script:
     - cd CarAppBackend
     - mvn test -B
     - node_modules/.bin/newman run src/postman/CarApi.postman_collection.json -e tests/tests.postman_environment.json
