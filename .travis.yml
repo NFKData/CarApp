@@ -1,4 +1,14 @@
  language: java
+ 
+ install:
+  - npm install newman
+
+before_script:
+  - node --version
+  - npm --version
+  - node_modules/.bin/newman --version
+ 
  script:
     - cd CarAppBackend
     - mvn test -B
+    - node_modules/.bin/newman run src/postman/CarApi.postman_collection.json -e tests/tests.postman_environment.json
