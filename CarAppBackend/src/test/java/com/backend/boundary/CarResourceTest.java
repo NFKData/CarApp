@@ -1,8 +1,7 @@
 package com.backend.boundary;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
@@ -16,8 +15,8 @@ import java.util.List;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
@@ -26,7 +25,7 @@ import com.backend.entity.Car;
 import com.backend.exception.CarNotFoundException;
 import com.backend.exception.InvalidEntityException;
 
-class CarResourceTest {
+public class CarResourceTest {
 
 	private static final String DEFAULT_ID = "123";
 	@Mock
@@ -34,13 +33,13 @@ class CarResourceTest {
 	@InjectMocks
 	private CarResourceImpl carResource;
 
-	@BeforeEach
-	void setUp() {
+	@Before
+	public void setUp() {
 		initMocks(this);
 	}
 
 	@Test
-	void whenGettingAllCars_shouldReturnOk() {
+	public void whenGettingAllCars_shouldReturnOk() {
 		List<Car> carsExpected = new ArrayList<Car>();
 		carsExpected.add(new Car());
 		carsExpected.get(0).setId(DEFAULT_ID);
@@ -52,7 +51,7 @@ class CarResourceTest {
 	}
 
 	@Test
-	void whenGettingOneCar_shouldReturnOk() throws CarNotFoundException {
+	public void whenGettingOneCar_shouldReturnOk() throws CarNotFoundException {
 		Car carExpected = new Car();
 		carExpected.setId(DEFAULT_ID);
 		when(carService.getCar(carExpected.getId())).thenReturn(carExpected);
@@ -62,17 +61,15 @@ class CarResourceTest {
 		verify(carService).getCar(carExpected.getId());
 	}
 	
-	@Test
-	void whenGettingAnNonexistentCar_shouldThrowCarNotFoundException() throws CarNotFoundException {
+	@Test(expected = CarNotFoundException.class)
+	public void whenGettingAnNonexistentCar_shouldThrowCarNotFoundException() throws CarNotFoundException {
 		when(carService.getCar(DEFAULT_ID)).thenThrow(new CarNotFoundException(DEFAULT_ID));
-		assertThrows(CarNotFoundException.class, () -> {
-			carResource.getOne(DEFAULT_ID);
-		});
+		carResource.getOne(DEFAULT_ID);
 		verify(carService).getCar(DEFAULT_ID);
 	}
 
 	@Test
-	void whenCreatingACar_shouldReturnCreated() throws InvalidEntityException {
+	public void whenCreatingACar_shouldReturnCreated() throws InvalidEntityException {
 		Car toCreate = new Car();
 		toCreate.setBrand("BMW");
 		toCreate.setCountry("Spain");
@@ -85,18 +82,16 @@ class CarResourceTest {
 		verify(carService).createCar(toCreate);
 	}
 	
-	@Test
-	void whenCreatingAnInvalidCar_shouldThrowInvalidEntityException() throws InvalidEntityException {
+	@Test(expected = InvalidEntityException.class)
+	public void whenCreatingAnInvalidCar_shouldThrowInvalidEntityException() throws InvalidEntityException {
 		Car car = new Car();
 		when(carService.createCar(car)).thenThrow(new InvalidEntityException(null));
-		assertThrows(InvalidEntityException.class, () -> {			
-			carResource.create(car);
-		});
+		carResource.create(car);
 		verify(carService).createCar(car);
 	}
 
 	@Test
-	void whenUpdatingACar_shouldReturnOk() throws CarNotFoundException, InvalidEntityException {
+	public void whenUpdatingACar_shouldReturnOk() throws CarNotFoundException, InvalidEntityException {
 		Car car = new Car();
 		car.setId(DEFAULT_ID);
 		when(carService.updateCar(car)).thenReturn(car);
@@ -106,30 +101,26 @@ class CarResourceTest {
 		verify(carService).updateCar(car);
 	}
 	
-	@Test
-	void whenUpdatingAnNonexistentCar_shouldThrowCarNotFoundException() throws CarNotFoundException, InvalidEntityException {
+	@Test(expected = CarNotFoundException.class)
+	public void whenUpdatingAnNonexistentCar_shouldThrowCarNotFoundException() throws CarNotFoundException, InvalidEntityException {
 		Car car = new Car();
 		car.setId(DEFAULT_ID);
 		when(carService.updateCar(car)).thenThrow(new CarNotFoundException(DEFAULT_ID));
-		assertThrows(CarNotFoundException.class, () -> {
-			carResource.update(car.getId(), car);
-		});
+		carResource.update(car.getId(), car);
 		verify(carService).updateCar(car);
 	}
 	
-	@Test
-	void whenUpdatingAnInvalidCar_shouldThrowInvalidEntityException() throws InvalidEntityException, CarNotFoundException {
+	@Test(expected = InvalidEntityException.class)
+	public void whenUpdatingAnInvalidCar_shouldThrowInvalidEntityException() throws InvalidEntityException, CarNotFoundException {
 		Car car = new Car();
 		car.setId(DEFAULT_ID);
 		when(carService.updateCar(car)).thenThrow(new InvalidEntityException(null));
-		assertThrows(InvalidEntityException.class, () -> {			
-			carResource.update(DEFAULT_ID, car);
-		});
+		carResource.update(DEFAULT_ID, car);
 		verify(carService).updateCar(car);
 	}
 
 	@Test
-	void whenDeletingACar_shouldReturnNoContent() throws CarNotFoundException {
+	public void whenDeletingACar_shouldReturnNoContent() throws CarNotFoundException {
 		doNothing().when(carService).deleteCar(DEFAULT_ID);
 		Response response = carResource.delete(DEFAULT_ID);
 		assertEquals(Status.NO_CONTENT, Status.fromStatusCode(response.getStatus()));
@@ -137,12 +128,10 @@ class CarResourceTest {
 		verify(carService).deleteCar(DEFAULT_ID);
 	}
 	
-	@Test
-	void whenDeletingAnNonexistentCar_shouldThrowCarNotFoundException() throws CarNotFoundException, InvalidEntityException {
+	@Test(expected = CarNotFoundException.class)
+	public void whenDeletingAnNonexistentCar_shouldThrowCarNotFoundException() throws CarNotFoundException, InvalidEntityException {
 		doThrow(new CarNotFoundException(DEFAULT_ID)).when(carService).deleteCar(DEFAULT_ID);
-		assertThrows(CarNotFoundException.class, () -> {
-			carResource.delete(DEFAULT_ID);
-		});
+		carResource.delete(DEFAULT_ID);
 		verify(carService).deleteCar(DEFAULT_ID);
 	}
 
