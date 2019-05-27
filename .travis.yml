@@ -8,6 +8,5 @@ install:
     - npm install newman
 
 script:
-    - cd CarAppBackend
     - mvn test -B
     - node_modules/.bin/newman run src/postman/CarApi.postman_collection.json
