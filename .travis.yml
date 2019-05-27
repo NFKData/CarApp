@@ -10,4 +10,4 @@ install:
 script:
     - cd CarAppBackend
     - mvn test -B
-    - node_modules/.bin/newman run src/postman/CarApi.postman_collection.json -e tests/tests.postman_environment.json
+    - node_modules/.bin/newman run src/postman/CarApi.postman_collection.json
