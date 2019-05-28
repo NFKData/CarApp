@@ -1421,9 +1421,9 @@
 	],
 	"variable": [
 		{
-			"id": "7d480293-6b09-48a8-9c32-a582d38bb58f",
+			"id": "074268a0-71c0-4be0-9262-76a83f357880",
 			"key": "baseUrl",
-			"value": "http://localhost:8080/car-api",
+			"value": "http://everis-carapp.herokuapp.com/car-api",
 			"type": "string"
 		}
 	]
