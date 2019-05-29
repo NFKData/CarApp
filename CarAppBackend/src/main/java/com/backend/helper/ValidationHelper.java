@@ -43,7 +43,7 @@ public class ValidationHelper<T> {
 	 * @param object Entity to be validated
 	 * @throws InvalidEntityException When there's any validation error
 	 */
-	private void validate(T object) throws InvalidEntityException {
+	public void validate(T object) throws InvalidEntityException {
 		Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 		Set<ConstraintViolation<T>> violations = validator.validate(object);
 		if (!violations.isEmpty()) {
