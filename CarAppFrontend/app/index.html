@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="CarAppFrontend">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>CarApp</title>
+  <base href="/">
+
+  <script src="lib/angular/angular.js"></script>
+  <script src="lib/angular-route/angular-route.js"></script>
+  <script src="lib/jquery/dist/jquery.js"></script>
+  <script src="lib/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="app.module.js"></script>
+  <script src="app.config.js"></script>
+  <script src="my-header/my-header.module.js"></script>
+  <script src="my-header/my-header.component.js"></script>
+
+  <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css" />
+  <link rel="stylesheet" href="app.css">
+</head>
+
+<body>
+  <my-header></my-header>
+  <div ng-view></div>
+</body>
+
+</html>
