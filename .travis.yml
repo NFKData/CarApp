@@ -1,0 +1,12 @@
+language: java
+ 
+before_install:
+    - cd CarAppBackend
+    - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+ 
+install:
+    - npm install newman
+
+script:
+    - mvn test -B
+    - node_modules/.bin/newman run src/postman/CarApi.postman_collection.json
