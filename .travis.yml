@@ -10,6 +10,12 @@ before_install:
 install:
     - npm install newman
 
+deploy:
+    provider: heroku
+    api-key:
+        secure: $HEROKU_API_KEY
+    app: car-api
+
 script:
     - mvn test -B
     - node_modules/.bin/newman run src/postman/CarApi.postman_collection.json
