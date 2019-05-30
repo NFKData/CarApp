@@ -7,7 +7,11 @@ carList.component('carList', {
         self.carList = undefined;
         self.getCarList = function () {
             $http.get(__env.apiUrl + SUB_URL).then(function (response) {
-                self.carList = response.data;
+                if (response.data.length == 0) {
+                    $('#warningDialog').modal();
+                } else {
+                    self.carList = response.data.length > 0 ? response.data : undefined;
+                }
             });
         };
 

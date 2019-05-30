@@ -3,5 +3,6 @@
 var app = angular.module('CarAppFrontend', [
   'ngRoute',
   'carHeader',
-  'carList'
+  'carList',
+  'warningDialog'
 ]);

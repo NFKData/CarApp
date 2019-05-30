@@ -1,9 +1,19 @@
 <div class="row" ng-if="$ctrl.carList">
-    <div class="col-4" ng-repeat="car in $ctrl.carList">
+    <div class="col-4" ng-if="$ctrl.carList.length > 0" ng-repeat="car in $ctrl.carList">
         <div class="card align-self-center">
-            <h5 class="card-title">{{ car.id | uppercase }}</h5>
-            <p class="card-text">{{ car.country }}</p>
-            <a href ng-click="$ctrl.notImplemented()" class="btn btn-primary">Detail</a>
+            <div class="card-header">
+                <h5 class="card-title">{{ car.id | uppercase }}</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">{{ car.country }}</p>
+                <button href ng-click="$ctrl.notImplemented()"
+                    class="btn btn-danger float-right btn-margin-right">Delete</button>
+                <button href ng-click="$ctrl.notImplemented()"
+                    class="btn btn-primary float-right btn-margin-right mr-2">Update</button>
+                <button href ng-click="$ctrl.notImplemented()"
+                    class="btn btn-info float-right btn-margin-right mr-2">Detail</button>
+            </div>
         </div>
     </div>
 </div>
+<warning-dialog warning-message="There's no car in the system."></warning-dialog>

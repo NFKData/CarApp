@@ -10,15 +10,16 @@ app.config(['$routeProvider', '$locationProvider',
   function ($routeProvider, $locationProvider) {
     $locationProvider.html5Mode(true);
     $routeProvider
-      .when("/", {
-        templateUrl: 'main-content.template.html'
-      }
-      )
-      .when("/notfound", {
+      .when('/', {
+        redirectTo: '/carCards'
+      })
+      .when('/carCards', {
+        templateUrl: 'views/car-cards-view.template.html'
+      })
+      .when('/notfound', {
         templateUrl: '404.html'
-      }
-      )
-      .otherwise({ redirectTo: '/notfound' });
+      })
+      .otherwise('/notfound');
   }
 ]
 );
