@@ -1,0 +1,9 @@
+<div class="row" ng-if="$ctrl.carList">
+    <div class="col-4" ng-repeat="car in $ctrl.carList">
+        <div class="card align-self-center">
+            <h5 class="card-title">{{ car.id | uppercase }}</h5>
+            <p class="card-text">{{ car.country }}</p>
+            <a href ng-click="$ctrl.notImplemented()" class="btn btn-primary">Detail</a>
+        </div>
+    </div>
+</div>

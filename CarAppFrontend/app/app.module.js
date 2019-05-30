@@ -2,5 +2,6 @@
 
 var app = angular.module('CarAppFrontend', [
   'ngRoute',
-  'carHeader'
+  'carHeader',
+  'carList'
 ]);

@@ -1,11 +1,17 @@
 'use strict';
 
+var env = {};
+
+if (window) {
+  Object.assign(env, window.__env);
+}
+
 app.config(['$routeProvider', '$locationProvider',
   function ($routeProvider, $locationProvider) {
     $locationProvider.html5Mode(true);
     $routeProvider
       .when("/", {
-        template: '<h1>Main Content</h1>'
+        templateUrl: 'main-content.template.html'
       }
       )
       .when("/notfound", {
@@ -16,3 +22,5 @@ app.config(['$routeProvider', '$locationProvider',
   }
 ]
 );
+
+app.constant('__env', env);

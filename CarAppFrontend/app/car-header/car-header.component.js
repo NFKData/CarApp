@@ -3,7 +3,7 @@
 mainModule
     .component('carHeader', {
         templateUrl: 'car-header/car-header.template.html',
-        controller: ['$scope', function CarHeaderController($scope) {
+        controller: function CarHeaderController() {
             var self = this;
-        }]
+        }
     })
