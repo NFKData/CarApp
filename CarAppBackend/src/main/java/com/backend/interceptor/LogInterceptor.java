@@ -30,7 +30,7 @@ public class LogInterceptor {
 		logger.info("Method Called: " + context.getMethod().getName());
 		if (context.getParameters() != null) {
 			for (int i = 0; i < context.getParameters().length; i++) {
-				logger.info("Parameter[" + i + ": " + context.getParameters()[i].toString());
+				logger.info("Parameter[" + i + "]: " + context.getParameters()[i].toString());
 			}
 		}
 		return context.proceed();

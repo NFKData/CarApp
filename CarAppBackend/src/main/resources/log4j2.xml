@@ -4,7 +4,7 @@
         <Console name="LogToConsole" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </Console>
-        <RollingFile name="LogToFile" fileName="/var/log/CarApp.log"
+        <RollingFile name="LogToFile" fileName="${sys:user.home}/log/CarApp.log"
          filePattern="/var/log/$${date:yyyy-MM}/CarApp-%d{MM-dd-yyyy}-%i.log.gz">
         	<PatternLayout>
         		<Pattern>%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</Pattern>

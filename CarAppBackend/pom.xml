@@ -12,6 +12,12 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
 			<version>${hibernate.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.jboss.logging</groupId>
+					<artifactId>jboss-logging</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>javax</groupId>
@@ -29,6 +35,41 @@
 			<artifactId>swagger-jaxrs2</artifactId>
 			<version>${swagger.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${test.junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>${test.mockito.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-module-junit4</artifactId>
+			<version>${test.powermock.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-api-mockito</artifactId>
+			<version>${test.powermock.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.core</groupId>
+			<artifactId>jersey-common</artifactId>
+			<version>${test.jersey.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>${postgresql.version}</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>car-api</finalName>
@@ -38,9 +79,15 @@
 		<jee.version>8.0</jee.version>
 		<log4j.version>2.11.2</log4j.version>
 		<swagger.version>2.0.8</swagger.version>
-		
+		<test.junit.version>4.12</test.junit.version>
+		<test.mockito.version>1.10.19</test.mockito.version>
+		<test.jersey.version>2.28</test.jersey.version>
+		<test.powermock.version>1.7.4</test.powermock.version>
+		<postgresql.version>42.2.5</postgresql.version>
+
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.surefire.version>2.22.2</maven.surefire.version>
 		<failOnMissingWebXml>false</failOnMissingWebXml>
 	</properties>
 </project>
