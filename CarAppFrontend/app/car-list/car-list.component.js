@@ -1,24 +1,48 @@
-const SUB_URL = '/cars'
+'use strict'
 
 carList.component('carList', {
     templateUrl: 'car-list/car-list.template.html',
-    controller: ['$http', '__env', function CarListController($http, __env) {
+    controller: ['carService', '$rootScope', '__env', function CarListController(carService, $rootScope, __env) {
         var self = this;
-        self.carList = undefined;
-        self.getCarList = function () {
-            $http.get(__env.apiUrl + SUB_URL).then(function (response) {
-                if (response.data.length == 0) {
-                    $('#warningDialog').modal();
-                } else {
-                    self.carList = response.data.length > 0 ? response.data : undefined;
-                }
+        self.carList = new Array();
+
+        self.deleteCars = function () {
+            while (self.carList.length > 0) {
+                self.carList.pop();
+            }
+        }
+
+        self.obtainCarList = function () {
+            carService.retrieve(_ => {
+                self.deleteCars();
+                $('#warningDialog').modal()
+            }, cars => {
+                self.deleteCars();
+                cars.forEach(car => {
+                    self.carList.push(car);
+                })
             });
-        };
+        }
+        self.obtainCarList();
 
-        self.notImplemented = function () {
-            alert("This function is not implemented");
-        };
+        carService.updateCallback = self.obtainCarList;
 
-        self.getCarList();
+        self.openCarDialog = function (type, id) {
+            $rootScope.dialogType = type;
+            if (id) {
+                carService.retrieveById(id, _ => {
+                    $('warning-dialog').attr('warning-message', 'Car with id ' + id + ' not found');
+                    $('#warningDialog').modal();
+                    $('warning-dialog').attr('warning-message', 'There\'s no car in the system.');
+                },
+                    car => {
+                        $rootScope.car = car;
+                        $('.carDialog').modal();
+                    });
+            } else {
+                $rootScope.car = { country: '', brand: '', registration: '' };
+                $('.carDialog').modal();
+            }
+        }
     }]
 })

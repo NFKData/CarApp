@@ -1,19 +1,22 @@
 <div class="row" ng-if="$ctrl.carList">
-    <div class="col-4" ng-if="$ctrl.carList.length > 0" ng-repeat="car in $ctrl.carList">
+    <div class="col-4" ng-repeat="car in $ctrl.carList">
         <div class="card align-self-center">
             <div class="card-header">
                 <h5 class="card-title">{{ car.id | uppercase }}</h5>
             </div>
             <div class="card-body">
                 <p class="card-text">{{ car.country }}</p>
-                <button href ng-click="$ctrl.notImplemented()"
+                <button ng-click="$ctrl.openCarDialog('delete', car.id)"
                     class="btn btn-danger float-right btn-margin-right">Delete</button>
-                <button href ng-click="$ctrl.notImplemented()"
-                    class="btn btn-primary float-right btn-margin-right mr-2">Update</button>
-                <button href ng-click="$ctrl.notImplemented()"
+                <button ng-click="$ctrl.openCarDialog('update', car.id)"
                     class="btn btn-info float-right btn-margin-right mr-2">Detail</button>
             </div>
         </div>
     </div>
+    <div class="col-4">
+        <button ng-click="$ctrl.openCarDialog('create')" class="btn btn-success">Create new car</button>
+    </div>
 </div>
-<warning-dialog warning-message="There's no car in the system."></warning-dialog>
+<warning-dialog warning-message="There's no car in the system.">
+</warning-dialog>
+<car-dialog></car-dialog>

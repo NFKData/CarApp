@@ -25,3 +25,7 @@ app.config(['$routeProvider', '$locationProvider',
 );
 
 app.constant('__env', env);
+
+app.run(amMoment => {
+  amMoment.changeLocale('en');
+});
