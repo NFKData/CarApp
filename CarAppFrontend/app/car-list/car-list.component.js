@@ -2,47 +2,37 @@
 
 carList.component('carList', {
     templateUrl: 'car-list/car-list.template.html',
-    controller: ['carService', '$rootScope', '__env', function CarListController(carService, $rootScope, __env) {
-        var self = this;
-        self.carList = new Array();
+    controller: ['carService', '$scope', '$rootScope', '__env', function CarListController(carService, $scope, $rootScope, __env) {
+        let self = this;
+        $rootScope.carList = undefined;
 
-        self.deleteCars = function () {
-            while (self.carList.length > 0) {
-                self.carList.pop();
-            }
-        }
-
-        self.obtainCarList = function () {
-            carService.retrieve(_ => {
-                self.deleteCars();
-                $('#warningDialog').modal()
-            }, cars => {
-                self.deleteCars();
-                cars.forEach(car => {
-                    self.carList.push(car);
-                })
+        self.obtainCarList = _ => {
+            carService.retrieve().then(response => {
+                if (response.data.length > 0) {
+                    $rootScope.carList = response.data;
+                } else {
+                    showNoCarsDialog();
+                }
             });
-        }
-        self.obtainCarList();
+        };
 
-        carService.updateCallback = self.obtainCarList;
-
-        self.openCarDialog = function (type, id) {
+        self.openCarDialog = (type, id) => {
             $rootScope.dialogType = type;
             if (id) {
-                carService.retrieveById(id, _ => {
-                    $('warning-dialog').attr('warning-message', 'Car with id ' + id + ' not found');
-                    $('#warningDialog').modal();
-                    $('warning-dialog').attr('warning-message', 'There\'s no car in the system.');
-                },
-                    car => {
-                        $rootScope.car = car;
-                        $('.carDialog').modal();
-                    });
+                carService.retrieveById(id).then(response => {
+                    $rootScope.car = response.data;
+                    showCarDialog();
+                }, _ => {
+                    $rootScope.carId = id;
+                    showCarNotFoundDialog();
+                    self.obtainCarList();
+                });
             } else {
                 $rootScope.car = { country: '', brand: '', registration: '' };
-                $('.carDialog').modal();
+                showCarDialog();
             }
-        }
+        };
+
+        self.obtainCarList();
     }]
-})
+});

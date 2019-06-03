@@ -34,11 +34,16 @@
   <link rel="stylesheet" href="lib/angular-moment-picker/dist/angular-moment-picker.css">
   <link rel="stylesheet" href="app.css">
   <link rel="stylesheet" href="car-header/car-header.template.css">
+  <link rel="stylesheet" href="car-dialog/car-dialog.template.css">
 </head>
 
 <body>
   <car-header></car-header>
   <div ng-view></div>
+  <warning-dialog id="noCarsDialog" warning-message="There's no car in the system."></warning-dialog>
+  <warning-dialog id="idNotFound" warning-message="There's no car with id {{carId}} in the system."></warning-dialog>
+  <car-dialog></car-dialog>
+  <warning-dialog id="noValidCar" warning-message="You must enter valid data before saving a car"></warning-dialog>
 </body>
 
 </html>

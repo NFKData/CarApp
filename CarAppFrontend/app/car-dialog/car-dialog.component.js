@@ -3,37 +3,88 @@
 const DATE_DISPLAY_FORMAT = 'DD/MM/YYYY HH:mm:ss';
 
 carDialog.component('carDialog', {
-    controller: ['$rootScope', 'moment', 'carService', function CarDialogController($rootScope, moment, carService) {
-        var self = this;
+    templateUrl: 'car-dialog/car-dialog.template.html',
+    controller: ['$rootScope', '$scope', 'moment', 'carService', function CarDialogController($rootScope, $scope, moment, carService) {
+        let self = this;
         $('.carDialog').on('show.bs.modal', _ => {
             self.car = $rootScope.car;
-            $rootScope.car = undefined;
             if (self.car.registration) {
                 self.car.registration = moment(self.car.registration, moment.HTML5_FMT.DATETIME_LOCAL_MS).format(DATE_DISPLAY_FORMAT);
             }
             self.type = $rootScope.dialogType;
-            $rootScope.dialogType = undefined;
         })
 
-        self.registrationChange = function (newValue, oldValue) {
+        $('.carDialog').on('hidden.bs.modal', _ => {
+            if (!$scope.form.$valid) {
+                $scope.form.$setPristine();
+                $scope.form.$setUntouched();
+            }
+        });
+
+        self.registrationChange = (newValue, _) => {
             self.registration = moment(newValue, DATE_DISPLAY_FORMAT).format(moment.HTML5_FMT.DATETIME_LOCAL_MS);
-        }
+        };
 
-        self.update = function () {
-            self.car.registration = self.registration;
-            carService.update(self.car);
-        }
+        self.update = _ => {
+            if ($scope.form.$valid) {
+                self.car.registration = self.registration;
+                carService.update(self.car).then(_ => {
+                    self.refreshCarList();
+                    self.hide();
+                }, response => {
+                    if (response.status == 404) {
+                        $rootScope.carId = self.car.id;
+                        showCarNotFoundDialog();
+                    } else if (response.status == 400) {
+                        showValidationErrorDialog();
+                    }
+                    self.refreshCarList();
+                });
+            } else {
+                showValidationErrorDialog();
+            }
+        };
 
-        self.delete = function () {
-            carService.delete(self.car.id);
-        }
+        self.delete = _ => {
+            carService.delete(self.car.id).then(_ => {
+                self.refreshCarList();
+                self.hide();
+            }, response => {
+                if (response.status == 404) {
+                    $rootScope.carId = self.car.id;
+                    showCarNotFoundDialog();
+                }
+                self.refreshCarList();
+            });
+        };
 
-        self.create = function () {
-            self.car.registration = self.registration;
-            carService.create(self.car);
-            self.registration = undefined;
-            self.car = undefined;
+        self.create = _ => {
+            if ($scope.form.$valid) {
+                self.car.registration = self.registration;
+                carService.create(self.car).then(_ => {
+                    self.refreshCarList();
+                    self.hide();
+                }, response => {
+                    if (response.status == 400) {
+                        showValidationErrorDialog();
+                    }
+                });
+            } else {
+                showValidationErrorDialog();
+            }
+        };
+
+        self.refreshCarList = _ => {
+            carService.retrieve().then(response => {
+                $rootScope.carList = response.data;
+                if (response.data.length == 0) {
+                    showNoCarsDialog();
+                }
+            });
+        };
+
+        self.hide = _ => {
+            $('.carDialog').modal('hide');
         }
-    }],
-    templateUrl: 'car-dialog/car-dialog.template.html',
+    }]
 });

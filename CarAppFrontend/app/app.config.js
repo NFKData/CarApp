@@ -29,3 +29,19 @@ app.constant('__env', env);
 app.run(amMoment => {
   amMoment.changeLocale('en');
 });
+
+const showCarNotFoundDialog = _ => {
+  $($('#idNotFound').children()[0]).modal();
+}
+
+const showValidationErrorDialog = _ => {
+  $($('#noValidCar').children()[0]).modal();
+}
+
+const showNoCarsDialog = _ => {
+  $($('#noCarsDialog').children()[0]).modal();
+}
+
+const showCarDialog = (type, id) => {
+  $('.carDialog').modal();
+}

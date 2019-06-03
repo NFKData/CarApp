@@ -1,5 +1,5 @@
-<div class="row" ng-if="$ctrl.carList">
-    <div class="col-4" ng-repeat="car in $ctrl.carList">
+<div class="row">
+    <div class="col-4" ng-repeat="car in $root.carList track by car.id">
         <div class="card align-self-center">
             <div class="card-header">
                 <h5 class="card-title">{{ car.id | uppercase }}</h5>
@@ -13,10 +13,8 @@
             </div>
         </div>
     </div>
-    <div class="col-4">
-        <button ng-click="$ctrl.openCarDialog('create')" class="btn btn-success">Create new car</button>
+    <div class="col-4 d-flex align-items-center">
+        <button ng-click="$ctrl.openCarDialog('create')" type="button" class="btn btn-success">Create new
+            car</button>
     </div>
 </div>
-<warning-dialog warning-message="There's no car in the system.">
-</warning-dialog>
-<car-dialog></car-dialog>
