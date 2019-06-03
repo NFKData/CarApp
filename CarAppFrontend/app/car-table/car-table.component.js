@@ -3,7 +3,7 @@
 carTable.component('carTable', {
     templateUrl: 'car-table/car-table.template.html',
     controller: ['DTOptionsBuilder', 'DTColumnBuilder', '$scope', '$rootScope', '$compile', 'carService', function CarTableController(DTOptionsBuilder, DTColumnBuilder, $scope, $rootScope, $compile, carService) {
-        var self = this;
+        let self = this;
 
         self.carTable = {};
 
