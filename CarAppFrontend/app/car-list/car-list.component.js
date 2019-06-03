@@ -2,15 +2,14 @@
 
 carList.component('carList', {
     templateUrl: 'car-list/car-list.template.html',
-    controller: ['carService', '$scope', '$rootScope', '__env', function CarListController(carService, $scope, $rootScope, __env) {
+    controller: ['carService', '$rootScope', '__env', function CarListController(carService, $rootScope, __env) {
         let self = this;
         $rootScope.carList = undefined;
 
         self.obtainCarList = _ => {
             carService.retrieve().then(response => {
-                if (response.data.length > 0) {
-                    $rootScope.carList = response.data;
-                } else {
+                $rootScope.carList = response.data;
+                if (response.data.length == 0) {
                     showNoCarsDialog();
                 }
             });
@@ -34,5 +33,9 @@ carList.component('carList', {
         };
 
         self.obtainCarList();
+
+        $rootScope.refreshCars = _ => {
+            self.obtainCarList();
+        }
     }]
 });

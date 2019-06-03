@@ -75,12 +75,7 @@ carDialog.component('carDialog', {
         };
 
         self.refreshCarList = _ => {
-            carService.retrieve().then(response => {
-                $rootScope.carList = response.data;
-                if (response.data.length == 0) {
-                    showNoCarsDialog();
-                }
-            });
+            $rootScope.refreshCars();
         };
 
         self.hide = _ => {

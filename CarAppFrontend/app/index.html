@@ -8,14 +8,17 @@
   <title>CarApp</title>
   <base href="/">
 
+  <script src="lib/jquery/dist/jquery.js"></script>
   <script src="lib/angular/angular.js"></script>
   <script src="lib/moment/moment.js"></script>
   <script src="lib/moment/locale/en-gb.js"></script>
   <script src="lib/angular-route/angular-route.js"></script>
   <script src="lib/angular-moment/angular-moment.js"></script>
   <script src="lib/angular-moment-picker/dist/angular-moment-picker.js"></script>
-  <script src="lib/jquery/dist/jquery.js"></script>
   <script src="lib/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="lib/datatables.net/js/jquery.dataTables.js"></script>
+  <script src="lib/angular-datatables/dist/angular-datatables.js"></script>
+  <script src="lib/angular-datatables/dist/plugins/bootstrap/angular-datatables.bootstrap.js"></script>
   <script src="env.js"></script>
   <script src="app.module.js"></script>
   <script src="app.config.js"></script>
@@ -23,6 +26,8 @@
   <script src="car-header/car-header.component.js"></script>
   <script src="car-list/car-list.module.js"></script>
   <script src="car-list/car-list.component.js"></script>
+  <script src="car-table/car-table.module.js"></script>
+  <script src="car-table/car-table.component.js"></script>
   <script src="warning-dialog/warning-dialog.module.js"></script>
   <script src="warning-dialog/warning-dialog.component.js"></script>
   <script src="car-dialog/car-dialog.module.js"></script>
@@ -32,9 +37,11 @@
 
   <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css" />
   <link rel="stylesheet" href="lib/angular-moment-picker/dist/angular-moment-picker.css">
+  <link rel="stylesheet" href="lib/datatables.net-bs4/css/dataTables.bootstrap4.css">
   <link rel="stylesheet" href="app.css">
   <link rel="stylesheet" href="car-header/car-header.template.css">
   <link rel="stylesheet" href="car-dialog/car-dialog.template.css">
+  <link rel="stylesheet" href="car-table/car-table.template.css">
 </head>
 
 <body>

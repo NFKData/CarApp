@@ -8,5 +8,6 @@ var app = angular.module('CarAppFrontend', [
   'carList',
   'warningDialog',
   'carDialog',
-  'carServiceProvider'
+  'carServiceProvider',
+  'carTable'
 ]);

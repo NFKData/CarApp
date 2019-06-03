@@ -16,6 +16,9 @@ app.config(['$routeProvider', '$locationProvider',
       .when('/carCards', {
         templateUrl: 'views/car-cards-view.template.html'
       })
+      .when('/carTable', {
+        templateUrl: 'views/car-table-view.template.html'
+      })
       .when('/notfound', {
         templateUrl: '404.html'
       })
@@ -42,6 +45,6 @@ const showNoCarsDialog = _ => {
   $($('#noCarsDialog').children()[0]).modal();
 }
 
-const showCarDialog = (type, id) => {
+const showCarDialog = _ => {
   $('.carDialog').modal();
 }
