@@ -191,7 +191,7 @@ public class CarResourceTest {
 	}
 	
 	@Test(expected = CarNotFoundException.class)
-	public void whenGettingACountryOfANonExistentCar_shouldReturnNotFound() throws CarNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+	public void whenGettingACountryOfANonExistentCar_shouldThrowCarNotFoundException() throws CarNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		when(carService.getCar(DEFAULT_ID)).thenThrow(new CarNotFoundException(DEFAULT_ID));
 		carResource.getCountry(DEFAULT_ID);
 		verify(carService).getCar(DEFAULT_ID);
@@ -216,7 +216,7 @@ public class CarResourceTest {
 	}
 	
 	@Test(expected = CarNotFoundException.class)
-	public void whenGettingABrandOfANonExistentCar_shouldReturnNotFound() throws CarNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+	public void whenGettingABrandOfANonExistentCar_shouldThrowCarNotFoundException() throws CarNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		when(carService.getCar(DEFAULT_ID)).thenThrow(new CarNotFoundException(DEFAULT_ID));
 		carResource.getBrand(DEFAULT_ID);
 		verify(carService).getCar(DEFAULT_ID);
