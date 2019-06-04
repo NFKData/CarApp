@@ -13,9 +13,9 @@ import com.backend.control.BrandService;
 import com.backend.entity.Brand;
 import com.backend.entity.dto.BrandDto;
 import com.backend.entity.dto.CarDto;
-import com.backend.entity.dto.helper.DtoHelper;
 import com.backend.exception.BrandNotFoundException;
 import com.backend.exception.InvalidEntityException;
+import com.backend.helper.DtoHelper;
 
 @Path("/brands")
 public class BrandResourceImpl extends BrandResource {

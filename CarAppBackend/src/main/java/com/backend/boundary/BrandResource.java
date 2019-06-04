@@ -32,12 +32,34 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 @Produces(MediaType.APPLICATION_JSON)
 public abstract class BrandResource {
 
+	/**
+	 * Retrieve every {@link Brand} in the system
+	 * @return Response with list of brands
+	 * @throws InstantiationException If any exception happens with Reflection API
+	 * @throws IllegalAccessException If any exception happens with Reflection API
+	 * @throws IllegalArgumentException If any exception happens with Reflection API
+	 * @throws InvocationTargetException If any exception happens with Reflection API
+	 * @throws NoSuchMethodException If any exception happens with Reflection API
+	 * @throws SecurityException If any exception happens with Reflection API
+	 */
 	@Operation(summary = "Get all brands", tags = {
 			"brands" }, description = "Retrieve every brand on the system", responses = {
 					@ApiResponse(description = "List of brands", responseCode = "200", content = @Content(schema = @Schema(implementation = BrandDto.class, type = "array"))) })
 	@GET
 	public abstract Response getAll() throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException;
 
+	/**
+	 * Retrieve the brand with the specified ID
+	 * @param id ID of the brand which will be looked for
+	 * @return Response with found {@link Brand} 
+	 * @throws BrandNotFoundException If there's no brand in the system with the specified ID
+	 * @throws InstantiationException If any exception happens with Reflection API
+	 * @throws IllegalAccessException If any exception happens with Reflection API
+	 * @throws IllegalArgumentException If any exception happens with Reflection API
+	 * @throws InvocationTargetException If any exception happens with Reflection API
+	 * @throws NoSuchMethodException If any exception happens with Reflection API
+	 * @throws SecurityException If any exception happens with Reflection API
+	 */
 	@Operation(summary = "Get brand by ID", tags = {
 			"brands" }, description = "Retrieve the brand with the specified ID", responses = {
 					@ApiResponse(description = "Brand", responseCode = "200", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = BrandDto.class)))),
@@ -48,6 +70,18 @@ public abstract class BrandResource {
 	public abstract Response getOne(
 			@Parameter(description = "ID of the brand to retrieve", schema = @Schema(type = "integer", format = "id", description = "param ID of the brand to retrieve"), required = true) @PathParam(value = "id") Integer id) throws BrandNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException;
 
+	/**
+	 * Insert a new brand in the system
+	 * @param brand Brand to be inserted
+	 * @return Response with created {@link Brand} entity 
+	 * @throws InvalidEntityException If validation of the entity failed
+	 * @throws InstantiationException If any exception happens with Reflection API
+	 * @throws IllegalAccessException If any exception happens with Reflection API
+	 * @throws IllegalArgumentException If any exception happens with Reflection API
+	 * @throws InvocationTargetException If any exception happens with Reflection API
+	 * @throws NoSuchMethodException If any exception happens with Reflection API
+	 * @throws SecurityException If any exception happens with Reflection API
+	 */
 	@Operation(summary = "Create a new brand", tags = {
 			"brands" }, description = "Create a new brand with specified data", responses = {
 					@ApiResponse(description = "Brand", responseCode = "201", content = @Content(mediaType = "application/json", schema = @Schema(implementation = BrandDto.class))),
@@ -57,6 +91,20 @@ public abstract class BrandResource {
 			@Parameter(description = "Brand to create", schema = @Schema(implementation = BrandDto.class), required = true) Brand brand)
 			throws InvalidEntityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException;
 
+	/**
+	 * Update the brand with the specified ID
+	 * @param id ID of the brand to be updated
+	 * @param brand Entity containing new brand data
+	 * @return Response with the new {@link Brand} entity
+	 * @throws InvalidEntityException If validation of the entity failed
+	 * @throws BrandNotFoundException If there's no brand in the system with the specified ID
+	 * @throws InstantiationException If any exception happens with Reflection API
+	 * @throws IllegalAccessException If any exception happens with Reflection API
+	 * @throws IllegalArgumentException If any exception happens with Reflection API
+	 * @throws InvocationTargetException If any exception happens with Reflection API
+	 * @throws NoSuchMethodException If any exception happens with Reflection API
+	 * @throws SecurityException If any exception happens with Reflection API
+	 */
 	@Operation(summary = "Update brand by ID", tags = {
 			"brands" }, description = "Update the brand with the specified ID and new data", responses = {
 					@ApiResponse(description = "Brand", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = BrandDto.class))),
@@ -70,6 +118,12 @@ public abstract class BrandResource {
 			@Parameter(description = "New data for the brand", schema = @Schema(implementation = BrandDto.class), required = true) Brand brand)
 			throws InvalidEntityException, BrandNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException;
 
+	/**
+	 * Deletes a brand from the system
+	 * @param id ID of the brand to be deleted
+	 * @return Response without entities
+	 * @throws BrandNotFoundException If there's no brand in the system with the specified ID
+	 */
 	@Operation(summary = "Delete brand by ID", tags = {
 			"brands" }, description = "Delete the brand with the specified ID", responses = {
 					@ApiResponse(description = "Brand deleted", responseCode = "204"),
@@ -80,6 +134,18 @@ public abstract class BrandResource {
 	public abstract Response delete(
 			@Parameter(description = "ID of the brand to update", schema = @Schema(type = "integer", format = "integer", description = "param ID of the brand to update"), required = true) @PathParam(value = "id") Integer id) throws BrandNotFoundException;
 			
+	/**
+	 * Retrieve list of cars ({@link Car}) with the specified {@link Brand}
+	 * @param id ID of the brand from which to get cars
+	 * @return List of cars with the specified brand
+	 * @throws BrandNotFoundException If there's no brand in the system with the specified ID
+	 * @throws InstantiationException If any exception happens with Reflection API
+	 * @throws IllegalAccessException If any exception happens with Reflection API
+	 * @throws IllegalArgumentException If any exception happens with Reflection API
+	 * @throws InvocationTargetException If any exception happens with Reflection API
+	 * @throws NoSuchMethodException If any exception happens with Reflection API
+	 * @throws SecurityException If any exception happens with Reflection API
+	 */
 	@Operation(summary = "Get brand's cars by brand ID", tags = {
 	"brands" }, description = "Retrieve brand's cars with the specified brand ID", responses = {
 			@ApiResponse(description = "Cars", responseCode = "200", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = CarDto.class)))),

@@ -13,9 +13,9 @@ import com.backend.control.CountryService;
 import com.backend.entity.Country;
 import com.backend.entity.dto.CarDto;
 import com.backend.entity.dto.CountryDto;
-import com.backend.entity.dto.helper.DtoHelper;
 import com.backend.exception.CountryNotFoundException;
 import com.backend.exception.InvalidEntityException;
+import com.backend.helper.DtoHelper;
 
 @Path("/countries")
 public class CountryResourceImpl extends CountryResource {

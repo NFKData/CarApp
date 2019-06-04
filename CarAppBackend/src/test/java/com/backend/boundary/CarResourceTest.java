@@ -30,9 +30,9 @@ import com.backend.entity.Brand;
 import com.backend.entity.Car;
 import com.backend.entity.Country;
 import com.backend.entity.dto.CarDto;
-import com.backend.entity.dto.helper.DtoHelper;
 import com.backend.exception.CarNotFoundException;
 import com.backend.exception.InvalidEntityException;
+import com.backend.helper.DtoHelper;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(DtoHelper.class)

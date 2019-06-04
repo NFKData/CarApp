@@ -39,12 +39,12 @@ public abstract class CarResource {
 	 * </ul>
 	 * 
 	 * @return Response with every {@link Car} in the body
-	 * @throws SecurityException 
-	 * @throws NoSuchMethodException 
-	 * @throws InvocationTargetException 
-	 * @throws IllegalArgumentException 
-	 * @throws IllegalAccessException 
-	 * @throws InstantiationException 
+	 * @throws SecurityException If any exception happens with Reflection API
+	 * @throws NoSuchMethodException If any exception happens with Reflection API
+	 * @throws InvocationTargetException If any exception happens with Reflection API
+	 * @throws IllegalArgumentException If any exception happens with Reflection API
+	 * @throws IllegalAccessException If any exception happens with Reflection API
+	 * @throws InstantiationException If any exception happens with Reflection API
 	 */
 	@Operation(summary = "Get all cars", tags = {
 			"cars" }, description = "Retrieve every car on the system", responses = {
@@ -64,12 +64,12 @@ public abstract class CarResource {
 	 * @return Response with the found {@link Car}
 	 * @throws CarNotFoundException If there's no car in the system with the
 	 *                              specified ID
-	 * @throws SecurityException 
-	 * @throws NoSuchMethodException 
-	 * @throws InvocationTargetException 
-	 * @throws IllegalArgumentException 
-	 * @throws IllegalAccessException 
-	 * @throws InstantiationException 
+	 * @throws SecurityException If any exception happens with Reflection API
+	 * @throws NoSuchMethodException If any exception happens with Reflection API
+	 * @throws InvocationTargetException If any exception happens with Reflection API
+	 * @throws IllegalArgumentException If any exception happens with Reflection API
+	 * @throws IllegalAccessException If any exception happens with Reflection API
+	 * @throws InstantiationException If any exception happens with Reflection API
 	 */
 	@Operation(summary = "Get car by ID", tags = {
 			"cars" }, description = "Retrieve the car with the specified ID", responses = {
@@ -92,12 +92,12 @@ public abstract class CarResource {
 	 * @param car The car to be created
 	 * @return Response with the new {@link Car} in the body
 	 * @throws InvalidEntityException If validation of the entity failed
-	 * @throws SecurityException 
-	 * @throws NoSuchMethodException 
-	 * @throws InvocationTargetException 
-	 * @throws IllegalArgumentException 
-	 * @throws IllegalAccessException 
-	 * @throws InstantiationException 
+	 * @throws SecurityException If any exception happens with Reflection API
+	 * @throws NoSuchMethodException If any exception happens with Reflection API
+	 * @throws InvocationTargetException If any exception happens with Reflection API
+	 * @throws IllegalArgumentException If any exception happens with Reflection API
+	 * @throws IllegalAccessException If any exception happens with Reflection API
+	 * @throws InstantiationException If any exception happens with Reflection API
 	 */
 	@Operation(summary = "Create a new car", tags = {
 			"cars" }, description = "Create a new car with specified data", responses = {
@@ -122,12 +122,12 @@ public abstract class CarResource {
 	 * @throws InvalidEntityException If validation of the entity failed
 	 * @throws CarNotFoundException   If a car with the specified Id couldn't be
 	 *                                found
-	 * @throws SecurityException 
-	 * @throws NoSuchMethodException 
-	 * @throws InvocationTargetException 
-	 * @throws IllegalArgumentException 
-	 * @throws IllegalAccessException 
-	 * @throws InstantiationException 
+	 * @throws SecurityException If any exception happens with Reflection API
+	 * @throws NoSuchMethodException If any exception happens with Reflection API
+	 * @throws InvocationTargetException If any exception happens with Reflection API
+	 * @throws IllegalArgumentException If any exception happens with Reflection API
+	 * @throws IllegalAccessException If any exception happens with Reflection API
+	 * @throws InstantiationException If any exception happens with Reflection API
 	 */
 	@Operation(summary = "Update car by ID", tags = {
 			"cars" }, description = "Update the car with the specified ID and new data", responses = {
@@ -165,6 +165,18 @@ public abstract class CarResource {
 			@Parameter(description = "UUID of the car to update", schema = @Schema(type = "string", format = "uuid", description = "param UUID of the car to update"), required = true) @PathParam(value = "id") String id)
 			throws CarNotFoundException;
 
+	/**
+	 * Get the brand of the car with the specified ID
+	 * @param id UUID of the car which to be looked for
+	 * @return {@link Brand} object of the car
+	 * @throws CarNotFoundException If there's no car in the system with the specified ID
+	 * @throws InstantiationException If any exception happens with Reflection API
+	 * @throws IllegalAccessException If any exception happens with Reflection API
+	 * @throws IllegalArgumentException If any exception happens with Reflection API
+	 * @throws InvocationTargetException If any exception happens with Reflection API
+	 * @throws NoSuchMethodException If any exception happens with Reflection API
+	 * @throws SecurityException If any exception happens with Reflection API
+	 */
 	@Operation(summary = "Get a car's brand by car ID", tags = {
 			"cars" }, description = "Retrieve the car's brand with the specified car ID", responses = {
 					@ApiResponse(description = "Brand", responseCode = "200", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Brand.class)))),
@@ -176,6 +188,18 @@ public abstract class CarResource {
 			@Parameter(description = "UUID of the car from which to get brand", schema = @Schema(type = "string", format = "uuid", description = "param UUID of the car to update"), required = true) @PathParam(value = "id") String id)
 			throws CarNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException;
 
+	/**
+	 * Get the country of the car with the specified ID
+	 * @param id UUID of the car which to be looked for
+	 * @return {@link Country} object of the car
+	 * @throws CarNotFoundException If there's no car in the system with the specified ID
+	 * @throws InstantiationException If any exception happens with Reflection API
+	 * @throws IllegalAccessException If any exception happens with Reflection API
+	 * @throws IllegalArgumentException If any exception happens with Reflection API
+	 * @throws InvocationTargetException If any exception happens with Reflection API
+	 * @throws NoSuchMethodException If any exception happens with Reflection API
+	 * @throws SecurityException If any exception happens with Reflection API
+	 */
 	@Operation(summary = "Get a car's country by car ID", tags = {
 			"cars" }, description = "Retrieve the car's country with the specified car ID", responses = {
 					@ApiResponse(description = "Country", responseCode = "200", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Country.class)))),
