@@ -29,7 +29,9 @@ import com.backend.control.CarService;
 import com.backend.entity.Brand;
 import com.backend.entity.Car;
 import com.backend.entity.Country;
+import com.backend.entity.dto.BrandDto;
 import com.backend.entity.dto.CarDto;
+import com.backend.entity.dto.CountryDto;
 import com.backend.exception.CarNotFoundException;
 import com.backend.exception.InvalidEntityException;
 import com.backend.helper.DtoHelper;
@@ -168,6 +170,56 @@ public class CarResourceTest {
 		doThrow(new CarNotFoundException(DEFAULT_ID)).when(carService).deleteCar(DEFAULT_ID);
 		carResource.delete(DEFAULT_ID);
 		verify(carService).deleteCar(DEFAULT_ID);
+	}
+	
+	@Test
+	public void whenGettingACountryOfACar_shouldReturnOk() throws CarNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+		Car expectedCar = new Car();
+		expectedCar.setId(DEFAULT_ID);
+		Country expectedCountry = new Country();
+		expectedCountry.setId(DEFAULT_ID_INT);
+		expectedCar.setCountry(expectedCountry);
+		when(carService.getCar(DEFAULT_ID)).thenReturn(expectedCar);
+		CountryDto expectedDto = new CountryDto(expectedCountry);
+		PowerMockito.mockStatic(DtoHelper.class);
+		PowerMockito.when(DtoHelper.entityToDto(expectedCountry, CountryDto.class)).thenReturn(expectedDto);
+		Response response = carResource.getCountry(DEFAULT_ID);
+		assertEquals(Status.OK, Status.fromStatusCode(response.getStatus()));
+		assertEquals(expectedDto, response.getEntity());
+		verify(carService).getCar(DEFAULT_ID);
+		PowerMockito.verifyStatic(DtoHelper.class);
+	}
+	
+	@Test(expected = CarNotFoundException.class)
+	public void whenGettingACountryOfANonExistentCar_shouldReturnNotFound() throws CarNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+		when(carService.getCar(DEFAULT_ID)).thenThrow(new CarNotFoundException(DEFAULT_ID));
+		carResource.getCountry(DEFAULT_ID);
+		verify(carService).getCar(DEFAULT_ID);
+	}
+	
+	@Test
+	public void whenGettingABrandOfACar_shouldReturnOk() throws CarNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+		Car expectedCar = new Car();
+		expectedCar.setId(DEFAULT_ID);
+		Brand expectedBrand = new Brand();
+		expectedBrand.setId(DEFAULT_ID_INT);
+		expectedCar.setBrand(expectedBrand);
+		when(carService.getCar(DEFAULT_ID)).thenReturn(expectedCar);
+		BrandDto expectedDto = new BrandDto(expectedBrand);
+		PowerMockito.mockStatic(DtoHelper.class);
+		PowerMockito.when(DtoHelper.entityToDto(expectedBrand, BrandDto.class)).thenReturn(expectedDto);
+		Response response = carResource.getBrand(DEFAULT_ID);
+		assertEquals(Status.OK, Status.fromStatusCode(response.getStatus()));
+		assertEquals(expectedDto, response.getEntity());
+		verify(carService).getCar(DEFAULT_ID);
+		PowerMockito.verifyStatic(DtoHelper.class);
+	}
+	
+	@Test(expected = CarNotFoundException.class)
+	public void whenGettingABrandOfANonExistentCar_shouldReturnNotFound() throws CarNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+		when(carService.getCar(DEFAULT_ID)).thenThrow(new CarNotFoundException(DEFAULT_ID));
+		carResource.getBrand(DEFAULT_ID);
+		verify(carService).getCar(DEFAULT_ID);
 	}
 
 }
