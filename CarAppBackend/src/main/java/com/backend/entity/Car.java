@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 import javax.interceptor.Interceptors;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -36,8 +37,7 @@ public class Car {
 	@Id
 	private String id;
 
-	@NotNull(message = "Brand cannot be null")
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "brand")
 	private Brand brand;
 
@@ -46,11 +46,10 @@ public class Car {
 	@NotNull(message = "Registration mustn't be null and has to have the ISO format")
 	private LocalDateTime registration;
 
-	@NotNull(message = "Country mustn't be null")
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "country")
 	private Country country;
-	
+
 	@Hidden
 	@Column(name = "created_at")
 	private LocalDateTime createdAt;
@@ -122,7 +121,7 @@ public class Car {
 		Car o = (Car) other;
 		return o.id.equals(this.id);
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Car = {id:" + id + ", brand:" + brand + ", registration:" + registration + ", country:" + country
