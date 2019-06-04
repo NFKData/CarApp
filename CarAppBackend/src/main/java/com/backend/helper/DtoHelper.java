@@ -24,8 +24,7 @@ public class DtoHelper {
 	 * @throws SecurityException If any exception happens with Reflection API
 	 */
 	public static <T,V> V entityToDto(T entity, Class<V> clazz) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-		V dto = clazz.getConstructor(entity.getClass()).newInstance(entity);
-		return dto;
+		return clazz.getConstructor(entity.getClass()).newInstance(entity);
 	}
 	
 	/**
