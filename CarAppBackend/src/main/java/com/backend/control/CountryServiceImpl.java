@@ -27,7 +27,7 @@ public class CountryServiceImpl implements CountryService {
 	}
 
 	@Override
-	public Country getCountry(String id) throws CountryNotFoundException {
+	public Country getCountry(Integer id) throws CountryNotFoundException {
 		Country country = em.find(Country.class, id);
 		if(country == null) {
 			throw new CountryNotFoundException(id);
@@ -51,7 +51,7 @@ public class CountryServiceImpl implements CountryService {
 	}
 
 	@Override
-	public void deleteCountry(String id) throws CountryNotFoundException {
+	public void deleteCountry(Integer id) throws CountryNotFoundException {
 		em.remove(getCountry(id));
 	}
 

@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,6 +16,8 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.swagger.v3.oas.annotations.Hidden;
 
 @Entity
@@ -24,24 +27,25 @@ public class Brand {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@Column(name = "id")
-	private String id;
+	@Column(name = "brand_id")
+	private Integer id;
 	
 	@NotNull(message = "Name cannot be null")
 	@Column(name = "name")
 	private String name;
 	
 	@Hidden
-	@Column(name = "createdAt")
+	@Column(name = "created_at")
 	private LocalDateTime createdAt;
 	
 	@Hidden
 	@Column(name = "last_updated")
 	private LocalDateTime lastUpdated;
 	
-	@OneToMany(mappedBy = "brand")
+	@OneToMany(mappedBy = "brand", fetch = FetchType.EAGER)
+	@JsonIgnore
 	private List<Car> cars;
-	
+
 	@PrePersist
 	public void prePersist() {
 		this.createdAt = LocalDateTime.now();
@@ -52,11 +56,11 @@ public class Brand {
 		this.lastUpdated = LocalDateTime.now();
 	}
 
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -79,11 +83,19 @@ public class Brand {
 	public List<Car> getCars() {
 		return cars;
 	}
+	
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public void setLastUpdated(LocalDateTime lastUpdated) {
+		this.lastUpdated = lastUpdated;
+	}
 
 	public void setCars(List<Car> cars) {
 		this.cars = cars;
 	}
-	
+
 	public boolean equals(Object other) {
 		if(!(other instanceof Brand))
 			return false;

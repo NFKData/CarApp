@@ -28,9 +28,9 @@ public class CountryNotFoundException extends CarApiBaseException {
 	/**
 	 * Create an exception with the default message and the Country's ID
 	 * that provoked it
-	 * @param countryId Country's ID that provoked the exception
+	 * @param id Country's ID that provoked the exception
 	 */
-	public CountryNotFoundException(String countryId) {
-		super(DEFAULT_MESSAGE + countryId, Status.NOT_FOUND);
+	public CountryNotFoundException(Integer id) {
+		super(DEFAULT_MESSAGE + id, Status.NOT_FOUND);
 	}
 }

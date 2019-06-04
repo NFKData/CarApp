@@ -10,12 +10,12 @@ public interface BrandService {
 
 	List<Brand> getAllBrands();
 
-	Brand getBrand(String id) throws BrandNotFoundException;
+	Brand getBrand(Integer id) throws BrandNotFoundException;
 
 	Brand createBrand(Brand brand) throws InvalidEntityException;
 
 	Brand updateBrand(Brand brand) throws InvalidEntityException, BrandNotFoundException;
 
-	void deleteBrand(String id) throws BrandNotFoundException;
+	void deleteBrand(Integer id) throws BrandNotFoundException;
 
 }

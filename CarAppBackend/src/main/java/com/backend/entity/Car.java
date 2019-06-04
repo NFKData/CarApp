@@ -3,21 +3,26 @@ package com.backend.entity;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import javax.interceptor.Interceptors;
-import javax.persistence.CascadeType;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.PostPersist;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import com.backend.interceptor.LogInterceptor;
+import com.backend.control.BrandService;
+import com.backend.control.CountryService;
+import com.backend.exception.BrandNotFoundException;
+import com.backend.exception.CountryNotFoundException;
 import com.backend.serialization.LocalDateTimeAdapter;
 
 import io.swagger.v3.oas.annotations.Hidden;
@@ -30,15 +35,15 @@ import io.swagger.v3.oas.annotations.Hidden;
 @Entity
 @Table(name = "Car")
 @NamedQuery(name = "CarService.findAllCars", query = "SELECT c FROM Car c")
-@Interceptors(LogInterceptor.class)
 public class Car {
 
 	@Column(name = "uuid")
 	@Id
 	private String id;
 
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "brand")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "brand_id", updatable = false)
+	@NotNull(message = "Brand mustn't be null")
 	private Brand brand;
 
 	@Column(name = "registration")
@@ -46,8 +51,9 @@ public class Car {
 	@NotNull(message = "Registration mustn't be null and has to have the ISO format")
 	private LocalDateTime registration;
 
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "country")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "country_id", updatable = false)
+	@NotNull(message = "Country mustn't be null")
 	private Country country;
 
 	@Hidden
@@ -59,7 +65,7 @@ public class Car {
 	private LocalDateTime lastUpdated;
 
 	@PrePersist
-	public void prePersit() {
+	public void prePersist() {
 		this.createdAt = LocalDateTime.now();
 		this.id = UUID.randomUUID().toString();
 	}
@@ -67,6 +73,15 @@ public class Car {
 	@PreUpdate
 	public void preUpdate() {
 		this.lastUpdated = LocalDateTime.now();
+	}
+	
+	@PostPersist
+	public void postPersist() throws NamingException, BrandNotFoundException, CountryNotFoundException {
+		InitialContext ctx = new InitialContext();
+		BrandService brandService = (BrandService) ctx.lookup("java:comp/env/brandService");
+		CountryService countryService = (CountryService) ctx.lookup("java:comp/env/countryService");
+		this.brand = brandService.getBrand(this.brand.getId());
+		this.country = countryService.getCountry(this.country.getId());
 	}
 
 	public String getId() {
@@ -107,6 +122,14 @@ public class Car {
 
 	public LocalDateTime getLastUpdated() {
 		return lastUpdated;
+	}
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public void setLastUpdated(LocalDateTime lastUpdated) {
+		this.lastUpdated = lastUpdated;
 	}
 
 	@Override

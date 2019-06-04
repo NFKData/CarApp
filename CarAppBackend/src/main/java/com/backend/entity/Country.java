@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,9 +23,9 @@ import io.swagger.v3.oas.annotations.Hidden;
 public class Country {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id")
-	private String id;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@Column(name = "country_id")
+	private Integer id;
 	
 	@Column(name = "name")
 	private String name;
@@ -37,7 +38,8 @@ public class Country {
 	@Column(name = "last_updated")
 	private LocalDateTime lastUpdated;
 	
-	@OneToMany(mappedBy = "country")
+	@OneToMany(mappedBy = "country", fetch = FetchType.EAGER)
+	@Hidden
 	private List<Car> cars;
 	
 	@PrePersist
@@ -50,11 +52,11 @@ public class Country {
 		this.lastUpdated = LocalDateTime.now();
 	}
 
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -77,11 +79,19 @@ public class Country {
 	public List<Car> getCars() {
 		return cars;
 	}
+	
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public void setLastUpdated(LocalDateTime lastUpdated) {
+		this.lastUpdated = lastUpdated;
+	}
 
 	public void setCars(List<Car> cars) {
 		this.cars = cars;
 	}
-	
+
 	public boolean equals(Object other) {
 		if(!(other instanceof Country))
 			return false;

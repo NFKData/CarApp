@@ -27,7 +27,7 @@ public class BrandServiceImpl implements BrandService {
 	}
 
 	@Override
-	public Brand getBrand(String id) throws BrandNotFoundException {
+	public Brand getBrand(Integer id) throws BrandNotFoundException {
 		Brand brand = em.find(Brand.class, id);
 		if(brand == null) {
 			throw new BrandNotFoundException(id);
@@ -51,7 +51,7 @@ public class BrandServiceImpl implements BrandService {
 	}
 
 	@Override
-	public void deleteBrand(String id) throws BrandNotFoundException {
+	public void deleteBrand(Integer id) throws BrandNotFoundException {
 		em.remove(getBrand(id));
 	}
 

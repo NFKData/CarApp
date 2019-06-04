@@ -1,5 +1,7 @@
 package com.backend.boundary;
 
+import java.lang.reflect.InvocationTargetException;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -11,6 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.backend.entity.Car;
 import com.backend.entity.Country;
 import com.backend.entity.dto.ValidationErrorDto;
 import com.backend.exception.CountryNotFoundException;
@@ -28,33 +31,33 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 @Produces(MediaType.APPLICATION_JSON)
 public abstract class CountryResource {
 
-	@Operation(summary = "Get all countrys", tags = {
-			"countrys" }, description = "Retrieve every country on the system", responses = {
-					@ApiResponse(description = "List of countrys", responseCode = "200", content = @Content(schema = @Schema(implementation = Country.class, type = "array"))) })
+	@Operation(summary = "Get all countries", tags = {
+			"countries" }, description = "Retrieve every country on the system", responses = {
+					@ApiResponse(description = "List of countries", responseCode = "200", content = @Content(schema = @Schema(implementation = Country.class, type = "array"))) })
 	@GET
-	public abstract Response getAll();
+	public abstract Response getAll() throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException;
 
 	@Operation(summary = "Get country by ID", tags = {
-			"countrys" }, description = "Retrieve the country with the specified ID", responses = {
+			"countries" }, description = "Retrieve the country with the specified ID", responses = {
 					@ApiResponse(description = "Country", responseCode = "200", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Country.class)))),
 					@ApiResponse(description = "Country not found", responseCode = "404") })
 	@GET
 	@Path("/{id}")
 	@Hidden
 	public abstract Response getOne(
-			@Parameter(description = "ID of the country to retrieve", schema = @Schema(type = "string", format = "id", description = "param ID of the country to retrieve"), required = true) @PathParam(value = "id") String id) throws CountryNotFoundException;
+			@Parameter(description = "ID of the country to retrieve", schema = @Schema(type = "integer", format = "id", description = "param ID of the country to retrieve"), required = true) @PathParam(value = "id") Integer id) throws CountryNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException;
 
 	@Operation(summary = "Create a new country", tags = {
-			"countrys" }, description = "Create a new country with specified data", responses = {
+			"countries" }, description = "Create a new country with specified data", responses = {
 					@ApiResponse(description = "Country", responseCode = "201", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Country.class))),
 					@ApiResponse(description = "Validation errors", responseCode = "400", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ValidationErrorDto.class)))) })
 	@POST
 	public abstract Response create(
 			@Parameter(description = "Country to create", schema = @Schema(implementation = Country.class), required = true) Country country)
-			throws InvalidEntityException;
+			throws InvalidEntityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException;
 
 	@Operation(summary = "Update country by ID", tags = {
-			"countrys" }, description = "Update the country with the specified ID and new data", responses = {
+			"countries" }, description = "Update the country with the specified ID and new data", responses = {
 					@ApiResponse(description = "Country", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Country.class))),
 					@ApiResponse(description = "Validation errors", responseCode = "400", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ValidationErrorDto.class)))),
 					@ApiResponse(description = "Country not found", responseCode = "404") })
@@ -62,19 +65,29 @@ public abstract class CountryResource {
 	@Path("/{id}")
 	@Hidden
 	public abstract Response update(
-			@Parameter(description = "ID of the country to update", schema = @Schema(type = "string", format = "uuid", description = "param ID of the country to update"), required = true) @PathParam(value = "id") String id,
+			@Parameter(description = "ID of the country to update", schema = @Schema(type = "integer", format = "uuid", description = "param ID of the country to update"), required = true) @PathParam(value = "id") Integer id,
 			@Parameter(description = "New data for the country", schema = @Schema(implementation = Country.class), required = true) Country country)
-			throws InvalidEntityException, CountryNotFoundException;
+			throws InvalidEntityException, CountryNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException;
 
 	@Operation(summary = "Delete country by ID", tags = {
-			"countrys" }, description = "Delete the country with the specified ID", responses = {
+			"countries" }, description = "Delete the country with the specified ID", responses = {
 					@ApiResponse(description = "Country deleted", responseCode = "204"),
 					@ApiResponse(description = "Country not found", responseCode = "404") })
 	@DELETE
 	@Path("/{id}")
 	@Hidden
 	public abstract Response delete(
-			@Parameter(description = "ID of the country to update", schema = @Schema(type = "string", format = "uuid", description = "param ID of the country to update"), required = true) @PathParam(value = "id") String id) throws CountryNotFoundException;
+			@Parameter(description = "ID of the country to update", schema = @Schema(type = "integer", format = "uuid", description = "param ID of the country to update"), required = true) @PathParam(value = "id") Integer id) throws CountryNotFoundException;
 			
 
+	@Operation(summary = "Get country's cars by brand ID", tags = {
+	"countries" }, description = "Retrieve country's cars with the specified country ID", responses = {
+			@ApiResponse(description = "Cars", responseCode = "200", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Car.class)))),
+			@ApiResponse(description = "Country not found", responseCode = "404") })
+	@GET
+	@Path("/{id}/cars")
+	@Hidden
+	public abstract Response getCars(
+			@Parameter(description = "ID of the country from which to get cars", schema = @Schema(type = "integer", format = "integer", description = "ID of the country from which to get cars"), required = true) @PathParam(value = "id") Integer id)
+			throws CountryNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException;
 }

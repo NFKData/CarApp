@@ -10,12 +10,12 @@ public interface CountryService {
 
 	List<Country> getAllCountries();
 
-	Country getCountry(String id) throws CountryNotFoundException;
+	Country getCountry(Integer id) throws CountryNotFoundException;
 
 	Country createCountry(Country country) throws InvalidEntityException;
 
 	Country updateCountry(Country country) throws InvalidEntityException, CountryNotFoundException;
 
-	void deleteCountry(String id) throws CountryNotFoundException;
+	void deleteCountry(Integer id) throws CountryNotFoundException;
 
 }

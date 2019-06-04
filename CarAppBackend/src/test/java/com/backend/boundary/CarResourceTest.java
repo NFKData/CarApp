@@ -8,6 +8,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,19 +18,28 @@ import javax.ws.rs.core.Response.Status;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import com.backend.control.CarService;
 import com.backend.entity.Brand;
 import com.backend.entity.Car;
 import com.backend.entity.Country;
+import com.backend.entity.dto.CarDto;
+import com.backend.entity.dto.helper.DtoHelper;
 import com.backend.exception.CarNotFoundException;
 import com.backend.exception.InvalidEntityException;
 
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(DtoHelper.class)
 public class CarResourceTest {
 
 	private static final String DEFAULT_ID = "123";
+	private static final Integer DEFAULT_ID_INT = 123;
 	@Mock
 	private CarService carService;
 	@InjectMocks
@@ -41,57 +51,70 @@ public class CarResourceTest {
 	}
 
 	@Test
-	public void whenGettingAllCars_shouldReturnOk() {
-		List<Car> carsExpected = new ArrayList<Car>();
+	public void whenGettingAllCars_shouldReturnOk() throws Exception {
+		List<Car> carsExpected = new ArrayList<>();
 		carsExpected.add(new Car());
 		carsExpected.get(0).setId(DEFAULT_ID);
 		when(carService.getAllCars()).thenReturn(carsExpected);
+		List<CarDto> entitiesExpected = new ArrayList<>(); 
+		entitiesExpected.add(new CarDto(carsExpected.get(0)));
+		PowerMockito.mockStatic(DtoHelper.class);
+		PowerMockito.when(DtoHelper.entityListToDtoList(carsExpected, CarDto.class)).thenReturn(entitiesExpected);
 		Response response = carResource.getAll();
 		assertEquals(Status.OK, Status.fromStatusCode(response.getStatus()));
-		assertEquals(carsExpected, response.getEntity());
+		assertEquals(entitiesExpected, response.getEntity());
 		verify(carService).getAllCars();
+		PowerMockito.verifyStatic(DtoHelper.class);
 	}
 
 	@Test
-	public void whenGettingOneCar_shouldReturnOk() throws CarNotFoundException {
+	public void whenGettingOneCar_shouldReturnOk() throws CarNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		Car carExpected = new Car();
 		carExpected.setId(DEFAULT_ID);
 		when(carService.getCar(carExpected.getId())).thenReturn(carExpected);
+		CarDto dtoExpected = new CarDto(carExpected);
+		PowerMockito.mockStatic(DtoHelper.class);
+		PowerMockito.when(DtoHelper.entityToDto(carExpected, CarDto.class)).thenReturn(dtoExpected);
 		Response response = carResource.getOne(carExpected.getId());
 		assertEquals(Status.OK, Status.fromStatusCode(response.getStatus()));
-		assertEquals(carExpected, response.getEntity());
+		assertEquals(dtoExpected, response.getEntity());
 		verify(carService).getCar(carExpected.getId());
+		PowerMockito.verifyStatic(DtoHelper.class);
 	}
 	
 	@Test(expected = CarNotFoundException.class)
-	public void whenGettingAnNonexistentCar_shouldThrowCarNotFoundException() throws CarNotFoundException {
+	public void whenGettingAnNonexistentCar_shouldThrowCarNotFoundException() throws CarNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		when(carService.getCar(DEFAULT_ID)).thenThrow(new CarNotFoundException(DEFAULT_ID));
 		carResource.getOne(DEFAULT_ID);
 		verify(carService).getCar(DEFAULT_ID);
 	}
 
 	@Test
-	public void whenCreatingACar_shouldReturnCreated() throws InvalidEntityException {
+	public void whenCreatingACar_shouldReturnCreated() throws InvalidEntityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		Car toCreate = new Car();
 		Brand brand = new Brand();
-		brand.setId(DEFAULT_ID);
+		brand.setId(DEFAULT_ID_INT);
 		brand.setName("BMW");
 		Country country = new Country();
-		country.setId(DEFAULT_ID);
+		country.setId(DEFAULT_ID_INT);
 		country.setName("Spain");
 		toCreate.setBrand(brand);
 		toCreate.setCountry(country);
 		toCreate.setRegistration(LocalDateTime.now());
-		toCreate.prePersit();
+		toCreate.prePersist();
 		when(carService.createCar(toCreate)).thenReturn(toCreate);
+		CarDto expectedDto = new CarDto(toCreate);
+		PowerMockito.mockStatic(DtoHelper.class);
+		PowerMockito.when(DtoHelper.entityToDto(toCreate, CarDto.class)).thenReturn(expectedDto);
 		Response response = carResource.create(toCreate);
 		assertEquals(Status.CREATED, Status.fromStatusCode(response.getStatus()));
-		assertEquals(toCreate, response.getEntity());
+		assertEquals(expectedDto, response.getEntity());
 		verify(carService).createCar(toCreate);
+		PowerMockito.verifyStatic(DtoHelper.class);
 	}
 	
 	@Test(expected = InvalidEntityException.class)
-	public void whenCreatingAnInvalidCar_shouldThrowInvalidEntityException() throws InvalidEntityException {
+	public void whenCreatingAnInvalidCar_shouldThrowInvalidEntityException() throws InvalidEntityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		Car car = new Car();
 		when(carService.createCar(car)).thenThrow(new InvalidEntityException(null));
 		carResource.create(car);
@@ -99,18 +122,22 @@ public class CarResourceTest {
 	}
 
 	@Test
-	public void whenUpdatingACar_shouldReturnOk() throws CarNotFoundException, InvalidEntityException {
+	public void whenUpdatingACar_shouldReturnOk() throws CarNotFoundException, InvalidEntityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		Car car = new Car();
 		car.setId(DEFAULT_ID);
 		when(carService.updateCar(car)).thenReturn(car);
+		CarDto dtoExpected = new CarDto(car);
+		PowerMockito.mockStatic(DtoHelper.class);
+		PowerMockito.when(DtoHelper.entityToDto(car, CarDto.class)).thenReturn(dtoExpected);
 		Response response = carResource.update(car.getId(), car);
 		assertEquals(Status.OK, Status.fromStatusCode(response.getStatus()));
-		assertEquals(car, response.getEntity());
+		assertEquals(dtoExpected, response.getEntity());
 		verify(carService).updateCar(car);
+		PowerMockito.verifyStatic(DtoHelper.class);
 	}
 	
 	@Test(expected = CarNotFoundException.class)
-	public void whenUpdatingAnNonexistentCar_shouldThrowCarNotFoundException() throws CarNotFoundException, InvalidEntityException {
+	public void whenUpdatingAnNonexistentCar_shouldThrowCarNotFoundException() throws CarNotFoundException, InvalidEntityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		Car car = new Car();
 		car.setId(DEFAULT_ID);
 		when(carService.updateCar(car)).thenThrow(new CarNotFoundException(DEFAULT_ID));
@@ -119,7 +146,7 @@ public class CarResourceTest {
 	}
 	
 	@Test(expected = InvalidEntityException.class)
-	public void whenUpdatingAnInvalidCar_shouldThrowInvalidEntityException() throws InvalidEntityException, CarNotFoundException {
+	public void whenUpdatingAnInvalidCar_shouldThrowInvalidEntityException() throws InvalidEntityException, CarNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		Car car = new Car();
 		car.setId(DEFAULT_ID);
 		when(carService.updateCar(car)).thenThrow(new InvalidEntityException(null));

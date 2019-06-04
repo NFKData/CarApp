@@ -28,9 +28,9 @@ public class BrandNotFoundException extends CarApiBaseException {
 	/**
 	 * Create an exception with the default message and the Brand's ID
 	 * that provoked it
-	 * @param brandId Brand's ID that provoked the exception
+	 * @param id Brand's ID that provoked the exception
 	 */
-	public BrandNotFoundException(String brandId) {
-		super(DEFAULT_MESSAGE + brandId, Status.NOT_FOUND);
+	public BrandNotFoundException(Integer id) {
+		super(DEFAULT_MESSAGE + id, Status.NOT_FOUND);
 	}
 }
