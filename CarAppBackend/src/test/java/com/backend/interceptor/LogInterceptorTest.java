@@ -7,7 +7,6 @@ import java.lang.reflect.Method;
 
 import javax.interceptor.InvocationContext;
 
-import org.apache.logging.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;

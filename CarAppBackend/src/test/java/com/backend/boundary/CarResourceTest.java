@@ -21,7 +21,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import com.backend.control.CarService;
+import com.backend.entity.Brand;
 import com.backend.entity.Car;
+import com.backend.entity.Country;
 import com.backend.exception.CarNotFoundException;
 import com.backend.exception.InvalidEntityException;
 
@@ -71,8 +73,14 @@ public class CarResourceTest {
 	@Test
 	public void whenCreatingACar_shouldReturnCreated() throws InvalidEntityException {
 		Car toCreate = new Car();
-		toCreate.setBrand("BMW");
-		toCreate.setCountry("Spain");
+		Brand brand = new Brand();
+		brand.setId(DEFAULT_ID);
+		brand.setName("BMW");
+		Country country = new Country();
+		country.setId(DEFAULT_ID);
+		country.setName("Spain");
+		toCreate.setBrand(brand);
+		toCreate.setCountry(country);
 		toCreate.setRegistration(LocalDateTime.now());
 		toCreate.prePersit();
 		when(carService.createCar(toCreate)).thenReturn(toCreate);

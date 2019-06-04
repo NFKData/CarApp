@@ -7,6 +7,8 @@ import javax.interceptor.Interceptors;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
@@ -34,19 +36,21 @@ public class Car {
 	@Id
 	private String id;
 
-	@Column(name = "brand")
-	@NotNull(message = "Brand mustn't be null")
-	private String brand;
+	@NotNull(message = "Brand cannot be null")
+	@ManyToOne
+	@JoinColumn(name = "brand")
+	private Brand brand;
 
 	@Column(name = "registration")
 	@XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
 	@NotNull(message = "Registration mustn't be null and has to have the ISO format")
 	private LocalDateTime registration;
 
-	@Column(name = "country")
 	@NotNull(message = "Country mustn't be null")
-	private String country;
-
+	@ManyToOne
+	@JoinColumn(name = "country")
+	private Country country;
+	
 	@Hidden
 	@Column(name = "created_at")
 	private LocalDateTime createdAt;
@@ -74,11 +78,11 @@ public class Car {
 		this.id = id;
 	}
 
-	public String getBrand() {
+	public Brand getBrand() {
 		return brand;
 	}
 
-	public void setBrand(String brand) {
+	public void setBrand(Brand brand) {
 		this.brand = brand;
 	}
 
@@ -90,11 +94,11 @@ public class Car {
 		this.registration = registration;
 	}
 
-	public String getCountry() {
+	public Country getCountry() {
 		return country;
 	}
 
-	public void setCountry(String country) {
+	public void setCountry(Country country) {
 		this.country = country;
 	}
 
