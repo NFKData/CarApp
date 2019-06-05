@@ -44,10 +44,10 @@ public class CountryServiceImpl implements CountryService {
 
 	@Override
 	public Country updateCountry(Country country) throws InvalidEntityException, CountryNotFoundException {
-		ValidationHelper.validateCountry(country);
 		Country auxCountry = getCountry(country.getId());
 		auxCountry.getName();
-		return em.merge(country);
+		ValidationHelper.validateCountry(auxCountry);
+		return em.merge(auxCountry);
 	}
 
 	@Override

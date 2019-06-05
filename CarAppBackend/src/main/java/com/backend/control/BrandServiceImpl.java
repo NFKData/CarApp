@@ -44,10 +44,10 @@ public class BrandServiceImpl implements BrandService {
 
 	@Override
 	public Brand updateBrand(Brand brand) throws InvalidEntityException, BrandNotFoundException {
-		ValidationHelper.validateBrand(brand);
 		Brand auxBrand = getBrand(brand.getId());
 		auxBrand.setName(brand.getName());
-		return em.merge(brand);
+		ValidationHelper.validateBrand(auxBrand);
+		return em.merge(auxBrand);
 	}
 
 	@Override

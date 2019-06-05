@@ -30,7 +30,7 @@ public class Brand {
 	@Column(name = "brand_id")
 	private Integer id;
 	
-	@NotNull(message = "Name cannot be null")
+	@NotNull(message = "Name mustn't be null")
 	@Column(name = "name")
 	private String name;
 	

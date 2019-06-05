@@ -44,11 +44,11 @@ public class CarServiceImpl implements CarService {
 
 	@Override
 	public Car updateCar(Car car) throws CarNotFoundException, InvalidEntityException {
-		ValidationHelper.validateCar(car);
 		Car auxCar = getCar(car.getId());
 		auxCar.setBrand(car.getBrand());
 		auxCar.setCountry(car.getCountry());
 		auxCar.setRegistration(car.getRegistration());
+		ValidationHelper.validateCar(auxCar);
 		return em.merge(auxCar);
 	}
 
