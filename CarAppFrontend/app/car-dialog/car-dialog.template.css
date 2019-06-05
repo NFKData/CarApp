@@ -1,0 +1,15 @@
+em {
+    color: red;
+}
+
+.errMsg {
+    color: red;
+}
+
+.errMsg > em {
+    color: black;
+}
+
+.ng-invalid.ng-touched {
+    border-color: red;
+}

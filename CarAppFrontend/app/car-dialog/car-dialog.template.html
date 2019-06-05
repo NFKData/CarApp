@@ -1,0 +1,73 @@
+<div class="modal fade carDialog" tabindex="-1" role="dialog" aria-labelledby="carDialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Car {{ $ctrl.car.id }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form name="form" id="form">
+                    <div class="form-row">
+                        <label for="country">Country: <em>*</em></label>
+                        <input type="text" class="form-control" name="country" id="country"
+                            ng-if="$ctrl.type != 'delete'" ng-model="$ctrl.car.country" required>
+                        <div ng-show="form.$submitted || form.country.$touched">
+                            <div ng-show="form.country.$error.required" ng-if="$ctrl.type != 'delete'">This field is
+                                required</div>
+                        </div>
+                        <input type="text" class="form-control" id="country" ng-if="$ctrl.type == 'delete'"
+                            ng-model="$ctrl.car.country" readonly disabled>
+                    </div>
+                    <div class="form-row">
+                        <label for="brand">Brand: <em>*</em></label>
+                        <input type="text" class="form-control" name="brand" id="brand" ng-if="$ctrl.type != 'delete'"
+                            ng-model="$ctrl.car.brand" required>
+                        <div ng-show="form.$submitted || form.brand.$touched">
+                            <div ng-show="form.brand.$error.required" ng-if="$ctrl.type != 'delete'">This field is
+                                required</div>
+                        </div>
+                        <input type="text" class="form-control" id="brand" ng-if="$ctrl.type == 'delete'"
+                            ng-model="$ctrl.car.brand" readonly disabled>
+                    </div>
+                    <div class="form-row">
+                        <label for="registration">Registration: <em>*</em></label>
+                    </div>
+                    <div class="form-row">
+                        <div class="input-group" moment-picker="$ctrl.car.registration" format="DD/MM/YYYY HH:mm:ss"
+                            set-on-select="true" id="registration" change="$ctrl.registrationChange(newValue, oldValue)"
+                            ng-if="$ctrl.type != 'delete'">
+                            <span class="input-group-addon">
+                                <i class="octicon octicon-calendar"></i>
+                            </span>
+                            <input class="form-control" name="registration" ng-model="$ctrl.car.registration" required>
+                        </div>
+                        <div ng-show="form.$submitted || form.registration.$touched">
+                            <div ng-show="form.registration.$error.required">This field is required</div>
+                        </div>
+                        <div class="input-group" moment-picker="$ctrl.car.registration" format="DD/MM/YYYY HH:mm:ss"
+                            set-on-select="true" id="registration" ng-if="$ctrl.type == 'delete'">
+                            <span class="input-group-addon">
+                                <i class="octicon octicon-calendar"></i>
+                            </span>
+                            <input class="form-control" ng-model="$ctrl.car.registration" required readonly disabled>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <span class="errMsg">All fields with <em>*</em> symbol are required</span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" ng-if="$ctrl.type == 'update'"
+                    ng-click="$ctrl.update()">Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" ng-if="$ctrl.type == 'delete'"
+                    ng-click="$ctrl.delete()">Delete</button>
+                <button type="button" class="btn btn-success" ng-click="$ctrl.create()"
+                    ng-if="$ctrl.type == 'create'">Save</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
