@@ -1,0 +1,20 @@
+<div class="row">
+    <div class="col-4" ng-repeat="car in $root.carList track by $index">
+        <div class="card align-self-center">
+            <div class="card-header">
+                <h5 class="card-title">{{ car.id | uppercase }}</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">{{ car.country }}</p>
+                <button ng-click="$ctrl.openCarDialog('delete', car.id)"
+                    class="btn btn-danger float-right btn-margin-right">Delete</button>
+                <button ng-click="$ctrl.openCarDialog('update', car.id)"
+                    class="btn btn-info float-right btn-margin-right mr-2">Detail</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-4 d-flex align-items-center">
+        <button ng-click="$ctrl.openCarDialog('create')" type="button" class="btn btn-success">Create new
+            car</button>
+    </div>
+</div>
