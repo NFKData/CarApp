@@ -40,8 +40,7 @@ public class CountryResourceImpl extends CountryResource {
 	}
 
 	@Override
-	public Response update(Integer id, Country entity) throws InvalidEntityException, CountryNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-		Country country = (Country) entity;
+	public Response update(Integer id, Country country) throws InvalidEntityException, CountryNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		country.setId(id);
 		return Response.status(Status.OK).entity(DtoHelper.entityToDto(countryService.updateCountry(country), CountryDto.class)).build();
 	}
@@ -54,6 +53,6 @@ public class CountryResourceImpl extends CountryResource {
 
 	@Override
 	public Response getCars(Integer id) throws CountryNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-		return Response.status(Status.OK).entity(new GenericEntity<List<CarDto>>(DtoHelper.entityListToDtoList(countryService.getCountry(id).getCars(), CarDto.class)) {}).build();
+		return Response.status(Status.OK).entity(new GenericEntity<List<CarDto>>(DtoHelper.entityListToDtoList(countryService.getCountryCars(id), CarDto.class)) {}).build();
 	}
 }

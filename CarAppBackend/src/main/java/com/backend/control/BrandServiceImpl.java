@@ -7,7 +7,11 @@ import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+
 import com.backend.entity.Brand;
+import com.backend.entity.Car;
 import com.backend.exception.BrandNotFoundException;
 import com.backend.exception.InvalidEntityException;
 import com.backend.helper.ValidationHelper;
@@ -44,15 +48,25 @@ public class BrandServiceImpl implements BrandService {
 
 	@Override
 	public Brand updateBrand(Brand brand) throws InvalidEntityException, BrandNotFoundException {
+		ValidationHelper.validateBrand(brand);
 		Brand auxBrand = getBrand(brand.getId());
 		auxBrand.setName(brand.getName());
-		ValidationHelper.validateBrand(auxBrand);
 		return em.merge(auxBrand);
 	}
 
 	@Override
 	public void deleteBrand(Integer id) throws BrandNotFoundException {
 		em.remove(getBrand(id));
+	}
+	
+	@Override
+	public List<Car> getBrandCars(Integer id) {
+		Session session = em.getEntityManagerFactory().unwrap(SessionFactory.class).getCurrentSession();
+		Brand brand = em.find(Brand.class, id);
+		List<Car> cars = brand.getCars();
+		cars.size();
+		session.close();
+		return cars;
 	}
 
 }

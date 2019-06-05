@@ -46,10 +46,9 @@ public class BrandResourceImpl extends BrandResource {
 	}
 
 	@Override
-	public Response update(Integer id, Brand entity)
+	public Response update(Integer id, Brand brand)
 			throws InvalidEntityException, BrandNotFoundException, InstantiationException, IllegalAccessException,
 			IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-		Brand brand = (Brand) entity;
 		brand.setId(id);
 		return Response.status(Status.OK).entity(DtoHelper.entityToDto(brandService.updateBrand(brand), BrandDto.class))
 				.build();
@@ -64,8 +63,9 @@ public class BrandResourceImpl extends BrandResource {
 	@Override
 	public Response getCars(Integer id) throws BrandNotFoundException, InstantiationException, IllegalAccessException,
 			IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+		
 		return Response.status(Status.OK).entity(new GenericEntity<List<CarDto>>(
-				DtoHelper.entityListToDtoList(brandService.getBrand(id).getCars(), CarDto.class)) {
+				DtoHelper.entityListToDtoList(brandService.getBrandCars(id), CarDto.class)) {
 		}).build();
 	}
 }

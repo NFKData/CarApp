@@ -100,7 +100,6 @@ public class BrandServiceTest {
 		PowerMockito.mockStatic(ValidationHelper.class);
 		when(em.find(Brand.class, DEFAULT_ID)).thenReturn(brand);
 		when(em.merge(brand)).thenReturn(brand);
-		PowerMockito.doNothing().when(ValidationHelper.class);
 		assertEquals(brand, brandService.updateBrand(brand));
 		verify(em).merge(brand);
 		PowerMockito.verifyStatic(ValidationHelper.class);
@@ -116,8 +115,10 @@ public class BrandServiceTest {
 	}
 
 	@Test(expected = InvalidEntityException.class)
-	public void whenUpdatingAnInvalidBrand_shouldThrownInvalidEntityException() throws Exception {
+	public void whenUpdatingAnInvalidBrand_shouldThrowInvalidEntityException() throws Exception {
 		Brand brand = new Brand();
+		brand.setId(DEFAULT_ID);
+		when(em.find(Brand.class, DEFAULT_ID)).thenReturn(brand);
 		PowerMockito.mockStatic(ValidationHelper.class);
 		PowerMockito.doThrow(new InvalidEntityException(new ArrayList<>())).when(ValidationHelper.class, "validateBrand",
 				brand);

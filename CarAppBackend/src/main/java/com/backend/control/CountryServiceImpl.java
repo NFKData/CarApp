@@ -7,6 +7,10 @@ import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+
+import com.backend.entity.Car;
 import com.backend.entity.Country;
 import com.backend.exception.CountryNotFoundException;
 import com.backend.exception.InvalidEntityException;
@@ -44,15 +48,25 @@ public class CountryServiceImpl implements CountryService {
 
 	@Override
 	public Country updateCountry(Country country) throws InvalidEntityException, CountryNotFoundException {
+		ValidationHelper.validateCountry(country);
 		Country auxCountry = getCountry(country.getId());
 		auxCountry.getName();
-		ValidationHelper.validateCountry(auxCountry);
 		return em.merge(auxCountry);
 	}
 
 	@Override
 	public void deleteCountry(Integer id) throws CountryNotFoundException {
 		em.remove(getCountry(id));
+	}
+
+	@Override
+	public List<Car> getCountryCars(Integer id) {
+		Session session = em.getEntityManagerFactory().unwrap(SessionFactory.class).openSession();
+		Country country = em.find(Country.class, id);
+		List<Car> cars = country.getCars();
+		cars.size();
+		session.close();
+		return cars;
 	}
 
 }

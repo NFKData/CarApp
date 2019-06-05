@@ -40,7 +40,7 @@ public class Country {
 	@Column(name = "last_updated")
 	private LocalDateTime lastUpdated;
 	
-	@OneToMany(mappedBy = "country", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "country", fetch = FetchType.LAZY)
 	@Hidden
 	private List<Car> cars;
 	

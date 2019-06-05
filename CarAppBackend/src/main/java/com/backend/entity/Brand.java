@@ -42,7 +42,7 @@ public class Brand {
 	@Column(name = "last_updated")
 	private LocalDateTime lastUpdated;
 	
-	@OneToMany(mappedBy = "brand", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "brand", fetch = FetchType.LAZY)
 	@JsonIgnore
 	private List<Car> cars;
 

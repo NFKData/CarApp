@@ -2,6 +2,7 @@ package com.backend.control;
 
 import java.util.List;
 
+import com.backend.entity.Car;
 import com.backend.entity.Country;
 import com.backend.exception.CountryNotFoundException;
 import com.backend.exception.InvalidEntityException;
@@ -45,5 +46,12 @@ public interface CountryService {
 	 * @throws CountryNotFoundException if there's no country with the received ID
 	 */
 	public void deleteCountry(Integer id) throws CountryNotFoundException;
+	
+	/**
+	 * Retrieve the list of cars of the specified {@link Country}
+	 * @param id ID of the country
+	 * @return List of the found cars
+	 */
+	public List<Car> getCountryCars(Integer id);
 
 }

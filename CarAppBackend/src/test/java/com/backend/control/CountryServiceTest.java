@@ -100,7 +100,6 @@ public class CountryServiceTest {
 		PowerMockito.mockStatic(ValidationHelper.class);
 		when(em.find(Country.class, DEFAULT_ID)).thenReturn(country);
 		when(em.merge(country)).thenReturn(country);
-		PowerMockito.doNothing().when(ValidationHelper.class);
 		assertEquals(country, countryService.updateCountry(country));
 		verify(em).merge(country);
 		PowerMockito.verifyStatic(ValidationHelper.class);
@@ -116,11 +115,12 @@ public class CountryServiceTest {
 	}
 
 	@Test(expected = InvalidEntityException.class)
-	public void whenUpdatingAnInvalidCountry_shouldThrownInvalidEntityException() throws Exception {
+	public void whenUpdatingAnInvalidCountry_shouldThrowInvalidEntityException() throws Exception {
 		Country country = new Country();
+		country.setId(DEFAULT_ID);
+		when(em.find(Country.class, DEFAULT_ID)).thenReturn(country);
 		PowerMockito.mockStatic(ValidationHelper.class);
-		PowerMockito.doThrow(new InvalidEntityException(new ArrayList<>())).when(ValidationHelper.class, "validateCountry",
-				country);
+		PowerMockito.doThrow(new InvalidEntityException(null)).when(ValidationHelper.class, "validateCountry", country);
 		countryService.updateCountry(country);
 		PowerMockito.verifyStatic(ValidationHelper.class);
 	}

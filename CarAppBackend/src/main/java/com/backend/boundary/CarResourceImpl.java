@@ -41,8 +41,7 @@ public class CarResourceImpl extends CarResource {
 	}
 
 	@Override
-	public Response update(String id, Car entity) throws CarNotFoundException, InvalidEntityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-		Car car = (Car) entity;
+	public Response update(String id, Car car) throws CarNotFoundException, InvalidEntityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		car.setId(id);
 		return Response.status(Status.OK).entity(DtoHelper.entityToDto(carService.updateCar(car), CarDto.class)).build();
 	}
