@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.PostPersist;
+import javax.persistence.PostUpdate;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -63,13 +64,13 @@ public class Car {
 	@Hidden
 	@Column(name = "last_updated")
 	private LocalDateTime lastUpdated;
-
+	
 	@PrePersist
 	public void prePersist() {
 		this.createdAt = LocalDateTime.now();
 		this.id = UUID.randomUUID().toString();
 	}
-
+	
 	@PreUpdate
 	public void preUpdate() {
 		this.lastUpdated = LocalDateTime.now();
@@ -80,8 +81,17 @@ public class Car {
 		InitialContext ctx = new InitialContext();
 		BrandService brandService = (BrandService) ctx.lookup("java:comp/env/brandService");
 		CountryService countryService = (CountryService) ctx.lookup("java:comp/env/countryService");
-		this.brand = brandService.getBrand(this.brand.getId());
-		this.country = countryService.getCountry(this.country.getId());
+		if (this.brand != null) {
+			this.brand = brandService.getBrand(this.brand.getId());
+		}
+		if (this.country != null) {
+			this.country = countryService.getCountry(this.country.getId());
+		}
+	}
+	
+	@PostUpdate
+	public void postUpdate() throws BrandNotFoundException, CountryNotFoundException, NamingException {
+		postPersist();
 	}
 
 	public String getId() {
