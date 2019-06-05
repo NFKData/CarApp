@@ -46,7 +46,7 @@ public class BrandServiceImpl implements BrandService {
 	public Brand updateBrand(Brand brand) throws InvalidEntityException, BrandNotFoundException {
 		ValidationHelper.validateBrand(brand);
 		Brand auxBrand = getBrand(brand.getId());
-		auxBrand.getName();
+		auxBrand.setName(brand.getName());
 		return em.merge(brand);
 	}
 
