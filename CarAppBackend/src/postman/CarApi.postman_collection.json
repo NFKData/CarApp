@@ -2818,7 +2818,7 @@
 												{
 													"description": "UUID of the car to update",
 													"key": "id",
-													"value": "78d88789-eccb-4b37-88af-fb060017edce"
+													"value": "{{carUUID}}"
 												}
 											]
 										},
@@ -3611,7 +3611,7 @@
 	],
 	"variable": [
 		{
-			"id": "a22d1b47-1dea-4eed-8448-3ec63dd96f06",
+			"id": "4adbd985-1f12-403b-883c-2e53c686de88",
 			"key": "baseUrl",
 			"value": "http://everis-carapp.herokuapp.com/car-api",
 			"type": "string"
