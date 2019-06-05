@@ -50,7 +50,7 @@ public interface BrandService {
 	 * Delete a {@link Brand} based on the received id
 	 * 
 	 * @param id ID of the brand to be deleted
-	 * @throws BrandNotFoundException if there's no brand with the received ID
+	 * @throws BrandNotFoundException If there's no brand with the received ID
 	 */
 	public void deleteBrand(Integer id) throws BrandNotFoundException;
 
@@ -58,7 +58,8 @@ public interface BrandService {
 	 * Retrieve the list of cars of the specified {@link Brand}
 	 * @param id ID of the brand
 	 * @return List of the found cars
+	 * @throws BrandNotFoundException If there's no brand with the received ID
 	 */
-	public List<Car> getBrandCars(Integer id);
+	public List<Car> getBrandCars(Integer id) throws BrandNotFoundException;
 
 }

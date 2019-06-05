@@ -60,7 +60,7 @@ public class CountryServiceImpl implements CountryService {
 	}
 
 	@Override
-	public List<Car> getCountryCars(Integer id) {
+	public List<Car> getCountryCars(Integer id) throws CountryNotFoundException {
 		Session session = em.getEntityManagerFactory().unwrap(SessionFactory.class).openSession();
 		Country country = em.find(Country.class, id);
 		List<Car> cars = country.getCars();

@@ -161,29 +161,26 @@ public class CountryResourceTest {
 	}
 	
 	@Test
-	public void whenGettingCarsOfACountry__shouldReturnOk() throws CountryNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-		Country expectedCountry = new Country();
-		expectedCountry.setId(DEFAULT_ID);
+	public void whenGettingCarsOfACountry_shouldReturnOk() throws CountryNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		List<Car> expectedCars = new ArrayList<>();
 		expectedCars.add(new Car());
 		expectedCars.get(0).setId(DEFAULT_ID.toString());
-		expectedCountry.setCars(expectedCars);
-		when(countryService.getCountry(DEFAULT_ID)).thenReturn(expectedCountry);
+		when(countryService.getCountryCars(DEFAULT_ID)).thenReturn(expectedCars);
 		List<CarDto> expectedDto = new ArrayList<>();
 		PowerMockito.mockStatic(DtoHelper.class);
 		PowerMockito.when(DtoHelper.entityListToDtoList(expectedCars, CarDto.class)).thenReturn(expectedDto);
 		Response response = countryResource.getCars(DEFAULT_ID);
 		assertEquals(Status.OK, Status.fromStatusCode(response.getStatus()));
 		assertEquals(expectedDto, response.getEntity());
-		verify(countryService).getCountry(DEFAULT_ID);
+		verify(countryService).getCountryCars(DEFAULT_ID);
 		PowerMockito.verifyStatic(DtoHelper.class);
 	}
 
 	@Test(expected = CountryNotFoundException.class)
 	public void whenGettingCarsOfANonExistentCountry_shouldThrowCountryNotFoundException() throws CountryNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-		when(countryService.getCountry(DEFAULT_ID)).thenThrow(new CountryNotFoundException(DEFAULT_ID));
+		when(countryService.getCountryCars(DEFAULT_ID)).thenThrow(new CountryNotFoundException(DEFAULT_ID));
 		countryResource.getCars(DEFAULT_ID);
-		verify(countryService).getCountry(DEFAULT_ID);
+		verify(countryService).getCountryCars(DEFAULT_ID);
 	}
 	
 }

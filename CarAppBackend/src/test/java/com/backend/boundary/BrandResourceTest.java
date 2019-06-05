@@ -161,29 +161,26 @@ public class BrandResourceTest {
 	}
 	
 	@Test
-	public void whenGettingCarsOfABrand__shouldReturnOk() throws BrandNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-		Brand expectedBrand = new Brand();
-		expectedBrand.setId(DEFAULT_ID);
+	public void whenGettingCarsOfABrand_shouldReturnOk() throws BrandNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		List<Car> expectedCars = new ArrayList<>();
 		expectedCars.add(new Car());
 		expectedCars.get(0).setId(DEFAULT_ID.toString());
-		expectedBrand.setCars(expectedCars);
-		when(brandService.getBrand(DEFAULT_ID)).thenReturn(expectedBrand);
+		when(brandService.getBrandCars(DEFAULT_ID)).thenReturn(expectedCars);
 		List<CarDto> expectedDto = new ArrayList<>();
 		PowerMockito.mockStatic(DtoHelper.class);
 		PowerMockito.when(DtoHelper.entityListToDtoList(expectedCars, CarDto.class)).thenReturn(expectedDto);
 		Response response = brandResource.getCars(DEFAULT_ID);
 		assertEquals(Status.OK, Status.fromStatusCode(response.getStatus()));
 		assertEquals(expectedDto, response.getEntity());
-		verify(brandService).getBrand(DEFAULT_ID);
+		verify(brandService).getBrandCars(DEFAULT_ID);
 		PowerMockito.verifyStatic(DtoHelper.class);
 	}
 
 	@Test(expected = BrandNotFoundException.class)
 	public void whenGettingCarsOfANonExistentBrand_shouldThrowBrandNotFoundException() throws BrandNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-		when(brandService.getBrand(DEFAULT_ID)).thenThrow(new BrandNotFoundException(DEFAULT_ID));
+		when(brandService.getBrandCars(DEFAULT_ID)).thenThrow(new BrandNotFoundException(DEFAULT_ID));
 		brandResource.getCars(DEFAULT_ID);
-		verify(brandService).getBrand(DEFAULT_ID);
+		verify(brandService).getBrandCars(DEFAULT_ID);
 	}
 	
 }

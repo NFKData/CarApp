@@ -43,7 +43,7 @@ public interface CountryService {
 	/**
 	 * Delete a {@link Country} based on the received id
 	 * @param id ID of the country to be deleted
-	 * @throws CountryNotFoundException if there's no country with the received ID
+	 * @throws CountryNotFoundException If there's no country with the received ID
 	 */
 	public void deleteCountry(Integer id) throws CountryNotFoundException;
 	
@@ -51,7 +51,8 @@ public interface CountryService {
 	 * Retrieve the list of cars of the specified {@link Country}
 	 * @param id ID of the country
 	 * @return List of the found cars
+	 * @throws CountryNotFoundException If there's no country with the received ID
 	 */
-	public List<Car> getCountryCars(Integer id);
+	public List<Car> getCountryCars(Integer id) throws CountryNotFoundException;
 
 }
