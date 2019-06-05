@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import io.swagger.v3.oas.annotations.Hidden;
 
@@ -27,6 +28,7 @@ public class Country {
 	@Column(name = "country_id")
 	private Integer id;
 	
+	@NotNull(message = "Name mustn't be null")
 	@Column(name = "name")
 	private String name;
 	
