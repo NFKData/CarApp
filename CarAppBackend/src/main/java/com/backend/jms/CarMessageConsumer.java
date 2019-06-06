@@ -31,6 +31,7 @@ public class CarMessageConsumer implements MessageListener {
 			Car param = mapper.readValue(message.getBody(String.class), Car.class);
 			createActions(param);
 			JMSExecutor.execute(JMSMappedActions.getInstance().getActions(Car.class, method));
+			JMSMappedActions.getInstance().clearActions(Car.class);
 		} catch (JMSException | IOException e) {
 			log.error("Unexpected error occurred. ", e);
 		}

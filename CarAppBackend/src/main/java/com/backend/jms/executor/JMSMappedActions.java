@@ -28,6 +28,13 @@ public class JMSMappedActions {
 		}
 	}
 	
+	public void clearActions(Class<?> type) {
+		Map<String, List<JMSAction>> mappedMethods = this.mappedActions.get(type);
+		for(String key : mappedMethods.keySet()) {
+			mappedMethods.get(key).clear();
+		}
+	}
+	
 	public List<JMSAction> getActions(Class<?> type, String method) {
 		Map<String, List<JMSAction>> mappedMethods = mappedActions.get(type);
 		if(mappedMethods == null) {

@@ -14,7 +14,6 @@ import org.apache.logging.log4j.Logger;
 import com.backend.entity.Brand;
 import com.backend.jms.executor.JMSExecutor;
 import com.backend.jms.executor.JMSMappedActions;
-import com.backend.jms.executor.action.PostCarAction;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @MessageDriven(activationConfig = {
@@ -31,6 +30,7 @@ public class BrandMessageConsumer implements MessageListener {
 			Brand param = mapper.readValue(message.getBody(String.class), Brand.class);
 			createActions(param);
 			JMSExecutor.execute(JMSMappedActions.getInstance().getActions(Brand.class, method));
+			JMSMappedActions.getInstance().clearActions(Brand.class);
 		} catch (JMSException | IOException e) {
 			log.error("Unexpected error occurred. ", e);
 		}
