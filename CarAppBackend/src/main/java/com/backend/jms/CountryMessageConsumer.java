@@ -14,10 +14,13 @@ import org.apache.logging.log4j.Logger;
 import com.backend.entity.Country;
 import com.backend.jms.executor.JMSExecutor;
 import com.backend.jms.executor.JMSMappedActions;
+import com.backend.jms.executor.action.DeleteCountryAction;
+import com.backend.jms.executor.action.PostCountryAction;
+import com.backend.jms.executor.action.PutCountryAction;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @MessageDriven(activationConfig = {
-		@ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "jms/CountryAppCountry"),
+		@ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "jms/CarAppCountry"),
 		@ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Topic") })
 public class CountryMessageConsumer implements MessageListener {
 
@@ -37,6 +40,9 @@ public class CountryMessageConsumer implements MessageListener {
 	}
 	
 	private void createActions(Country country) {
+		new PostCountryAction(country);
+		new PutCountryAction(country);
+		new DeleteCountryAction(country);
 	}
 
 }

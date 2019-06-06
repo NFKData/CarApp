@@ -14,7 +14,9 @@ import org.apache.logging.log4j.Logger;
 import com.backend.entity.Car;
 import com.backend.jms.executor.JMSExecutor;
 import com.backend.jms.executor.JMSMappedActions;
+import com.backend.jms.executor.action.DeleteCarAction;
 import com.backend.jms.executor.action.PostCarAction;
+import com.backend.jms.executor.action.PutCarAction;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @MessageDriven(activationConfig = {
@@ -39,6 +41,8 @@ public class CarMessageConsumer implements MessageListener {
 	
 	private void createActions(Car car) {
 		new PostCarAction(car);
+		new PutCarAction(car);
+		new DeleteCarAction(car);
 	}
 
 }

@@ -8,42 +8,42 @@ import javax.ws.rs.HttpMethod;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.backend.control.CarService;
-import com.backend.entity.Car;
-import com.backend.exception.CarNotFoundException;
+import com.backend.control.CountryService;
+import com.backend.entity.Country;
+import com.backend.exception.CountryNotFoundException;
 import com.backend.exception.InvalidEntityException;
 import com.backend.interceptor.LogInterceptor;
 import com.backend.jms.executor.JMSExecutor.JMSAction;
 import com.backend.jms.executor.JMSMappedActions;
 
 @Interceptors(LogInterceptor.class)
-public class PostCarAction implements JMSAction {
+public class PostCountryAction implements JMSAction {
 
 	Logger log = LogManager.getLogger("com.backend");
 	
-	private CarService carService;
+	private CountryService countryService;
 	
-	private Car car;
+	private Country country;
 	
-	public PostCarAction(Car car) {
-		this.car = car;
+	public PostCountryAction(Country country) {
+		this.country = country;
 		InitialContext ctx;
 		try {
 			ctx = new InitialContext();
-			this.carService = (CarService) ctx.lookup("java:comp/env/carService");
+			this.countryService = (CountryService) ctx.lookup("java:comp/env/countryService");
 		} catch (NamingException e) {
 			log.error("Unexpected error occurred.", e);
 		}
-		JMSMappedActions.getInstance().registerAction(Car.class, HttpMethod.POST, this);
+		JMSMappedActions.getInstance().registerAction(Country.class, HttpMethod.POST, this);
 	}
 
 	@Override
 	public void execute() {
 		try {
-			if(car != null) {
-				carService.createCar(car);
-			} else throw new CarNotFoundException(null);
-		} catch (CarNotFoundException | InvalidEntityException e) {
+			if(country != null) {
+				countryService.createCountry(country);
+			} else throw new CountryNotFoundException(null);
+		} catch (CountryNotFoundException | InvalidEntityException e) {
 			log.error("Unexpected error occurred.", e);
 		}
 	}
@@ -54,11 +54,11 @@ public class PostCarAction implements JMSAction {
 			return true;
 		if (getClass() != obj.getClass())
 			return false;
-		PostCarAction other = (PostCarAction) obj;
-		if (car == null) {
-			if (other.car != null)
+		PostCountryAction other = (PostCountryAction) obj;
+		if (country == null) {
+			if (other.country != null)
 				return false;
-		} else if (!car.equals(other.car))
+		} else if (!country.equals(other.country))
 			return false;
 		return true;
 	}

@@ -11,13 +11,12 @@ import org.apache.logging.log4j.Logger;
 import com.backend.control.CarService;
 import com.backend.entity.Car;
 import com.backend.exception.CarNotFoundException;
-import com.backend.exception.InvalidEntityException;
 import com.backend.interceptor.LogInterceptor;
 import com.backend.jms.executor.JMSExecutor.JMSAction;
 import com.backend.jms.executor.JMSMappedActions;
 
 @Interceptors(LogInterceptor.class)
-public class PostCarAction implements JMSAction {
+public class DeleteCarAction implements JMSAction {
 
 	Logger log = LogManager.getLogger("com.backend");
 	
@@ -25,7 +24,7 @@ public class PostCarAction implements JMSAction {
 	
 	private Car car;
 	
-	public PostCarAction(Car car) {
+	public DeleteCarAction(Car car) {
 		this.car = car;
 		InitialContext ctx;
 		try {
@@ -34,16 +33,16 @@ public class PostCarAction implements JMSAction {
 		} catch (NamingException e) {
 			log.error("Unexpected error occurred.", e);
 		}
-		JMSMappedActions.getInstance().registerAction(Car.class, HttpMethod.POST, this);
+		JMSMappedActions.getInstance().registerAction(Car.class, HttpMethod.DELETE, this);
 	}
 
 	@Override
 	public void execute() {
 		try {
 			if(car != null) {
-				carService.createCar(car);
+				carService.deleteCar(car.getId());
 			} else throw new CarNotFoundException(null);
-		} catch (CarNotFoundException | InvalidEntityException e) {
+		} catch (CarNotFoundException e) {
 			log.error("Unexpected error occurred.", e);
 		}
 	}
@@ -54,7 +53,7 @@ public class PostCarAction implements JMSAction {
 			return true;
 		if (getClass() != obj.getClass())
 			return false;
-		PostCarAction other = (PostCarAction) obj;
+		DeleteCarAction other = (DeleteCarAction) obj;
 		if (car == null) {
 			if (other.car != null)
 				return false;

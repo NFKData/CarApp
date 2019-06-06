@@ -8,42 +8,42 @@ import javax.ws.rs.HttpMethod;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.backend.control.CarService;
-import com.backend.entity.Car;
-import com.backend.exception.CarNotFoundException;
+import com.backend.control.BrandService;
+import com.backend.entity.Brand;
+import com.backend.exception.BrandNotFoundException;
 import com.backend.exception.InvalidEntityException;
 import com.backend.interceptor.LogInterceptor;
 import com.backend.jms.executor.JMSExecutor.JMSAction;
 import com.backend.jms.executor.JMSMappedActions;
 
 @Interceptors(LogInterceptor.class)
-public class PostCarAction implements JMSAction {
+public class PutBrandAction implements JMSAction {
 
 	Logger log = LogManager.getLogger("com.backend");
 	
-	private CarService carService;
+	private BrandService brandService;
 	
-	private Car car;
+	private Brand brand;
 	
-	public PostCarAction(Car car) {
-		this.car = car;
+	public PutBrandAction(Brand brand) {
+		this.brand = brand;
 		InitialContext ctx;
 		try {
 			ctx = new InitialContext();
-			this.carService = (CarService) ctx.lookup("java:comp/env/carService");
+			this.brandService = (BrandService) ctx.lookup("java:comp/env/brandService");
 		} catch (NamingException e) {
 			log.error("Unexpected error occurred.", e);
 		}
-		JMSMappedActions.getInstance().registerAction(Car.class, HttpMethod.POST, this);
+		JMSMappedActions.getInstance().registerAction(Brand.class, HttpMethod.PUT, this);
 	}
 
 	@Override
 	public void execute() {
 		try {
-			if(car != null) {
-				carService.createCar(car);
-			} else throw new CarNotFoundException(null);
-		} catch (CarNotFoundException | InvalidEntityException e) {
+			if(brand != null) {
+				brandService.updateBrand(brand);
+			} else throw new BrandNotFoundException(null);
+		} catch (BrandNotFoundException | InvalidEntityException e) {
 			log.error("Unexpected error occurred.", e);
 		}
 	}
@@ -54,11 +54,11 @@ public class PostCarAction implements JMSAction {
 			return true;
 		if (getClass() != obj.getClass())
 			return false;
-		PostCarAction other = (PostCarAction) obj;
-		if (car == null) {
-			if (other.car != null)
+		PutBrandAction other = (PutBrandAction) obj;
+		if (brand == null) {
+			if (other.brand != null)
 				return false;
-		} else if (!car.equals(other.car))
+		} else if (!brand.equals(other.brand))
 			return false;
 		return true;
 	}

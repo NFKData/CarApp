@@ -14,6 +14,9 @@ import org.apache.logging.log4j.Logger;
 import com.backend.entity.Brand;
 import com.backend.jms.executor.JMSExecutor;
 import com.backend.jms.executor.JMSMappedActions;
+import com.backend.jms.executor.action.DeleteBrandAction;
+import com.backend.jms.executor.action.PostBrandAction;
+import com.backend.jms.executor.action.PutBrandAction;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @MessageDriven(activationConfig = {
@@ -37,6 +40,9 @@ public class BrandMessageConsumer implements MessageListener {
 	}
 	
 	private void createActions(Brand brand) {
+		new PostBrandAction(brand);
+		new PutBrandAction(brand);
+		new DeleteBrandAction(brand);
 	}
 
 }
