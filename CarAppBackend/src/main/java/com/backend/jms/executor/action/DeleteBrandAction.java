@@ -11,7 +11,6 @@ import org.apache.logging.log4j.Logger;
 import com.backend.control.BrandService;
 import com.backend.entity.Brand;
 import com.backend.exception.BrandNotFoundException;
-import com.backend.exception.InvalidEntityException;
 import com.backend.interceptor.LogInterceptor;
 import com.backend.jms.executor.JMSExecutor.JMSAction;
 import com.backend.jms.executor.JMSMappedActions;
@@ -41,9 +40,9 @@ public class DeleteBrandAction implements JMSAction {
 	public void execute() {
 		try {
 			if(brand != null) {
-				brandService.updateBrand(brand);
+				brandService.deleteBrand(brand.getId());
 			} else throw new BrandNotFoundException(null);
-		} catch (BrandNotFoundException | InvalidEntityException e) {
+		} catch (BrandNotFoundException e) {
 			log.error("Unexpected error occurred.", e);
 		}
 	}
