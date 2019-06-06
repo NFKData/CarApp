@@ -13,12 +13,18 @@ import org.apache.logging.log4j.Logger;
 
 import com.backend.entity.Car;
 import com.backend.jms.executor.JMSExecutor;
+import com.backend.jms.executor.JMSExecutor.JMSAction;
 import com.backend.jms.executor.JMSMappedActions;
 import com.backend.jms.executor.action.DeleteCarAction;
 import com.backend.jms.executor.action.PostCarAction;
 import com.backend.jms.executor.action.PutCarAction;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * Topic subscriber for CarAppCar Topic
+ * @author gmiralle
+ *
+ */
 @MessageDriven(activationConfig = {
 		@ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "jms/CarAppCar"),
 		@ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Topic") })
@@ -39,6 +45,10 @@ public class CarMessageConsumer implements MessageListener {
 		}
 	}
 	
+	/**
+	 * Create {@link JMSAction} for {@link Car}
+	 * @param car Car received on JMS
+	 */
 	private void createActions(Car car) {
 		new PostCarAction(car);
 		new PutCarAction(car);
