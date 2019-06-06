@@ -1,5 +1,7 @@
 package com.backend.boundary;
 
+import java.lang.reflect.InvocationTargetException;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -11,7 +13,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.backend.entity.Brand;
 import com.backend.entity.Car;
+import com.backend.entity.Country;
 import com.backend.entity.dto.ValidationErrorDto;
 import com.backend.exception.CarNotFoundException;
 import com.backend.exception.InvalidEntityException;
@@ -31,22 +35,28 @@ public abstract class CarResource {
 	/**
 	 * Obtain all cars in the system May return the following HTTP Codes:
 	 * <ul>
-	 * 	<li>200 - OK</li>
+	 * <li>200 - OK</li>
 	 * </ul>
 	 * 
 	 * @return Response with every {@link Car} in the body
+	 * @throws SecurityException If any exception happens with Reflection API
+	 * @throws NoSuchMethodException If any exception happens with Reflection API
+	 * @throws InvocationTargetException If any exception happens with Reflection API
+	 * @throws IllegalArgumentException If any exception happens with Reflection API
+	 * @throws IllegalAccessException If any exception happens with Reflection API
+	 * @throws InstantiationException If any exception happens with Reflection API
 	 */
 	@Operation(summary = "Get all cars", tags = {
 			"cars" }, description = "Retrieve every car on the system", responses = {
 					@ApiResponse(description = "List of cars", responseCode = "200", content = @Content(schema = @Schema(implementation = Car.class, type = "array"))) })
 	@GET
-	public abstract Response getAll();
+	public abstract Response getAll() throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException;
 
 	/**
 	 * Obtain the car with the specified ID May return the following HTTP Codes:
 	 * <ul>
-	 * 	<li>200 - OK</li>
-	 * 	<li>404 - Not found - If there's no car with the specified ID on the
+	 * <li>200 - OK</li>
+	 * <li>404 - Not found - If there's no car with the specified ID on the
 	 * system</li>
 	 * </ul>
 	 * 
@@ -54,6 +64,12 @@ public abstract class CarResource {
 	 * @return Response with the found {@link Car}
 	 * @throws CarNotFoundException If there's no car in the system with the
 	 *                              specified ID
+	 * @throws SecurityException If any exception happens with Reflection API
+	 * @throws NoSuchMethodException If any exception happens with Reflection API
+	 * @throws InvocationTargetException If any exception happens with Reflection API
+	 * @throws IllegalArgumentException If any exception happens with Reflection API
+	 * @throws IllegalAccessException If any exception happens with Reflection API
+	 * @throws InstantiationException If any exception happens with Reflection API
 	 */
 	@Operation(summary = "Get car by ID", tags = {
 			"cars" }, description = "Retrieve the car with the specified ID", responses = {
@@ -64,18 +80,24 @@ public abstract class CarResource {
 	@Hidden
 	public abstract Response getOne(
 			@Parameter(description = "UUID of the car to retrieve", schema = @Schema(type = "string", format = "uuid", description = "param UUID of the car to retrieve"), required = true) @PathParam(value = "id") String id)
-			throws CarNotFoundException;
+			throws CarNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException;
 
 	/**
 	 * Insert a new car in the system May return the following HTTP Codes:
 	 * <ul>
-	 *	<li>201 - Created</li>
-	 * 	<li>400 - Bad request - On validation errors</li>
+	 * <li>201 - Created</li>
+	 * <li>400 - Bad request - On validation errors</li>
 	 * </ul>
 	 * 
 	 * @param car The car to be created
 	 * @return Response with the new {@link Car} in the body
 	 * @throws InvalidEntityException If validation of the entity failed
+	 * @throws SecurityException If any exception happens with Reflection API
+	 * @throws NoSuchMethodException If any exception happens with Reflection API
+	 * @throws InvocationTargetException If any exception happens with Reflection API
+	 * @throws IllegalArgumentException If any exception happens with Reflection API
+	 * @throws IllegalAccessException If any exception happens with Reflection API
+	 * @throws InstantiationException If any exception happens with Reflection API
 	 */
 	@Operation(summary = "Create a new car", tags = {
 			"cars" }, description = "Create a new car with specified data", responses = {
@@ -84,14 +106,14 @@ public abstract class CarResource {
 	@POST
 	public abstract Response create(
 			@Parameter(description = "Car to create", schema = @Schema(implementation = Car.class), required = true) Car car)
-			throws InvalidEntityException;
+			throws InvalidEntityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException;
 
 	/**
 	 * Update the car with the specified ID May return the following HTTP Codes:
 	 * <ul>
-	 * 	<li>200 - OK</li>
-	 * 	<li>400 - Bad Request - On validation errors</li>
-	 * 	<li>404 - Not Found - If there's no car with the specified ID</li>
+	 * <li>200 - OK</li>
+	 * <li>400 - Bad Request - On validation errors</li>
+	 * <li>404 - Not Found - If there's no car with the specified ID</li>
 	 * </ul>
 	 * 
 	 * @param id  UUID of the car which will be updated
@@ -100,6 +122,12 @@ public abstract class CarResource {
 	 * @throws InvalidEntityException If validation of the entity failed
 	 * @throws CarNotFoundException   If a car with the specified Id couldn't be
 	 *                                found
+	 * @throws SecurityException If any exception happens with Reflection API
+	 * @throws NoSuchMethodException If any exception happens with Reflection API
+	 * @throws InvocationTargetException If any exception happens with Reflection API
+	 * @throws IllegalArgumentException If any exception happens with Reflection API
+	 * @throws IllegalAccessException If any exception happens with Reflection API
+	 * @throws InstantiationException If any exception happens with Reflection API
 	 */
 	@Operation(summary = "Update car by ID", tags = {
 			"cars" }, description = "Update the car with the specified ID and new data", responses = {
@@ -112,14 +140,14 @@ public abstract class CarResource {
 	public abstract Response update(
 			@Parameter(description = "UUID of the car to update", schema = @Schema(type = "string", format = "uuid", description = "param UUID of the car to update"), required = true) @PathParam(value = "id") String id,
 			@Parameter(description = "New data for the car", schema = @Schema(implementation = Car.class), required = true) Car car)
-			throws CarNotFoundException, InvalidEntityException;
+			throws CarNotFoundException, InvalidEntityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException;
 
 	/**
 	 * Delete the {@link Car} with the specified ID May return the following HTTP
 	 * Codes:
 	 * <ul>
-	 * 	<li>204 - No Content - On Success</li>
-	 * 	<li>404 - Not Found - If there's no car with the specified ID</li>
+	 * <li>204 - No Content - On Success</li>
+	 * <li>404 - Not Found - If there's no car with the specified ID</li>
 	 * </ul>
 	 * 
 	 * @param id UUID of the car which will be deleted
@@ -136,5 +164,51 @@ public abstract class CarResource {
 	public abstract Response delete(
 			@Parameter(description = "UUID of the car to update", schema = @Schema(type = "string", format = "uuid", description = "param UUID of the car to update"), required = true) @PathParam(value = "id") String id)
 			throws CarNotFoundException;
+
+	/**
+	 * Get the brand of the car with the specified ID
+	 * @param id UUID of the car which to be looked for
+	 * @return {@link Brand} object of the car
+	 * @throws CarNotFoundException If there's no car in the system with the specified ID
+	 * @throws InstantiationException If any exception happens with Reflection API
+	 * @throws IllegalAccessException If any exception happens with Reflection API
+	 * @throws IllegalArgumentException If any exception happens with Reflection API
+	 * @throws InvocationTargetException If any exception happens with Reflection API
+	 * @throws NoSuchMethodException If any exception happens with Reflection API
+	 * @throws SecurityException If any exception happens with Reflection API
+	 */
+	@Operation(summary = "Get a car's brand by car ID", tags = {
+			"cars" }, description = "Retrieve the car's brand with the specified car ID", responses = {
+					@ApiResponse(description = "Brand", responseCode = "200", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Brand.class)))),
+					@ApiResponse(description = "Car not found", responseCode = "404") })
+	@GET
+	@Path("/{id}/brand")
+	@Hidden
+	public abstract Response getBrand(
+			@Parameter(description = "UUID of the car from which to get brand", schema = @Schema(type = "string", format = "uuid", description = "param UUID of the car to update"), required = true) @PathParam(value = "id") String id)
+			throws CarNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException;
+
+	/**
+	 * Get the country of the car with the specified ID
+	 * @param id UUID of the car which to be looked for
+	 * @return {@link Country} object of the car
+	 * @throws CarNotFoundException If there's no car in the system with the specified ID
+	 * @throws InstantiationException If any exception happens with Reflection API
+	 * @throws IllegalAccessException If any exception happens with Reflection API
+	 * @throws IllegalArgumentException If any exception happens with Reflection API
+	 * @throws InvocationTargetException If any exception happens with Reflection API
+	 * @throws NoSuchMethodException If any exception happens with Reflection API
+	 * @throws SecurityException If any exception happens with Reflection API
+	 */
+	@Operation(summary = "Get a car's country by car ID", tags = {
+			"cars" }, description = "Retrieve the car's country with the specified car ID", responses = {
+					@ApiResponse(description = "Country", responseCode = "200", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Country.class)))),
+					@ApiResponse(description = "Car not found", responseCode = "404") })
+	@GET
+	@Path("/{id}/country")
+	@Hidden
+	public abstract Response getCountry(
+			@Parameter(description = "UUID of the car from which to get country", schema = @Schema(type = "string", format = "uuid", description = "param UUID of the car to update"), required = true) @PathParam(value = "id") String id)
+			throws CarNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException;
 
 }

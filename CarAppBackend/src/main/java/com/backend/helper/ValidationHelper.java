@@ -13,7 +13,9 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.ws.rs.core.GenericEntity;
 
+import com.backend.entity.Brand;
 import com.backend.entity.Car;
+import com.backend.entity.Country;
 import com.backend.entity.dto.ValidationErrorDto;
 import com.backend.exception.InvalidEntityException;
 import com.backend.interceptor.LogInterceptor;
@@ -36,6 +38,37 @@ public class ValidationHelper<T> {
 			helpers.put(Car.class, helper);
 		}
 		helper.validate(car);
+	}
+	
+	/**
+	 * Method that delegates a brand validation on a general validation method
+	 * @param brand {@link Brand} to be validated
+	 * @throws InvalidEntityException When there's any validation error
+	 */
+	@SuppressWarnings("unchecked")
+	public static void validateBrand(Brand brand) throws InvalidEntityException {
+		ValidationHelper<Brand> helper = (ValidationHelper<Brand>) helpers.get(Brand.class);
+		if(helper == null) {
+			helper = new ValidationHelper<Brand>();
+			helpers.put(Brand.class, helper);
+		}
+		helper.validate(brand);
+		
+	}
+
+	/**
+	 * Method that delegates a country validation on a general validation method
+	 * @param country {@link Country} to be validated
+	 * @throws InvalidEntityException When there's any validation error
+	 */
+	public static void validateCountry(Country country) throws InvalidEntityException {
+		@SuppressWarnings("unchecked")
+		ValidationHelper<Country> helper = (ValidationHelper<Country>) helpers.get(Country.class);
+		if(helper == null) {
+			helper = new ValidationHelper<Country>();
+			helpers.put(Country.class, helper);
+		}
+		helper.validate(country);
 	}
 	
 	/**

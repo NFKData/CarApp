@@ -100,7 +100,6 @@ public class CarServiceTest {
 		PowerMockito.mockStatic(ValidationHelper.class);
 		when(em.find(Car.class, DEFAULT_ID)).thenReturn(car);
 		when(em.merge(car)).thenReturn(car);
-		PowerMockito.doNothing().when(ValidationHelper.class);
 		assertEquals(car, carService.updateCar(car));
 		verify(em).merge(car);
 		PowerMockito.verifyStatic(ValidationHelper.class);
@@ -116,8 +115,10 @@ public class CarServiceTest {
 	}
 
 	@Test(expected = InvalidEntityException.class)
-	public void whenUpdatingAnInvalidCar_shouldThrownInvalidEntityException() throws Exception {
+	public void whenUpdatingAnInvalidCar_shouldThrowInvalidEntityException() throws Exception {
 		Car car = new Car();
+		car.setId(DEFAULT_ID);
+		when(em.find(Car.class, DEFAULT_ID)).thenReturn(car);
 		PowerMockito.mockStatic(ValidationHelper.class);
 		PowerMockito.doThrow(new InvalidEntityException(new ArrayList<>())).when(ValidationHelper.class, "validateCar",
 				car);
