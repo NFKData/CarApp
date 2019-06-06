@@ -28,7 +28,6 @@ public interface CarService {
 	 * @param car The car to be inserted
 	 * @return The {@link Car} if succeeded
 	 * @throws InvalidEntityException If the data are not valid
-	 * @throws CarFoundException if there's another car with the same ID
 	 */
 	public Car createCar(Car car) throws InvalidEntityException;
 	
