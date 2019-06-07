@@ -2,6 +2,7 @@ package com.backend.filter;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 import javax.annotation.Priority;
@@ -11,8 +12,6 @@ import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.Provider;
-
-import org.apache.commons.codec.binary.Base64;
 
 import com.auth0.client.auth.AuthAPI;
 import com.auth0.exception.Auth0Exception;
@@ -39,7 +38,8 @@ public class AuthFilter implements ContainerRequestFilter {
 			requestContext.abortWith(Response.status(Status.UNAUTHORIZED)
 					.entity("Request must include \"Authorization\" header.").build());
 		}
-		String[] authData = new String(new Base64().decode((authHeader.split("\\s+"))[1].getBytes())).split(":");
+	
+		String[] authData = new String(Base64.getDecoder().decode((authHeader.split("\\s+"))[1].getBytes())).split(":");
 		AuthAPI authApi = new AuthAPI(DOMAIN, CLIENT_ID, CLIENT_SECRET);
 		try {
 		TokenHolder tokenHolderLogin = authApi.login(authData[0], authData[1]).setAudience(API_AUDIENCE)
@@ -47,9 +47,9 @@ public class AuthFilter implements ContainerRequestFilter {
 		List<String> authHeaders = new ArrayList<>();
 		authHeaders.add(BEARER + tokenHolderLogin.getAccessToken());
 		requestContext.getHeaders().put(AUTHORIZATION, authHeaders);
-		System.out.println(requestContext.getHeaderString(AUTHORIZATION));
 		} catch(Auth0Exception ex) {
 			CreatedUser createdUser = authApi.signUp(authData[0], authData[1], CONNECTION).execute();
+			requestContext.abortWith(Response.status(Status.UNAUTHORIZED).entity("A verification email should be sent to " + createdUser.getEmail()).build());
 		}
 	}
 
