@@ -37,8 +37,8 @@
 		</dependency>
 		<dependency>
 			<groupId>com.auth0</groupId>
-			<artifactId>auth0</artifactId>
-			<version>${auth0.version}</version>
+			<artifactId>java-jwt</artifactId>
+			<version>${jwt.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
@@ -89,7 +89,7 @@
 		<test.jersey.version>2.28</test.jersey.version>
 		<test.powermock.version>1.7.4</test.powermock.version>
 		<postgresql.version>42.2.5</postgresql.version>
-		<auth0.version>1.13.3</auth0.version>
+		<jwt.version>3.8.1</jwt.version>
 
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
