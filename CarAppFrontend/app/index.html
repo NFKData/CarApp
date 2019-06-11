@@ -19,6 +19,8 @@
   <script src="lib/datatables.net/js/jquery.dataTables.js"></script>
   <script src="lib/angular-datatables/dist/angular-datatables.js"></script>
   <script src="lib/angular-datatables/dist/plugins/bootstrap/angular-datatables.bootstrap.js"></script>
+  <script src="lib/auth0-js/build/auth0.js"></script>
+  <script src="lib/angular-auth0/dist/angular-auth0.min.js"></script>
   <script src="env.js"></script>
   <script src="app.module.js"></script>
   <script src="app.config.js"></script>
@@ -32,8 +34,14 @@
   <script src="warning-dialog/warning-dialog.component.js"></script>
   <script src="car-dialog/car-dialog.module.js"></script>
   <script src="car-dialog/car-dialog.component.js"></script>
+  <script src="auth-callback/auth-callback.module.js"></script>
+  <script src="auth-callback/auth-callback.component.js"></script>
   <script src="services/cars/cars.module.js"></script>
   <script src="services/cars/cars.service.js"></script>
+  <script src="services/auth/auth.module.js"></script>
+  <script src="services/auth/auth.service.js"></script>
+  <script src="interceptors/jwt/jwt.module.js"></script>
+  <script src="interceptors/jwt/jwt.interceptor.js"></script>
 
   <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css" />
   <link rel="stylesheet" href="lib/angular-moment-picker/dist/angular-moment-picker.css">
@@ -50,7 +58,9 @@
   <warning-dialog id="noCarsDialog" warning-message="There's no car in the system."></warning-dialog>
   <warning-dialog id="idNotFound" warning-message="There's no car with id {{carId}} in the system."></warning-dialog>
   <car-dialog></car-dialog>
-  <warning-dialog id="noValidCar" warning-message="You must enter valid data before saving a car"></warning-dialog>
+  <warning-dialog id="noValidCar" warning-message="You must enter valid data before saving a car."></warning-dialog>
+  <warning-dialog id="mustLogin" warning-message="You must login to use the application.">
+  </warning-dialog>
 </body>
 
 </html>

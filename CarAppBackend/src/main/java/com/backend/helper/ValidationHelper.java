@@ -16,7 +16,7 @@ import javax.ws.rs.core.GenericEntity;
 import com.backend.entity.Brand;
 import com.backend.entity.Car;
 import com.backend.entity.Country;
-import com.backend.entity.dto.ValidationErrorDto;
+import com.backend.entity.dto.ErrorDto;
 import com.backend.exception.InvalidEntityException;
 import com.backend.interceptor.LogInterceptor;
 
@@ -80,13 +80,13 @@ public class ValidationHelper<T> {
 		Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 		Set<ConstraintViolation<T>> violations = validator.validate(object);
 		if (!violations.isEmpty()) {
-			List<ValidationErrorDto> validationErrors = new ArrayList<>();
+			List<ErrorDto> validationErrors = new ArrayList<>();
 			int errorNumbers = 0;
 			Iterator<ConstraintViolation<T>> it = violations.iterator();
 			while (it.hasNext()) {
-				validationErrors.add(new ValidationErrorDto(++errorNumbers, it.next().getMessage()));
+				validationErrors.add(new ErrorDto(++errorNumbers, it.next().getMessage()));
 			}
-			throw new InvalidEntityException(validationErrors, new GenericEntity<List<ValidationErrorDto>>(validationErrors) {});
+			throw new InvalidEntityException(validationErrors, new GenericEntity<List<ErrorDto>>(validationErrors) {});
 		}
 	}
 	

@@ -2,7 +2,7 @@
 
 carTable.component('carTable', {
     templateUrl: 'car-table/car-table.template.html',
-    controller: ['DTOptionsBuilder', 'DTColumnBuilder', '$scope', '$rootScope', '$compile', 'carService', function CarTableController(DTOptionsBuilder, DTColumnBuilder, $scope, $rootScope, $compile, carService) {
+    controller: ['DTOptionsBuilder', 'DTColumnBuilder', '$scope', '$rootScope', '$compile', 'carService', 'authService', function CarTableController(DTOptionsBuilder, DTColumnBuilder, $scope, $rootScope, $compile, carService, authService) {
         let self = this;
 
         self.carTable = {};
