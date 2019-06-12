@@ -15,7 +15,7 @@ import javax.ws.rs.core.Response;
 
 import com.backend.entity.Car;
 import com.backend.entity.Country;
-import com.backend.entity.dto.ValidationErrorDto;
+import com.backend.entity.dto.ErrorDto;
 import com.backend.exception.CountryNotFoundException;
 import com.backend.exception.InvalidEntityException;
 
@@ -84,7 +84,7 @@ public abstract class CountryResource {
 	@Operation(summary = "Create a new country", tags = {
 			"countries" }, description = "Create a new country with specified data", responses = {
 					@ApiResponse(description = "Country", responseCode = "201", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Country.class))),
-					@ApiResponse(description = "Validation errors", responseCode = "400", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ValidationErrorDto.class)))) })
+					@ApiResponse(description = "Validation errors", responseCode = "400", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ErrorDto.class)))) })
 	@POST
 	public abstract Response create(
 			@Parameter(description = "Country to create", schema = @Schema(implementation = Country.class), required = true) Country country)
@@ -107,7 +107,7 @@ public abstract class CountryResource {
 	@Operation(summary = "Update country by ID", tags = {
 			"countries" }, description = "Update the country with the specified ID and new data", responses = {
 					@ApiResponse(description = "Country", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Country.class))),
-					@ApiResponse(description = "Validation errors", responseCode = "400", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ValidationErrorDto.class)))),
+					@ApiResponse(description = "Validation errors", responseCode = "400", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ErrorDto.class)))),
 					@ApiResponse(description = "Country not found", responseCode = "404") })
 	@PUT
 	@Path("/{id}")

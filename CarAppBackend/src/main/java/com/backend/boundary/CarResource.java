@@ -16,7 +16,7 @@ import javax.ws.rs.core.Response;
 import com.backend.entity.Brand;
 import com.backend.entity.Car;
 import com.backend.entity.Country;
-import com.backend.entity.dto.ValidationErrorDto;
+import com.backend.entity.dto.ErrorDto;
 import com.backend.exception.CarNotFoundException;
 import com.backend.exception.InvalidEntityException;
 
@@ -102,7 +102,7 @@ public abstract class CarResource {
 	@Operation(summary = "Create a new car", tags = {
 			"cars" }, description = "Create a new car with specified data", responses = {
 					@ApiResponse(description = "Car", responseCode = "201", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Car.class))),
-					@ApiResponse(description = "Validation errors", responseCode = "400", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ValidationErrorDto.class)))) })
+					@ApiResponse(description = "Validation errors", responseCode = "400", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ErrorDto.class)))) })
 	@POST
 	public abstract Response create(
 			@Parameter(description = "Car to create", schema = @Schema(implementation = Car.class), required = true) Car car)
@@ -132,7 +132,7 @@ public abstract class CarResource {
 	@Operation(summary = "Update car by ID", tags = {
 			"cars" }, description = "Update the car with the specified ID and new data", responses = {
 					@ApiResponse(description = "Car", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Car.class))),
-					@ApiResponse(description = "Validation errors", responseCode = "400", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ValidationErrorDto.class)))),
+					@ApiResponse(description = "Validation errors", responseCode = "400", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ErrorDto.class)))),
 					@ApiResponse(description = "Car not found", responseCode = "404") })
 	@PUT
 	@Path("/{id}")

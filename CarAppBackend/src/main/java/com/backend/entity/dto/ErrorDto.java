@@ -10,7 +10,7 @@ import com.backend.interceptor.LogInterceptor;
  *
  */
 @Interceptors(LogInterceptor.class)
-public class ValidationErrorDto {
+public class ErrorDto {
 
 	private int errorNumber;
 	private String description;
@@ -18,14 +18,14 @@ public class ValidationErrorDto {
 	/**
 	 * Generic constructor needed for JSON serialization
 	 */
-	public ValidationErrorDto() {}
+	public ErrorDto() {}
 
 	/**
 	 * Constructor of an error
 	 * @param errorNumber Number of this error
 	 * @param description Description of this error
 	 */
-	public ValidationErrorDto(int errorNumber, String description) {
+	public ErrorDto(int errorNumber, String description) {
 			this.errorNumber = errorNumber;
 			this.description = description;
 		}

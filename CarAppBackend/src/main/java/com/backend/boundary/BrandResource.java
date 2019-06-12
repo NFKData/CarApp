@@ -16,7 +16,7 @@ import javax.ws.rs.core.Response;
 import com.backend.entity.Brand;
 import com.backend.entity.dto.BrandDto;
 import com.backend.entity.dto.CarDto;
-import com.backend.entity.dto.ValidationErrorDto;
+import com.backend.entity.dto.ErrorDto;
 import com.backend.exception.BrandNotFoundException;
 import com.backend.exception.InvalidEntityException;
 
@@ -85,7 +85,7 @@ public abstract class BrandResource {
 	@Operation(summary = "Create a new brand", tags = {
 			"brands" }, description = "Create a new brand with specified data", responses = {
 					@ApiResponse(description = "Brand", responseCode = "201", content = @Content(mediaType = "application/json", schema = @Schema(implementation = BrandDto.class))),
-					@ApiResponse(description = "Validation errors", responseCode = "400", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ValidationErrorDto.class)))) })
+					@ApiResponse(description = "Validation errors", responseCode = "400", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ErrorDto.class)))) })
 	@POST
 	public abstract Response create(
 			@Parameter(description = "Brand to create", schema = @Schema(implementation = BrandDto.class), required = true) Brand brand)
@@ -108,7 +108,7 @@ public abstract class BrandResource {
 	@Operation(summary = "Update brand by ID", tags = {
 			"brands" }, description = "Update the brand with the specified ID and new data", responses = {
 					@ApiResponse(description = "Brand", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = BrandDto.class))),
-					@ApiResponse(description = "Validation errors", responseCode = "400", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ValidationErrorDto.class)))),
+					@ApiResponse(description = "Validation errors", responseCode = "400", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ErrorDto.class)))),
 					@ApiResponse(description = "Brand not found", responseCode = "404") })
 	@PUT
 	@Path("/{id}")

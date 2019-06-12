@@ -2,7 +2,7 @@
 
 carList.component('carList', {
     templateUrl: 'car-list/car-list.template.html',
-    controller: ['carService', '$rootScope', '__env', function CarListController(carService, $rootScope, __env) {
+    controller: ['carService', 'authService', '$rootScope', '__env', function CarListController(carService, authService, $rootScope, __env) {
         let self = this;
         $rootScope.carList = undefined;
 
