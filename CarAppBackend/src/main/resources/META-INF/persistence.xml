@@ -8,9 +8,6 @@
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		<jta-data-source>jdbc/carapp</jta-data-source>
 		<properties>
-			<property
-				name="javax.persistence.schema-generation.database.action"
-				value="create" />
             <property name="hibernate.transaction.jta.platform"
                 value="org.hibernate.service.jta.platform.internal.SunOneJtaPlatform" />
 		</properties>
