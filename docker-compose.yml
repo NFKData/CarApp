@@ -1,10 +1,11 @@
-version: "3.1"
+version: "3.7"
 services:
   postgres:
     image: postgres
     environment:
       POSTGRES_PASSWORD: admin
       POSTGRES_DB: carapp
+    container_name: CarAppPostgres
   carappbackend:
     build: 
       context: ./CarAppBackend
@@ -34,9 +35,27 @@ services:
        JMS_BRAND: jms/CarAppBrand
        JMS_BRAND_DEST: CarAppBrandDest
        PREPARE_RESOURCES_FILE: /opt/payara41/scripts/prepare_resources.sh
+       JWT_SECRET: gltvLjKS86slFnQtcCuHdGMf9nFSDZbv
     ports:
       - "4848:4848"
       - "8080:8080"
       - "8181:8181"
       - "9009:9009"
       - "7676:7676"
+  carappfrontend:
+    build:
+      context: ./CarAppFrontend
+      dockerfile: Dockerfile
+    image: nfkdata/everiscarappfrontend
+    volumes: 
+      - ./CarAppFrontend:/app
+    depends_on: 
+      - carappbackend
+    container_name: CarAppFrontend
+    environment:
+      NODE_ENV: development
+    user: "node"
+    working_dir: "/app"
+    command: "npm start"
+    ports:
+      - "8000:8000"
