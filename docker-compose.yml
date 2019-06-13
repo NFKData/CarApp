@@ -6,6 +6,19 @@ services:
       POSTGRES_PASSWORD: admin
       POSTGRES_DB: carapp
     container_name: CarAppPostgres
+    ports:
+      - "5432:5432"
+  dbmigration:
+    image: boxfuse/flyway:5.2.4
+    depends_on: 
+      - postgres
+    container_name: DBMigration
+    environment:
+      FLYWAY_PASSWORD: admin
+    volumes: 
+      - ./CarAppBackend/DBSetup/conf:/flyway/conf
+      - ./CarAppBackend/DBSetup/sql:/flyway/sql
+    entrypoint: "/flyway/sql/wait-for-it.sh -h postgres -p 5432 -s -- /flyway/flyway migrate"
   carappbackend:
     build: 
       context: ./CarAppBackend
