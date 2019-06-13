@@ -1,0 +1,42 @@
+version: "3.1"
+services:
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: carapp
+  carappbackend:
+    build: 
+      context: ./CarAppBackend
+      dockerfile: Dockerfile
+    image: nfkdata/everiscarappbackend
+    volumes: 
+      - ./CarAppBackend/target:/opt/payara41/app
+    depends_on: 
+      - postgres
+    container_name: CarAppBackend
+    environment:
+       HOME_DIR: /opt/payara41
+       PAYARA_DIR: /opt/payara41/appserver
+       SCRIPT_DIR: /opt/payara41/scripts
+       CONFIG_DIR: /opt/payara41/config
+       DEPLOY_DIR: /opt/payara41/deployments
+       LIB_DIR: /opt/payara41/glassfish/domains/domain1/lib
+       BIN_DIR: /opt/payara41/bin
+       PAYARA_DOMAIN: domain1
+       JDBC_POOL: PostgresPool
+       JDBC_JNDI: jdbc/carapp
+       JMS_CONFACTORY: jms/CarAppConFactory
+       JMS_CAR: jms/CarAppCar
+       JMS_CAR_DEST: CarAppCarDest
+       JMS_COUNTRY: jms/CarAppCountry
+       JMS_COUNTRY_DEST: CarAppCountryDest
+       JMS_BRAND: jms/CarAppBrand
+       JMS_BRAND_DEST: CarAppBrandDest
+       PREPARE_RESOURCES_FILE: /opt/payara41/scripts/prepare_resources.sh
+    ports:
+      - "4848:4848"
+      - "8080:8080"
+      - "8181:8181"
+      - "9009:9009"
+      - "7676:7676"
