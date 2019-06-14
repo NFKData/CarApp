@@ -3,6 +3,7 @@ package com.backend.control;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.enterprise.context.ApplicationScoped;
 import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -19,6 +20,7 @@ import com.backend.interceptor.LogInterceptor;
 
 @Stateless
 @Interceptors(LogInterceptor.class)
+@ApplicationScoped
 public class BrandServiceImpl implements BrandService {
 
 	@PersistenceContext(unitName="carPU")

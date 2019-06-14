@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;
+import javax.enterprise.context.ApplicationScoped;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
@@ -25,6 +26,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * @author gmiralle
  *
  */
+@ApplicationScoped
 @MessageDriven(activationConfig = {
 		@ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "jms/CarAppCar"),
 		@ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Topic") })

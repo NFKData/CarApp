@@ -12,6 +12,7 @@
 		<thorntail.version>2.4.0.Final</thorntail.version>
 		<hibernate.version>5.4.2.Final</hibernate.version>
 		<slf4j.version>1.7.25</slf4j.version>
+		<postgres.version>42.2.5</postgres.version>
 
 		<test.junit.version>4.12</test.junit.version>
 		<test.mockito.version>1.10.19</test.mockito.version>
@@ -51,6 +52,7 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
 			<version>${hibernate.version}</version>
+			<scope>provided</scope>
 			<exclusions>
 				<exclusion>
 					<groupId>org.jboss.logging</groupId>
@@ -62,8 +64,14 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-simple</artifactId>
 			<version>${slf4j.version}</version>
+			<scope>provided</scope>
 		</dependency>
-
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>${postgres.version}</version>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

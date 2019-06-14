@@ -15,6 +15,6 @@ import org.eclipse.microprofile.openapi.annotations.info.Info;
           contact = @Contact(name = "Guillermo Miralles Campillo", email = "guillermo.miralles.campillo@everis.com")
   )
 )
-@ApplicationPath("api")
+@ApplicationPath("/api")
 public class JAXRSConfiguration extends Application {
 }
