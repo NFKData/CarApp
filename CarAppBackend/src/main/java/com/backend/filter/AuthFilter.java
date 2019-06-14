@@ -22,7 +22,7 @@ public class AuthFilter implements ContainerRequestFilter {
 
 	private static final ErrorDto ERROR_401 = new ErrorDto(0, "Request must include \"Authorization\" header.");
 	private static final ErrorDto ERROR_403 = new ErrorDto(0, "Auth token not valid");
-	private static final String JWT_SECRET = "jwt.secret";
+	private static final String JWT_SECRET = "JWT_SECRET";
 	private static final String BEARER = "Bearer ";
 	private static final String OPTIONS = "OPTIONS";
 
@@ -36,7 +36,7 @@ public class AuthFilter implements ContainerRequestFilter {
 			requestContext.abortWith(Response.status(Status.UNAUTHORIZED).entity(ERROR_401).build());
 		} else {
 			authHeader = authHeader.substring(BEARER.length());
-			String secret = System.getProperty(JWT_SECRET);
+			String secret = System.getenv(JWT_SECRET);
 			Algorithm alg = Algorithm.HMAC256(secret);
 			JWTVerifier verifier = JWT.require(alg).build();
 			try {

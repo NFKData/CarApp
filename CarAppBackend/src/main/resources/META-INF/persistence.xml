@@ -6,17 +6,10 @@
  http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 	<persistence-unit name="carPU" transaction-type="JTA">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-<!-- 		<jta-data-source>jdbc/carapp</jta-data-source> -->
+		<jta-data-source>jdbc/carapp</jta-data-source>
 		<properties>
-			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://${env.HOST}:${env.PORT}/${env.DATABASE}" />
-            <property name="javax.persistence.jdbc.user" value="${env.USER}" />
-            <property name="javax.persistence.jdbc.password" value="${env.PASSWORD}" />
-			<property
-				name="javax.persistence.schema-generation.database.action"
-				value="create" />
-			<property name="hibernate.transaction.jta.platform"
-				value="org.hibernate.service.jta.platform.internal.SunOneJtaPlatform" />
+            <property name="hibernate.transaction.jta.platform"
+                value="org.hibernate.service.jta.platform.internal.SunOneJtaPlatform" />
 		</properties>
 	</persistence-unit>
 </persistence>

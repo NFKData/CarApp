@@ -1,0 +1,74 @@
+version: "3.7"
+services:
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: carapp
+    container_name: CarAppPostgres
+    ports:
+      - "5432:5432"
+  dbmigration:
+    image: boxfuse/flyway:5.2.4
+    depends_on: 
+      - postgres
+    container_name: DBMigration
+    environment:
+      FLYWAY_PASSWORD: admin
+    volumes: 
+      - ./CarAppBackend/DBSetup/conf:/flyway/conf
+      - ./CarAppBackend/DBSetup/sql:/flyway/sql
+    entrypoint: "/flyway/sql/wait-for-it.sh -h postgres -p 5432 -s -- /flyway/flyway migrate"
+  carappbackend:
+    build: 
+      context: ./CarAppBackend
+      dockerfile: Dockerfile
+    image: nfkdata/everiscarappbackend
+    volumes: 
+      - ./CarAppBackend/target:/opt/payara41/app
+    depends_on: 
+      - postgres
+    container_name: CarAppBackend
+    environment:
+       HOME_DIR: /opt/payara41
+       PAYARA_DIR: /opt/payara41/appserver
+       SCRIPT_DIR: /opt/payara41/scripts
+       CONFIG_DIR: /opt/payara41/config
+       DEPLOY_DIR: /opt/payara41/deployments
+       LIB_DIR: /opt/payara41/glassfish/domains/domain1/lib
+       BIN_DIR: /opt/payara41/bin
+       PAYARA_DOMAIN: domain1
+       JDBC_POOL: PostgresPool
+       JDBC_JNDI: jdbc/carapp
+       JMS_CONFACTORY: jms/CarAppConFactory
+       JMS_CAR: jms/CarAppCar
+       JMS_CAR_DEST: CarAppCarDest
+       JMS_COUNTRY: jms/CarAppCountry
+       JMS_COUNTRY_DEST: CarAppCountryDest
+       JMS_BRAND: jms/CarAppBrand
+       JMS_BRAND_DEST: CarAppBrandDest
+       PREPARE_RESOURCES_FILE: /opt/payara41/scripts/prepare_resources.sh
+       JWT_SECRET: gltvLjKS86slFnQtcCuHdGMf9nFSDZbv
+    ports:
+      - "4848:4848"
+      - "8080:8080"
+      - "8181:8181"
+      - "9009:9009"
+      - "7676:7676"
+  carappfrontend:
+    build:
+      context: ./CarAppFrontend
+      dockerfile: Dockerfile
+    image: nfkdata/everiscarappfrontend
+    volumes: 
+      - ./CarAppFrontend:/app
+    depends_on: 
+      - carappbackend
+    container_name: CarAppFrontend
+    environment:
+      NODE_ENV: development
+    user: "node"
+    working_dir: "/app"
+    command: "npm start"
+    ports:
+      - "8000:8000"
