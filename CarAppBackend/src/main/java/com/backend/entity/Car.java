@@ -20,13 +20,13 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+
 import com.backend.control.BrandService;
 import com.backend.control.CountryService;
 import com.backend.exception.BrandNotFoundException;
 import com.backend.exception.CountryNotFoundException;
 import com.backend.serialization.LocalDateTimeAdapter;
-
-import io.swagger.v3.oas.annotations.Hidden;
 
 /**
  * Entity that represents a car
@@ -57,11 +57,11 @@ public class Car {
 	@NotNull(message = "Country mustn't be null")
 	private Country country;
 
-	@Hidden
+	@Schema(hidden = true)
 	@Column(name = "created_at")
 	private LocalDateTime createdAt;
 
-	@Hidden
+	@Schema(hidden = true)
 	@Column(name = "last_updated")
 	private LocalDateTime lastUpdated;
 	

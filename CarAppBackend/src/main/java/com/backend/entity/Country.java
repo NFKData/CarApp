@@ -16,7 +16,7 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import io.swagger.v3.oas.annotations.Hidden;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 @Entity
 @NamedQuery(name = "CountryService.findAllCountries", query = "SELECT c FROM Country c")
@@ -32,16 +32,16 @@ public class Country {
 	@Column(name = "name")
 	private String name;
 	
-	@Hidden
+	@Schema(hidden = true)
 	@Column(name = "createdAt")
 	private LocalDateTime createdAt;
 	
-	@Hidden
+	@Schema(hidden = true)
 	@Column(name = "last_updated")
 	private LocalDateTime lastUpdated;
 	
 	@OneToMany(mappedBy = "country", fetch = FetchType.LAZY)
-	@Hidden
+	@Schema(hidden = true)
 	private List<Car> cars;
 	
 	@PrePersist

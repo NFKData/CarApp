@@ -16,9 +16,9 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
-import io.swagger.v3.oas.annotations.Hidden;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @NamedQuery(name = "BrandService.findAllBrands", query = "SELECT b FROM Brand b")
@@ -34,11 +34,11 @@ public class Brand {
 	@Column(name = "name")
 	private String name;
 	
-	@Hidden
+	@Schema(hidden = true)
 	@Column(name = "created_at")
 	private LocalDateTime createdAt;
 	
-	@Hidden
+	@Schema(hidden = true)
 	@Column(name = "last_updated")
 	private LocalDateTime lastUpdated;
 	
