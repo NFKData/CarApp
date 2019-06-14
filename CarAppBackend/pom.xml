@@ -7,6 +7,11 @@
   <version>1.0-SNAPSHOT</version>
   <packaging>war</packaging>
   <properties>
+  	<test.junit.version>4.12</test.junit.version>
+  	<test.mockito.version>1.10.19</test.mockito.version>
+  	<test.resteasy.version>3.6.3.Final</test.resteasy.version>
+  	<test.powermock.version>1.7.4</test.powermock.version>
+  
     <failOnMissingWebXml>false</failOnMissingWebXml>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
@@ -28,7 +33,7 @@
     <dependency>
       <groupId>org.jboss.resteasy</groupId>
       <artifactId>resteasy-client</artifactId>
-      <version>3.6.3.Final</version>
+      <version>${test.resteasy.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -37,6 +42,30 @@
       <version>1.53</version>
       <scope>test</scope>
     </dependency>
+            <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${test.junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${test.mockito.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-module-junit4</artifactId>
+            <version>${test.powermock.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-api-mockito</artifactId>
+            <version>${test.powermock.version}</version>
+            <scope>test</scope>
+        </dependency>
   </dependencies>
   <build>
     <finalName>${project.artifactId}</finalName>
