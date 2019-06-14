@@ -8,8 +8,8 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.backend.entity.Country;
 import com.backend.jms.executor.JMSExecutor;
@@ -32,7 +32,7 @@ public class CountryMessageConsumer implements MessageListener {
 
 	@Override
 	public void onMessage(Message message) {
-		Logger log = LogManager.getLogger("com.backend");
+		Logger log = LoggerFactory.getLogger("com.backend");
 		try {
 			ObjectMapper mapper = new ObjectMapper().findAndRegisterModules();
 			String method = message.getStringProperty("Method");

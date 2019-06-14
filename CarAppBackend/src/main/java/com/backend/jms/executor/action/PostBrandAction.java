@@ -5,8 +5,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.ws.rs.HttpMethod;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.backend.control.BrandService;
 import com.backend.entity.Brand;
@@ -19,7 +19,7 @@ import com.backend.jms.executor.JMSMappedActions;
 @Interceptors(LogInterceptor.class)
 public class PostBrandAction implements JMSAction {
 
-	Logger log = LogManager.getLogger("com.backend");
+	Logger log = LoggerFactory.getLogger("com.backend");
 	
 	private BrandService brandService;
 	

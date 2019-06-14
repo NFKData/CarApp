@@ -5,9 +5,10 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import com.backend.boundary.CarResource;
 import com.backend.exception.CarApiBaseException;
 
 /**
@@ -21,7 +22,7 @@ import com.backend.exception.CarApiBaseException;
 @Provider
 public class CarApiBaseExceptionHandler implements ExceptionMapper<CarApiBaseException> {
 
-	private static Logger LOG = LogManager.getLogger("com.backend");
+	private static Logger LOG = LoggerFactory.getLogger("com.backend");
 	
 	@Override
 	public Response toResponse(CarApiBaseException exception) {

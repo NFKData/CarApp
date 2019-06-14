@@ -8,13 +8,13 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Provider
 public class UnexpectedExceptionHandler implements ExceptionMapper<Exception> {
 
-	private static Logger LOG = LogManager.getLogger("com.backend");
+	private static Logger LOG = LoggerFactory.getLogger("com.backend");
 	
 	@Override
 	public Response toResponse(Exception exception) {

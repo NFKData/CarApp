@@ -4,8 +4,8 @@ import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Interceptor that log every call to methods on the api
@@ -26,11 +26,11 @@ public class LogInterceptor {
 	 */
 	@AroundInvoke
 	public Object log(InvocationContext context) throws Exception {
-		Logger logger = LogManager.getLogger("com.backend");
-		logger.info("Method Called: " + context.getMethod().getName());
+		Logger log = LoggerFactory.getLogger("com.backend");
+		log.info("Method Called: " + context.getMethod().getName());
 		if (context.getParameters() != null) {
 			for (int i = 0; i < context.getParameters().length; i++) {
-				logger.info("Parameter[" + i + "]: " + context.getParameters()[i].toString());
+				log.info("Parameter[" + i + "]: " + context.getParameters()[i].toString());
 			}
 		}
 		return context.proceed();
