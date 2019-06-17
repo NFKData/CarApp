@@ -1,12 +1,14 @@
 swarm:
   datasources:
+    jdbc-drivers:
+      org.postgresql:
+        driver-class-name: "org.postgresql.Driver"
+        driver-xa-datasource-class-name: "org.postgresql.xa.PGXADataSource"
+        driver-module-name: "org.postgresql"
     data-sources:
       carapp:
-        driver-name: postgresql
-        connection-url: jdbc:postgresql://localhost:5432/carapp
-        user-name: postgres
-        password: admin
-        valid-connection-checker-class-name: org.jboss.jca.adapters.jdbc.extensions.postgres.PostgreSQLValidConnectionChecker
-        validate-on-match: true
-        background-validation: false
-        exception-sorter-class-name: org.jboss.jca.adapters.jdbc.extensions.postgres.PostgreSQLExceptionSorter
+        jndi-name: "java:jboss/datasources/carapp"
+        driver-name: "org.postgresql"
+        connection-url: "jdbc:postgresql://localhost:5432/carapp"
+        user-name: "postgres"
+        password: "admin"

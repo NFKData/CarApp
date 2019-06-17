@@ -3,10 +3,10 @@ package com.backend.control;
 import java.util.List;
 
 import javax.ejb.Stateless;
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -20,10 +20,10 @@ import com.backend.interceptor.LogInterceptor;
 
 @Stateless
 @Interceptors(LogInterceptor.class)
-@ApplicationScoped
+@RequestScoped
 public class CountryServiceImpl implements CountryService {
 
-	@PersistenceContext(unitName="carPU")
+	@Inject
 	private EntityManager em;
 	
 	@SuppressWarnings("unchecked")
