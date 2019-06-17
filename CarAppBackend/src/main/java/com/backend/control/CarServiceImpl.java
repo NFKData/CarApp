@@ -4,9 +4,9 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import com.backend.entity.Car;
 import com.backend.exception.CarNotFoundException;
@@ -19,7 +19,7 @@ import com.backend.interceptor.LogInterceptor;
 @RequestScoped
 public class CarServiceImpl implements CarService {
 
-	@PersistenceContext(unitName = "carPU")
+	@Inject
 	private EntityManager em;
 
 	@SuppressWarnings("unchecked")

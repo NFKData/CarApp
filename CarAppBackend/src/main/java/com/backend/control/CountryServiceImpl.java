@@ -8,9 +8,6 @@ import javax.inject.Inject;
 import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-
 import com.backend.entity.Car;
 import com.backend.entity.Country;
 import com.backend.exception.CountryNotFoundException;
@@ -63,12 +60,9 @@ public class CountryServiceImpl implements CountryService {
 
 	@Override
 	public List<Car> getCountryCars(Integer id) throws CountryNotFoundException {
-		Session session = em.getEntityManagerFactory().unwrap(SessionFactory.class).openSession();
 		Country country = em.find(Country.class, id);
 		List<Car> cars = country.getCars();
 		cars.size();
-		session.close();
 		return cars;
 	}
-
 }

@@ -4,9 +4,9 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -24,7 +24,7 @@ import com.backend.interceptor.LogInterceptor;
 @RequestScoped
 public class BrandServiceImpl implements BrandService {
 
-	@PersistenceContext(unitName="carPU")
+	@Inject
 	private EntityManager em;
 	
 	@SuppressWarnings("unchecked")
