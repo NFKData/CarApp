@@ -100,7 +100,7 @@ public class HealthCheckImpl implements HealthCheck {
 			request = client.target(BASE_URL + "brands");
 			return checkSubSystem(method, request);
 		case "CountryResource":
-			request = client.target(BASE_URL + "cars");
+			request = client.target(BASE_URL + "countries");
 			return checkSubSystem(method, request);
 		}
 		return false;
