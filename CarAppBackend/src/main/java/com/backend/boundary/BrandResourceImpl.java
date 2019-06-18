@@ -3,7 +3,7 @@ package com.backend.boundary;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-import javax.inject.Inject;
+import javax.ejb.EJB;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Response;
@@ -20,7 +20,7 @@ import com.backend.helper.DtoHelper;
 @Path("/brands")
 public class BrandResourceImpl extends BrandResource {
 
-	@Inject
+	@EJB(name = "brandService")
 	private BrandService brandService;
 
 	@Override

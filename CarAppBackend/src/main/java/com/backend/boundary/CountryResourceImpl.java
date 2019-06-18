@@ -3,7 +3,7 @@ package com.backend.boundary;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-import javax.inject.Inject;
+import javax.ejb.EJB;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Response;
@@ -20,7 +20,7 @@ import com.backend.helper.DtoHelper;
 @Path("/countries")
 public class CountryResourceImpl extends CountryResource {
 
-	@Inject
+	@EJB(name = "countryService")
 	private CountryService countryService;
 
 	@Override

@@ -3,7 +3,7 @@ package com.backend.boundary;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-import javax.inject.Inject;
+import javax.ejb.EJB;
 import javax.interceptor.Interceptors;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.GenericEntity;
@@ -24,7 +24,7 @@ import com.backend.interceptor.LogInterceptor;
 @Path("/cars")
 public class CarResourceImpl extends CarResource {
 
-	@Inject
+	@EJB(name = "carService")
 	private CarService carService;
 
 	@Override
