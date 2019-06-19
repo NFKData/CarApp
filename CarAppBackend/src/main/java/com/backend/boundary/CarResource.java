@@ -1,5 +1,6 @@
 package com.backend.boundary;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
 import javax.ws.rs.Consumes;
@@ -64,7 +65,7 @@ public abstract class CarResource {
 	@Tag(name = "cars")
 	@GET
 	@Timeout(5000)
-	@Retry(maxRetries = 5, retryOn = IllegalStateException.class, maxDuration = 2000)
+	@Retry(maxRetries = 5, retryOn = { IllegalStateException.class, IOException.class}, maxDuration = 2000)
 	@CircuitBreaker(successThreshold = 10, requestVolumeThreshold = 4, failureRatio = 0.75, delay = 1000)
 	@Fallback(ResourceFallbackHandler.class)
 	@Bulkhead(10)
@@ -104,7 +105,7 @@ public abstract class CarResource {
 	@GET
 	@Path("/{id}")
 	@Timeout(5000)
-	@Retry(maxRetries = 5, retryOn = IllegalStateException.class, maxDuration = 2000)
+	@Retry(maxRetries = 5, retryOn = { IllegalStateException.class, IOException.class}, maxDuration = 2000)
 	@CircuitBreaker(successThreshold = 10, requestVolumeThreshold = 4, failureRatio = 0.75, delay = 1000)
 	@Fallback(ResourceFallbackHandler.class)
 	@Bulkhead(10)
@@ -143,7 +144,7 @@ public abstract class CarResource {
 	@Tag(name = "cars")
 	@POST
 	@Timeout(5000)
-	@Retry(maxRetries = 5, retryOn = IllegalStateException.class, maxDuration = 2000)
+	@Retry(maxRetries = 5, retryOn = { IllegalStateException.class, IOException.class}, maxDuration = 2000)
 	@CircuitBreaker(successThreshold = 10, requestVolumeThreshold = 4, failureRatio = 0.75, delay = 1000)
 	@Fallback(ResourceFallbackHandler.class)
 	@Bulkhead(10)
@@ -188,7 +189,7 @@ public abstract class CarResource {
 	@PUT
 	@Path("/{id}")
 	@Timeout(5000)
-	@Retry(maxRetries = 5, retryOn = IllegalStateException.class, maxDuration = 2000)
+	@Retry(maxRetries = 5, retryOn = { IllegalStateException.class, IOException.class}, maxDuration = 2000)
 	@CircuitBreaker(successThreshold = 10, requestVolumeThreshold = 4, failureRatio = 0.75, delay = 1000)
 	@Fallback(ResourceFallbackHandler.class)
 	@Bulkhead(10)
@@ -217,7 +218,7 @@ public abstract class CarResource {
 	@DELETE
 	@Path("/{id}")
 	@Timeout(5000)
-	@Retry(maxRetries = 5, retryOn = IllegalStateException.class, maxDuration = 2000)
+	@Retry(maxRetries = 5, retryOn = { IllegalStateException.class, IOException.class}, maxDuration = 2000)
 	@CircuitBreaker(successThreshold = 10, requestVolumeThreshold = 4, failureRatio = 0.75, delay = 1000)
 	@Fallback(ResourceFallbackHandler.class)
 	@Bulkhead(10)
@@ -253,7 +254,7 @@ public abstract class CarResource {
 	@GET
 	@Path("/{id}/brand")
 	@Timeout(5000)
-	@Retry(maxRetries = 5, retryOn = IllegalStateException.class, maxDuration = 2000)
+	@Retry(maxRetries = 5, retryOn = { IllegalStateException.class, IOException.class}, maxDuration = 2000)
 	@CircuitBreaker(successThreshold = 10, requestVolumeThreshold = 4, failureRatio = 0.75, delay = 1000)
 	@Fallback(ResourceFallbackHandler.class)
 	@Bulkhead(10)
@@ -290,7 +291,7 @@ public abstract class CarResource {
 	@GET
 	@Path("/{id}/country")
 	@Timeout(5000)
-	@Retry(maxRetries = 5, retryOn = IllegalStateException.class, maxDuration = 2000)
+	@Retry(maxRetries = 5, retryOn = { IllegalStateException.class, IOException.class}, maxDuration = 2000)
 	@CircuitBreaker(successThreshold = 10, requestVolumeThreshold = 4, failureRatio = 0.75, delay = 1000)
 	@Fallback(ResourceFallbackHandler.class)
 	@Bulkhead(10)

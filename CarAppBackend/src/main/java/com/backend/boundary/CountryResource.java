@@ -1,5 +1,6 @@
 package com.backend.boundary;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
 import javax.ws.rs.Consumes;
@@ -60,7 +61,7 @@ public abstract class CountryResource {
 	@Tag(name = "countries")
 	@GET
 	@Timeout(5000)
-	@Retry(maxRetries = 5, retryOn = IllegalStateException.class, maxDuration = 2000)
+	@Retry(maxRetries = 5, retryOn = { IllegalStateException.class, IOException.class}, maxDuration = 2000)
 	@CircuitBreaker(successThreshold = 10, requestVolumeThreshold = 4, failureRatio = 0.75, delay = 1000)
 	@Fallback(ResourceFallbackHandler.class)
 	@Bulkhead(10)
@@ -95,7 +96,7 @@ public abstract class CountryResource {
 	@GET
 	@Path("/{id}")
 	@Timeout(5000)
-	@Retry(maxRetries = 5, retryOn = IllegalStateException.class, maxDuration = 2000)
+	@Retry(maxRetries = 5, retryOn = { IllegalStateException.class, IOException.class}, maxDuration = 2000)
 	@CircuitBreaker(successThreshold = 10, requestVolumeThreshold = 4, failureRatio = 0.75, delay = 1000)
 	@Fallback(ResourceFallbackHandler.class)
 	@Bulkhead(10)
@@ -130,7 +131,7 @@ public abstract class CountryResource {
 	@Tag(name = "countries")
 	@POST
 	@Timeout(5000)
-	@Retry(maxRetries = 5, retryOn = IllegalStateException.class, maxDuration = 2000)
+	@Retry(maxRetries = 5, retryOn = { IllegalStateException.class, IOException.class}, maxDuration = 2000)
 	@CircuitBreaker(successThreshold = 10, requestVolumeThreshold = 4, failureRatio = 0.75, delay = 1000)
 	@Fallback(ResourceFallbackHandler.class)
 	@Bulkhead(10)
@@ -170,7 +171,7 @@ public abstract class CountryResource {
 	@PUT
 	@Path("/{id}")
 	@Timeout(5000)
-	@Retry(maxRetries = 5, retryOn = IllegalStateException.class, maxDuration = 2000)
+	@Retry(maxRetries = 5, retryOn = { IllegalStateException.class, IOException.class}, maxDuration = 2000)
 	@CircuitBreaker(successThreshold = 10, requestVolumeThreshold = 4, failureRatio = 0.75, delay = 1000)
 	@Fallback(ResourceFallbackHandler.class)
 	@Bulkhead(10)
@@ -195,7 +196,7 @@ public abstract class CountryResource {
 	@DELETE
 	@Path("/{id}")
 	@Timeout(5000)
-	@Retry(maxRetries = 5, retryOn = IllegalStateException.class, maxDuration = 2000)
+	@Retry(maxRetries = 5, retryOn = { IllegalStateException.class, IOException.class}, maxDuration = 2000)
 	@CircuitBreaker(successThreshold = 10, requestVolumeThreshold = 4, failureRatio = 0.75, delay = 1000)
 	@Fallback(ResourceFallbackHandler.class)
 	@Bulkhead(10)
@@ -231,7 +232,7 @@ public abstract class CountryResource {
 	@GET
 	@Path("/{id}/cars")
 	@Timeout(5000)
-	@Retry(maxRetries = 5, retryOn = IllegalStateException.class, maxDuration = 2000)
+	@Retry(maxRetries = 5, retryOn = { IllegalStateException.class, IOException.class}, maxDuration = 2000)
 	@CircuitBreaker(successThreshold = 10, requestVolumeThreshold = 4, failureRatio = 0.75, delay = 1000)
 	@Fallback(ResourceFallbackHandler.class)
 	@Bulkhead(10)

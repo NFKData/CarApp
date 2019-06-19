@@ -117,6 +117,32 @@ class GetDataBehaviour(TaskSet):
             if response.status_code == 200 or response.status_code == 404:
                 response.success()
 
+    @task(1)
+    def getAllBrands(self):
+         with get(self, "/car-api/api/brands") as response:
+            if response.status_code == 200:
+                response.success()
+
+            
+    @task(2)
+    def getOneBrand(self):
+        with get(self, "/car-api/api/brands/123") as response:
+            if response.status_code == 200 or response.status_code == 404:
+                response.success()
+
+    @task(1)
+    def getAllCountries(self):
+         with get(self, "/car-api/api/countries") as response:
+            if response.status_code == 200:
+                response.success()
+
+            
+    @task(2)
+    def getOneCountry(self):
+        with get(self, "/car-api/api/countries/123") as response:
+            if response.status_code == 200 or response.status_code == 404:
+                response.success()
+
 
 class EntityLifeCycleBehaviour(TaskSet):
     @task(1)
@@ -131,8 +157,7 @@ class EntityLifeCycleBehaviour(TaskSet):
 
 
 class BackendBehaviour(TaskSet):
-    # GetDataBehaviour: 4,
-    tasks = {EntityLifeCycleBehaviour: 1}
+    tasks = {GetDataBehaviour: 4, EntityLifeCycleBehaviour: 1}
 
     def on_start(self):
         login()

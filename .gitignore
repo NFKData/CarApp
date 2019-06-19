@@ -1,1 +1,3 @@
 CarAppBackend/derby.log
+*.pyc
+CarAppBackend/*.py.*.py
