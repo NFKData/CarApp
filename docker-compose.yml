@@ -49,6 +49,8 @@ services:
        JMS_BRAND_DEST: CarAppBrandDest
        PREPARE_RESOURCES_FILE: /opt/payara41/scripts/prepare_resources.sh
        JWT_SECRET: gltvLjKS86slFnQtcCuHdGMf9nFSDZbv
+       JWT_CLIENT_SECRET: fd_CvQkZexu2fSxWCYm8IkhmLenp_pRBugoxRYi_UFfAxGF_7uiwf-9qlBM_lj4H
+       JWT_CLIENT_ID: wc9hz6numwWDigRgMI7CZnXm1B4Qn9fW
        JMS_USER: admin
        JMS_PASSWORD: admin
     ports:

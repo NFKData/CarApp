@@ -2,6 +2,7 @@ from locust import HttpLocust, TaskSet, task
 import random
 import http.client
 import json
+import os
 
 carAppHeaders = None
 
@@ -92,7 +93,8 @@ def login():
     global carAppHeaders
     if carAppHeaders == None:
         conn = http.client.HTTPSConnection("everis-carapp.eu.auth0.com")
-        payload = "{\"client_id\":\"wc9hz6numwWDigRgMI7CZnXm1B4Qn9fW\",\"client_secret\":\"fd_CvQkZexu2fSxWCYm8IkhmLenp_pRBugoxRYi_UFfAxGF_7uiwf-9qlBM_lj4H\",\"audience\":\"https://everis-carapp.herokuapp.com/car-api\",\"grant_type\":\"client_credentials\"}"
+        payload = "{\"client_id\":\"" + os.environ['JWT_CLIENT_ID'] + "\",\"client_secret\":\"" + os.environ['JWT_CLIENT_SECRET'] + \
+            "\",\"audience\":\"https://everis-carapp.herokuapp.com/car-api\",\"grant_type\":\"client_credentials\"}"
         headers = {'content-type': "application/json"}
         conn.request("POST", "/oauth/token", payload, headers)
         res = conn.getresponse()
@@ -119,11 +121,10 @@ class GetDataBehaviour(TaskSet):
 
     @task(1)
     def getAllBrands(self):
-         with get(self, "/car-api/api/brands") as response:
+        with get(self, "/car-api/api/brands") as response:
             if response.status_code == 200:
                 response.success()
 
-            
     @task(2)
     def getOneBrand(self):
         with get(self, "/car-api/api/brands/123") as response:
@@ -132,11 +133,10 @@ class GetDataBehaviour(TaskSet):
 
     @task(1)
     def getAllCountries(self):
-         with get(self, "/car-api/api/countries") as response:
+        with get(self, "/car-api/api/countries") as response:
             if response.status_code == 200:
                 response.success()
 
-            
     @task(2)
     def getOneCountry(self):
         with get(self, "/car-api/api/countries/123") as response:
