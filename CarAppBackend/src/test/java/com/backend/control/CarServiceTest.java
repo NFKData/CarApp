@@ -74,10 +74,10 @@ public class CarServiceTest {
 		Car car = new Car();
 		car.setId(DEFAULT_ID);
 		PowerMockito.mockStatic(ValidationHelper.class);
-		doNothing().when(em).persist(car);
+		when(em.merge(car)).thenReturn(car);
 		PowerMockito.doNothing().when(ValidationHelper.class);
 		assertEquals(car, carService.createCar(car));
-		verify(em).persist(car);
+		verify(em).merge(car);
 		PowerMockito.verifyStatic(ValidationHelper.class);
 	}
 

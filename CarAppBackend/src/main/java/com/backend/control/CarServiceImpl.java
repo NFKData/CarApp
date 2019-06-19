@@ -37,8 +37,7 @@ public class CarServiceImpl implements CarService {
 	@Override
 	public Car createCar(Car car) throws InvalidEntityException {
 		ValidationHelper.validateCar(car);
-		em.persist(car);
-		return car;
+		return em.merge(car);
 
 	}
 

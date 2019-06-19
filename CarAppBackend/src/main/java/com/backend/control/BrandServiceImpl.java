@@ -42,8 +42,7 @@ public class BrandServiceImpl implements BrandService {
 	@Override
 	public Brand createBrand(Brand brand) throws InvalidEntityException {
 		ValidationHelper.validateBrand(brand);
-		em.persist(brand);
-		return brand;
+		return em.merge(brand);
 	}
 
 	@Override

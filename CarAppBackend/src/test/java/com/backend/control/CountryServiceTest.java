@@ -74,10 +74,10 @@ public class CountryServiceTest {
 		Country country = new Country();
 		country.setId(DEFAULT_ID);
 		PowerMockito.mockStatic(ValidationHelper.class);
-		doNothing().when(em).persist(country);
+		when(em.merge(country)).thenReturn(country);
 		PowerMockito.doNothing().when(ValidationHelper.class);
 		assertEquals(country, countryService.createCountry(country));
-		verify(em).persist(country);
+		verify(em).merge(country);
 		PowerMockito.verifyStatic(ValidationHelper.class);
 	}
 

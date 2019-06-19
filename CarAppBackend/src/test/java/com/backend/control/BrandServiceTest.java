@@ -74,10 +74,10 @@ public class BrandServiceTest {
 		Brand brand = new Brand();
 		brand.setId(DEFAULT_ID);
 		PowerMockito.mockStatic(ValidationHelper.class);
-		doNothing().when(em).persist(brand);
+		when(em.merge(brand)).thenReturn(brand);
 		PowerMockito.doNothing().when(ValidationHelper.class);
 		assertEquals(brand, brandService.createBrand(brand));
-		verify(em).persist(brand);
+		verify(em).merge(brand);
 		PowerMockito.verifyStatic(ValidationHelper.class);
 	}
 

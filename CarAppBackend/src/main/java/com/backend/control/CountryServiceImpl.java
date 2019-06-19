@@ -39,8 +39,7 @@ public class CountryServiceImpl implements CountryService {
 	@Override
 	public Country createCountry(Country country) throws InvalidEntityException {
 		ValidationHelper.validateCountry(country);
-		em.persist(country);
-		return country;
+		return em.merge(country);
 	}
 
 	@Override
