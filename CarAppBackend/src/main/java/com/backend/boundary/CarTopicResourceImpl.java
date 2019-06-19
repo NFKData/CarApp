@@ -16,16 +16,14 @@ public class CarTopicResourceImpl extends CarTopicResource {
 
 	@EJB(name = "carTopicService")
 	private CarTopicService carTopicService;
-	
+
 	@Override
 	public Response create(Car car) throws NamingException, JMSException, JsonProcessingException {
-		if(car == null) {
+		if (car == null) {
 			return Response.status(Status.BAD_REQUEST).build();
 		}
 		carTopicService.create(car);
 		return Response.status(Status.OK).build();
 	}
 
-	
-	
 }

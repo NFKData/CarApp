@@ -13,6 +13,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.eclipse.microprofile.faulttolerance.Bulkhead;
+import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
+import org.eclipse.microprofile.faulttolerance.Fallback;
+import org.eclipse.microprofile.faulttolerance.Retry;
+import org.eclipse.microprofile.faulttolerance.Timeout;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
@@ -22,6 +27,7 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
+import com.backend.control.fallback.ResourceFallbackHandler;
 import com.backend.entity.Brand;
 import com.backend.entity.Car;
 import com.backend.entity.Country;
@@ -57,6 +63,11 @@ public abstract class CarResource {
 	@APIResponse(description = "List of cars", responseCode = "200", content = @Content(schema = @Schema(implementation = Car.class, type = SchemaType.ARRAY)))
 	@Tag(name = "cars")
 	@GET
+	@Timeout(5000)
+	@Retry(maxRetries = 5, retryOn = IllegalStateException.class, maxDuration = 2000)
+	@CircuitBreaker(successThreshold = 10, requestVolumeThreshold = 4, failureRatio = 0.75, delay = 1000)
+	@Fallback(ResourceFallbackHandler.class)
+	@Bulkhead(10)
 	public abstract Response getAll() throws InstantiationException, IllegalAccessException, IllegalArgumentException,
 			InvocationTargetException, NoSuchMethodException, SecurityException;
 
@@ -92,6 +103,11 @@ public abstract class CarResource {
 	@Tag(name = "cars")
 	@GET
 	@Path("/{id}")
+	@Timeout(5000)
+	@Retry(maxRetries = 5, retryOn = IllegalStateException.class, maxDuration = 2000)
+	@CircuitBreaker(successThreshold = 10, requestVolumeThreshold = 4, failureRatio = 0.75, delay = 1000)
+	@Fallback(ResourceFallbackHandler.class)
+	@Bulkhead(10)
 	public abstract Response getOne(
 			@Parameter(description = "UUID of the car to retrieve", schema = @Schema(type = SchemaType.STRING, format = "uuid", description = "param UUID of the car to retrieve"), required = true) @PathParam(value = "id") String id)
 			throws CarNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException,
@@ -126,6 +142,11 @@ public abstract class CarResource {
 			@APIResponse(description = "Validation errors", responseCode = "400", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDto.class, type = SchemaType.ARRAY))) })
 	@Tag(name = "cars")
 	@POST
+	@Timeout(5000)
+	@Retry(maxRetries = 5, retryOn = IllegalStateException.class, maxDuration = 2000)
+	@CircuitBreaker(successThreshold = 10, requestVolumeThreshold = 4, failureRatio = 0.75, delay = 1000)
+	@Fallback(ResourceFallbackHandler.class)
+	@Bulkhead(10)
 	public abstract Response create(
 			@Parameter(description = "Car to create", schema = @Schema(implementation = Car.class, type = SchemaType.OBJECT), required = true) Car car)
 			throws InvalidEntityException, InstantiationException, IllegalAccessException, IllegalArgumentException,
@@ -166,6 +187,11 @@ public abstract class CarResource {
 	@Tag(name = "cars")
 	@PUT
 	@Path("/{id}")
+	@Timeout(5000)
+	@Retry(maxRetries = 5, retryOn = IllegalStateException.class, maxDuration = 2000)
+	@CircuitBreaker(successThreshold = 10, requestVolumeThreshold = 4, failureRatio = 0.75, delay = 1000)
+	@Fallback(ResourceFallbackHandler.class)
+	@Bulkhead(10)
 	public abstract Response update(
 			@Parameter(description = "UUID of the car to update", schema = @Schema(type = SchemaType.STRING, format = "uuid", description = "param UUID of the car to update"), required = true) @PathParam(value = "id") String id,
 			@Parameter(description = "New data for the car", schema = @Schema(implementation = Car.class, type = SchemaType.OBJECT), required = true) Car car)
@@ -190,6 +216,11 @@ public abstract class CarResource {
 	@Tag(name = "cars")
 	@DELETE
 	@Path("/{id}")
+	@Timeout(5000)
+	@Retry(maxRetries = 5, retryOn = IllegalStateException.class, maxDuration = 2000)
+	@CircuitBreaker(successThreshold = 10, requestVolumeThreshold = 4, failureRatio = 0.75, delay = 1000)
+	@Fallback(ResourceFallbackHandler.class)
+	@Bulkhead(10)
 	public abstract Response delete(
 			@Parameter(description = "UUID of the car to update", schema = @Schema(type = SchemaType.STRING, format = "uuid", description = "param UUID of the car to update"), required = true) @PathParam(value = "id") String id)
 			throws CarNotFoundException;
@@ -221,6 +252,11 @@ public abstract class CarResource {
 	@Tag(name = "cars")
 	@GET
 	@Path("/{id}/brand")
+	@Timeout(5000)
+	@Retry(maxRetries = 5, retryOn = IllegalStateException.class, maxDuration = 2000)
+	@CircuitBreaker(successThreshold = 10, requestVolumeThreshold = 4, failureRatio = 0.75, delay = 1000)
+	@Fallback(ResourceFallbackHandler.class)
+	@Bulkhead(10)
 	public abstract Response getBrand(
 			@Parameter(description = "UUID of the car from which to get brand", schema = @Schema(type = SchemaType.STRING, format = "uuid", description = "param UUID of the car to update"), required = true) @PathParam(value = "id") String id)
 			throws CarNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException,
@@ -253,6 +289,11 @@ public abstract class CarResource {
 	@Tag(name = "cars")
 	@GET
 	@Path("/{id}/country")
+	@Timeout(5000)
+	@Retry(maxRetries = 5, retryOn = IllegalStateException.class, maxDuration = 2000)
+	@CircuitBreaker(successThreshold = 10, requestVolumeThreshold = 4, failureRatio = 0.75, delay = 1000)
+	@Fallback(ResourceFallbackHandler.class)
+	@Bulkhead(10)
 	public abstract Response getCountry(
 			@Parameter(description = "UUID of the car from which to get country", schema = @Schema(type = SchemaType.STRING, format = "uuid", description = "param UUID of the car to update"), required = true) @PathParam(value = "id") String id)
 			throws CarNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException,

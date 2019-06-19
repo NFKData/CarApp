@@ -21,13 +21,13 @@ carTable.component('carTable', {
         };
 
         self.dtOptions = DTOptionsBuilder.fromFnPromise(_ => {
-            return carService.retrieve()
+            return carService.retrieve();
         }).withDataProp('data').withOption('fnRowCallback', self.fnRowCallback);
 
         self.dtColumns = [
             DTColumnBuilder.newColumn('id').withTitle('ID'),
-            DTColumnBuilder.newColumn('country').withTitle('Country'),
-            DTColumnBuilder.newColumn('brand').withTitle('Brand'),
+            DTColumnBuilder.newColumn('country.name').withTitle('Country'),
+            DTColumnBuilder.newColumn('brand.name').withTitle('Brand'),
             DTColumnBuilder.newColumn('registration').withTitle('Registration').renderWith(self.formatRegistration),
             DTColumnBuilder.newColumn('id').withTitle('Actions').renderWith(self.actionsHtml)
         ];

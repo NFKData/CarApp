@@ -5,7 +5,7 @@
                 <h5 class="card-title">{{ car.id | uppercase }}</h5>
             </div>
             <div class="card-body">
-                <p class="card-text">{{ car.country }}</p>
+                <p class="card-text">{{ car.country.name }}</p>
                 <button ng-click="$ctrl.openCarDialog('delete', car.id)"
                     class="btn btn-danger float-right btn-margin-right">Delete</button>
                 <button ng-click="$ctrl.openCarDialog('update', car.id)"

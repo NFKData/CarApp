@@ -60,9 +60,9 @@ public class BrandServiceImpl implements BrandService {
 	}
 	
 	@Override
-	public List<Car> getBrandCars(Integer id) {
+	public List<Car> getBrandCars(Integer id) throws BrandNotFoundException {
 		Session session = em.getEntityManagerFactory().unwrap(SessionFactory.class).getCurrentSession();
-		Brand brand = em.find(Brand.class, id);
+		Brand brand = getBrand(id);
 		List<Car> cars = brand.getCars();
 		cars.size();
 		session.close();
